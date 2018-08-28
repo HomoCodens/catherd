@@ -64,45 +64,76 @@ public class RootController {
      
             @Override
             public void updateItem(Nameable item, boolean empty) {
+            	System.out.println("UpdateItem called on " + item);
+            	
                 super.updateItem(item, empty);
                 
                 if(!empty) {
                 	this.textProperty().bind(getItem().getNameProperty());
                 	
-                	if(item instanceof FosterHome || item instanceof CatGroup) {
-                		ContextMenu addMenu = new ContextMenu();
-                		MenuItem addMenuItem = new MenuItem();
-                		int n_items = getTreeItem().getChildren().size();
+            		ContextMenu menu = new ContextMenu();
+            		MenuItem addMenuItem = new MenuItem();
+            		MenuItem removeMenuItem = new MenuItem();
+            		int n_items = getTreeItem().getChildren().size();
+            		
+            		if(item instanceof FosterHome) {
+            			addMenuItem.setText("Neue Gruppe");
+                		addMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent e) {
+								CatGroup newGroup = new CatGroup("Gruppe " + (n_items + 1));
+								TreeItem<Nameable> parent = getTreeItem();
+								main.addCatGroup(newGroup);
+                				TreeItem<Nameable> newGroupItem = new TreeItem<Nameable>((Nameable)newGroup);
+                				parent.getChildren().add(newGroupItem);
+                				parent.setExpanded(true);
+							}
+                		});
                 		
-                		if(item instanceof FosterHome) {
-                			addMenuItem.setText("Neue Gruppe");
-                    		addMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-    							@Override
-    							public void handle(ActionEvent e) {
-    								CatGroup newGroup = new CatGroup("Gruppe " + (n_items + 1));
-    								TreeItem<Nameable> item = getTreeItem();
-    								main.addCatGroup(newGroup);
-                    				TreeItem<Nameable> newGroupItem = new TreeItem<Nameable>((Nameable)newGroup);
-                    				item.getChildren().add(newGroupItem);
-                    				item.setExpanded(true);
-    							}
-                    		});
-                    	} else if(item instanceof CatGroup) {
-                    		addMenuItem.setText("Neue Katze");
-                    		addMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-    							@Override
-    							public void handle(ActionEvent e) {
-    								Cat newCat = new Cat("Katze " + (n_items + 1));
-    								TreeItem<Nameable> item = getTreeItem();
-    								main.addCatToGroup(newCat, (CatGroup)item.getValue());
-                    				TreeItem<Nameable> newCatItem = new TreeItem<Nameable>((Nameable)newCat);
-                    				item.getChildren().add(newCatItem);
-                    				item.setExpanded(true);
-    							}
-                    		});                    	}
-                		addMenu.getItems().add(addMenuItem);
-                		setContextMenu(addMenu);
+                		menu.getItems().add(addMenuItem);
+                	} else if(item instanceof CatGroup) {
+                		System.out.println("Doing the group thing");
+                		addMenuItem.setText("Neue Katze");
+                		addMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent e) {
+								Cat newCat = new Cat("Katze " + (n_items + 1));
+								TreeItem<Nameable> parent = getTreeItem();
+								main.addCatToGroup(newCat, (CatGroup)parent.getValue());
+                				TreeItem<Nameable> newCatItem = new TreeItem<Nameable>((Nameable)newCat);
+                				parent.getChildren().add(newCatItem);
+                				parent.setExpanded(true);
+							}
+                		});
+                		
+                		removeMenuItem.setText("Gruppe entfernen");
+                		removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+                			@Override
+                			public void handle(ActionEvent e) {
+                				main.removeCatGroup((CatGroup)item);
+                				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
+                				node.getParent().getChildren().remove(node);
+                			}
+                		});
+                		menu.getItems().add(addMenuItem);
+                		menu.getItems().add(removeMenuItem);
+                	} else if(item instanceof Cat) {
+                		System.out.println("Doing the cat thing");
+                		removeMenuItem.setText("Katze entfernen");
+                		removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+                			@Override
+                			public void handle(ActionEvent e) {
+                				main.removeCat((Cat)item);
+                				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
+                				node.getParent().getChildren().remove(node);
+                			}
+                		});
+                		menu.getItems().add(removeMenuItem);
                 	}
+            		setContextMenu(menu);
+                } else {
+                	this.textProperty().unbind();
+                	setText(null);
                 }
             }
         }

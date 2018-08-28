@@ -77,11 +77,21 @@ public class CatHerdMain extends Application {
 		groups.add(group);
 	}
 	
+	public void removeCatGroup(CatGroup group) {
+		groups.remove(group);
+	}
+	
 	public void addCatToGroup(Cat cat, CatGroup group) {
 		for(CatGroup g : groups) {
 			if(g.getId() == group.getId()) {
 				g.addCat(cat);
 			}
+		}
+	}
+	
+	public void removeCat(Cat cat) {
+		for(CatGroup g : groups) {
+			g.getCats().remove(cat);
 		}
 	}
 }
