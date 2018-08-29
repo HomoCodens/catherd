@@ -1,6 +1,7 @@
 package ch.katzenhausfreunde.catherd.view;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.Cat;
@@ -12,6 +13,9 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeCell;
@@ -58,8 +62,11 @@ public class RootController {
         
         final class CatCell extends TreeCell<Nameable> {
        	
+        	Alert confirmation = new Alert(AlertType.CONFIRMATION);
+        	
             public CatCell() {
-            	
+            	confirmation.setHeaderText(null);
+            	confirmation.setTitle("Bestätigen");
             }
      
             @Override
@@ -110,9 +117,13 @@ public class RootController {
                 		removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
                 			@Override
                 			public void handle(ActionEvent e) {
-                				main.removeCatGroup((CatGroup)item);
-                				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
-                				node.getParent().getChildren().remove(node);
+                				confirmation.setContentText("Gruppe " + item.getName() + " wirklich entfernen?");
+                				Optional<ButtonType> result = confirmation.showAndWait();
+                				if (result.get() == ButtonType.OK){
+                					main.removeCatGroup((CatGroup)item);
+                    				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
+                    				node.getParent().getChildren().remove(node);
+                				}
                 			}
                 		});
                 		menu.getItems().add(addMenuItem);
@@ -123,9 +134,13 @@ public class RootController {
                 		removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
                 			@Override
                 			public void handle(ActionEvent e) {
-                				main.removeCat((Cat)item);
-                				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
-                				node.getParent().getChildren().remove(node);
+                				confirmation.setContentText("Katze " + item.getName() + " wirklich entfernen?");
+                				Optional<ButtonType> result = confirmation.showAndWait();
+                				if (result.get() == ButtonType.OK){
+	                				main.removeCat((Cat)item);
+	                				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
+	                				node.getParent().getChildren().remove(node);
+                				}
                 			}
                 		});
                 		menu.getItems().add(removeMenuItem);
