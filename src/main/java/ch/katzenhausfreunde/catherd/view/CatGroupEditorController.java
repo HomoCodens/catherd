@@ -8,8 +8,6 @@ public class CatGroupEditorController {
 	@FXML
 	private TextField catGroupName;
 	
-	private CatGroup catGroup;
-	
 	public CatGroupEditorController() {
 		
 	}
@@ -20,12 +18,7 @@ public class CatGroupEditorController {
 	}
 	
 	public void setCatGroup(CatGroup group) {
-		this.catGroup = group;
 		catGroupName.setText(group.getName());
-	}
-	
-	public void onChangeCatGroupName() {
-		System.out.println("onChangeCatGroupName");
-		this.catGroup.setName(catGroupName.getText());
+		group.nameProperty().bind(catGroupName.textProperty());
 	}
 }

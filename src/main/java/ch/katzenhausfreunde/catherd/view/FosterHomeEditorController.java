@@ -8,8 +8,6 @@ public class FosterHomeEditorController {
 	@FXML
 	private TextField fosterHomeName;
 	
-	private FosterHome fosterHome;
-	
 	public FosterHomeEditorController() {
 		
 	}
@@ -20,12 +18,7 @@ public class FosterHomeEditorController {
 	}
 	
 	public void setFosterHome(FosterHome home) {
-		this.fosterHome = home;
 		fosterHomeName.setText(home.getName());
-	}
-	
-	public void onChangeFosterHomeName() {
-		System.out.println("onChangeFosterHomeName");
-		this.fosterHome.setName(fosterHomeName.getText());
+		home.nameProperty().bind(fosterHomeName.textProperty());
 	}
 }

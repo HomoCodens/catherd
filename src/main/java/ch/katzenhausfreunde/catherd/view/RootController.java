@@ -84,7 +84,7 @@ public class RootController {
                 super.updateItem(item, empty);
                 
                 if(!empty) {
-                	this.textProperty().bind(item.getNameProperty());
+                	this.textProperty().bind(item.nameProperty());
                 	
             		ContextMenu menu = new ContextMenu();
             		MenuItem addMenuItem = new MenuItem();

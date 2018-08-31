@@ -28,7 +28,7 @@ public class Nameable {
 		return id;
 	}
 	
-	public StringProperty getNameProperty() {
+	public StringProperty nameProperty() {
 		return this.name;
 	}
 	

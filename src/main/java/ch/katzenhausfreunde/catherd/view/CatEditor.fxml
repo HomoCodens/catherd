@@ -10,7 +10,7 @@
       <VBox prefHeight="42.0" prefWidth="149.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label text="Cat" />
-            <TextField fx:id="catName" onKeyReleased="#onChangeCatName" />
+            <TextField fx:id="catName" />
          </children>
       </VBox>
    </children>

@@ -8,8 +8,6 @@ public class CatEditorController {
 	@FXML
 	private TextField catName;
 	
-	private Cat cat;
-	
 	public CatEditorController() {
 		
 	}
@@ -20,12 +18,7 @@ public class CatEditorController {
 	}
 	
 	public void setCat(Cat cat) {
-		this.cat = cat;
 		catName.setText(cat.getName());
-	}
-	
-	public void onChangeCatName() {
-		System.out.println("onChangeCatName");
-		this.cat.setName(catName.getText());
+		cat.nameProperty().bind(catName.textProperty());
 	}
 }
