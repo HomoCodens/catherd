@@ -1,7 +1,10 @@
 package ch.katzenhausfreunde.catherd.model;
 
+import java.nio.file.Paths;
+
 import javax.xml.bind.annotation.XmlElement;
 
+import ch.katzenhausfreunde.catherd.util.DocumentRenderer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -50,5 +53,6 @@ public class FosterHome extends Nameable {
 		this.groups.add(new CatGroup("2"));
 		this.groups.get(1).getCats().add(new Cat("Fluffy"));
 		this.groups.add(new CatGroup("3"));
+		System.out.println("About to do it");
 	}
 }

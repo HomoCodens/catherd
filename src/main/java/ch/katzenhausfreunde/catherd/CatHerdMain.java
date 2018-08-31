@@ -2,6 +2,10 @@ package ch.katzenhausfreunde.catherd;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.prefs.Preferences;
 
 import javax.xml.bind.JAXBContext;
@@ -13,6 +17,7 @@ import ch.katzenhausfreunde.catherd.model.CatGroup;
 import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.util.CatHerdDiskStorage;
+import ch.katzenhausfreunde.catherd.util.DocumentRenderer;
 import ch.katzenhausfreunde.catherd.view.RootController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -39,6 +44,11 @@ public class CatHerdMain extends Application {
 			this.store.populateDummies();
 		}
 		CatHerdDiskStorage.saveToFile(new File("E:\\blason.json"), store);
+		FosterHome home = store.getFosterHomes().get(0);
+		CatGroup group = home.getGroups().get(0);
+
+		DocumentRenderer renderer = new DocumentRenderer(home, group);
+		renderer.renderAllGroupDocuments(Paths.get("E:\\"));
 	}
 	
 	@Override
@@ -52,6 +62,7 @@ public class CatHerdMain extends Application {
 	}
 	
 	public static void main(String[] args) {
+		System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
 		launch(args);
 	}
 	
