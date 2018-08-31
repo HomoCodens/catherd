@@ -8,3 +8,5 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * Write PDF generator classes
 * Lots&Lots of fields
   * Custom "person" input
+  
+ Thanks to [code.makery.ch](https://code.makery.ch/library/javafx-tutorial/) for getting me up top speed on JavaFX.
