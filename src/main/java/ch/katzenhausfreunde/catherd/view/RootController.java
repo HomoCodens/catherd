@@ -6,6 +6,7 @@ import java.util.Optional;
 import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.Cat;
 import ch.katzenhausfreunde.catherd.model.CatGroup;
+import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.model.Nameable;
 import javafx.event.ActionEvent;
@@ -27,6 +28,7 @@ import javafx.util.Callback;
 
 public class RootController {
 	private CatHerdMain main;
+	private CatHerdStore store;
 	
 	@FXML
 	private BorderPane leftPane;
@@ -45,26 +47,32 @@ public class RootController {
 	
 	public void setMain(CatHerdMain main) {
 		this.main = main;
+		this.store = main.getStore();
 		
 		TreeItem<Nameable> rootItem = new TreeItem<Nameable>(new Nameable("root"));
 		
-		TreeItem<Nameable> fosterHome = new TreeItem<Nameable>(main.getFosterHome());
-        rootItem.getChildren().add(fosterHome);
+		for(FosterHome h : store.getFosterHomes()) {
+			TreeItem<Nameable> fosterHome = new TreeItem<Nameable>(h);
+			rootItem.getChildren().add(fosterHome);
         
-        for(CatGroup g: main.getGroups()) {
-        	TreeItem<Nameable> group = new TreeItem<Nameable>(g);
-        	for(Cat c : g.getCats()) {
-        		TreeItem<Nameable> catNode = new TreeItem<Nameable>(c);
-        		group.getChildren().add(catNode);
-        	}
-        	fosterHome.getChildren().add(group);
+	        for(CatGroup g: h.getGroups()) {
+	        	TreeItem<Nameable> group = new TreeItem<Nameable>(g);
+	        	for(Cat c : g.getCats()) {
+	        		TreeItem<Nameable> catNode = new TreeItem<Nameable>(c);
+	        		group.getChildren().add(catNode);
+	        	}
+	        	fosterHome.getChildren().add(group);
+	        }
         }
         
         final class CatCell extends TreeCell<Nameable> {
-       	
+	       	
         	Alert confirmation = new Alert(AlertType.CONFIRMATION);
+        	TreeView<Nameable> view;
         	
-            public CatCell() {
+            public CatCell(TreeView<Nameable> view) {
+            	this.view = view;
+            	
             	confirmation.setHeaderText(null);
             	confirmation.setTitle("Bestätigen");
             }
@@ -76,7 +84,7 @@ public class RootController {
                 super.updateItem(item, empty);
                 
                 if(!empty) {
-                	this.textProperty().bind(getItem().getNameProperty());
+                	this.textProperty().bind(item.getNameProperty());
                 	
             		ContextMenu menu = new ContextMenu();
             		MenuItem addMenuItem = new MenuItem();
@@ -90,7 +98,7 @@ public class RootController {
 							public void handle(ActionEvent e) {
 								CatGroup newGroup = new CatGroup("Gruppe " + (n_items + 1));
 								TreeItem<Nameable> parent = getTreeItem();
-								main.addCatGroup(newGroup);
+								((FosterHome)item).addCatGroup(newGroup);
                 				TreeItem<Nameable> newGroupItem = new TreeItem<Nameable>((Nameable)newGroup);
                 				parent.getChildren().add(newGroupItem);
                 				parent.setExpanded(true);
@@ -106,7 +114,7 @@ public class RootController {
 							public void handle(ActionEvent e) {
 								Cat newCat = new Cat("Katze " + (n_items + 1));
 								TreeItem<Nameable> parent = getTreeItem();
-								main.addCatToGroup(newCat, (CatGroup)parent.getValue());
+								((CatGroup)item).addCat(newCat);
                 				TreeItem<Nameable> newCatItem = new TreeItem<Nameable>((Nameable)newCat);
                 				parent.getChildren().add(newCatItem);
                 				parent.setExpanded(true);
@@ -120,7 +128,8 @@ public class RootController {
                 				confirmation.setContentText("Gruppe " + item.getName() + " wirklich entfernen?");
                 				Optional<ButtonType> result = confirmation.showAndWait();
                 				if (result.get() == ButtonType.OK){
-                					main.removeCatGroup((CatGroup)item);
+                					FosterHome parent = (FosterHome)getTreeItem().getParent().getValue();
+                					parent.removeCatGroup((CatGroup)item);
                     				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
                     				node.getParent().getChildren().remove(node);
                 				}
@@ -136,8 +145,9 @@ public class RootController {
                 			public void handle(ActionEvent e) {
                 				confirmation.setContentText("Katze " + item.getName() + " wirklich entfernen?");
                 				Optional<ButtonType> result = confirmation.showAndWait();
-                				if (result.get() == ButtonType.OK){
-	                				main.removeCat((Cat)item);
+                				if (result.get() == ButtonType.OK) {
+                					CatGroup parent = (CatGroup)getTreeItem().getParent().getValue();
+	                				parent.removeCat((Cat)item);
 	                				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
 	                				node.getParent().getChildren().remove(node);
                 				}
@@ -152,7 +162,7 @@ public class RootController {
                 }
             }
         }
-        
+		
         TreeView<Nameable> tree = new TreeView<Nameable>(rootItem);
         tree.setShowRoot(false);
         tree.getSelectionModel().selectedItemProperty().addListener((observable, oldItem, newItem) -> {
@@ -168,7 +178,7 @@ public class RootController {
         tree.setCellFactory(new Callback<TreeView<Nameable>,TreeCell<Nameable>>(){
             @Override
             public TreeCell<Nameable> call(TreeView<Nameable> p) {
-                return new CatCell();
+                return new CatCell(p);
             }
         });
         leftPane.setCenter(tree);

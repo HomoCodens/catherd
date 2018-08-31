@@ -2,6 +2,8 @@ package ch.katzenhausfreunde.catherd.model;
 
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -30,6 +32,7 @@ public class Nameable {
 		return this.name;
 	}
 	
+	@XmlElement(name = "name")
 	public String getName() {
 		return this.name.get();
 	}

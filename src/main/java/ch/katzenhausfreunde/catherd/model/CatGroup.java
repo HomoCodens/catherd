@@ -1,5 +1,7 @@
 package ch.katzenhausfreunde.catherd.model;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,6 +16,7 @@ public class CatGroup extends Nameable {
 		super(name);
 	}
 	
+	@XmlElement(name = "cat")
 	public ObservableList<Cat> getCats() {
 		return this.cats;
 	}
@@ -24,5 +27,9 @@ public class CatGroup extends Nameable {
 	
 	public void addCat(Cat cat) {
 		cats.add(cat);
+	}
+	
+	public void removeCat(Cat cat) {
+		cats.remove(cat);
 	}
 }

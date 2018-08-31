@@ -1,10 +1,18 @@
 package ch.katzenhausfreunde.catherd;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.prefs.Preferences;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import ch.katzenhausfreunde.catherd.model.Cat;
 import ch.katzenhausfreunde.catherd.model.CatGroup;
+import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
+import ch.katzenhausfreunde.catherd.util.CatHerdDiskStorage;
 import ch.katzenhausfreunde.catherd.view.RootController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -18,19 +26,18 @@ public class CatHerdMain extends Application {
 	
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	private FosterHome fosterHome;
-	private ObservableList<CatGroup> groups = FXCollections.observableArrayList();
+	private CatHerdStore store;
 	
 	public CatHerdMain() {
 		System.out.println("Hi meow.");
 		
-		this.fosterHome = new FosterHome();
-		this.groups.add(new CatGroup("1"));
-		this.groups.get(0).getCats().add(new Cat("Mittens"));
-		this.groups.get(0).getCats().add(new Cat("Spot"));
-		this.groups.add(new CatGroup("2"));
-		this.groups.get(1).getCats().add(new Cat("Fluffy"));
-		this.groups.add(new CatGroup("3"));
+		CatHerdStore loadedStore = CatHerdDiskStorage.loadFromFile(new File("E:\\blason.xml"));
+		if(loadedStore != null) {
+			this.store = loadedStore;
+		} else {
+			this.store = new CatHerdStore();
+		}
+		CatHerdDiskStorage.saveToFile(new File("E:\\blason.xml"), store);
 	}
 	
 	@Override
@@ -65,33 +72,7 @@ public class CatHerdMain extends Application {
 		}
 	}
 	
-	public FosterHome getFosterHome() {
-		return this.fosterHome;
-	}
-	
-	public ObservableList<CatGroup> getGroups() {
-		return this.groups;
-	}
-	
-	public void addCatGroup(CatGroup group) {
-		groups.add(group);
-	}
-	
-	public void removeCatGroup(CatGroup group) {
-		groups.remove(group);
-	}
-	
-	public void addCatToGroup(Cat cat, CatGroup group) {
-		for(CatGroup g : groups) {
-			if(g.getId() == group.getId()) {
-				g.addCat(cat);
-			}
-		}
-	}
-	
-	public void removeCat(Cat cat) {
-		for(CatGroup g : groups) {
-			g.getCats().remove(cat);
-		}
+	public CatHerdStore getStore() {
+		return store;
 	}
 }
