@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class CatGroup extends Nameable {
+	@XmlElement(name = "cat")
 	private ObservableList<Cat> cats = FXCollections.observableArrayList();
 	
 	public CatGroup() {
@@ -16,7 +17,6 @@ public class CatGroup extends Nameable {
 		super(name);
 	}
 	
-	@XmlElement(name = "cat")
 	public ObservableList<Cat> getCats() {
 		return this.cats;
 	}

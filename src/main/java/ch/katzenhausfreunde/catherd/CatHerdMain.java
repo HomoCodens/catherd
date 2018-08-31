@@ -31,13 +31,14 @@ public class CatHerdMain extends Application {
 	public CatHerdMain() {
 		System.out.println("Hi meow.");
 		
-		CatHerdStore loadedStore = CatHerdDiskStorage.loadFromFile(new File("E:\\blason.xml"));
+		CatHerdStore loadedStore = CatHerdDiskStorage.loadFromFile(new File("E:\\blason.json"));
 		if(loadedStore != null) {
 			this.store = loadedStore;
 		} else {
 			this.store = new CatHerdStore();
+			this.store.populateDummies();
 		}
-		CatHerdDiskStorage.saveToFile(new File("E:\\blason.xml"), store);
+		CatHerdDiskStorage.saveToFile(new File("E:\\blason.json"), store);
 	}
 	
 	@Override

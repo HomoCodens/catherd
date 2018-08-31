@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class FosterHome extends Nameable {
+	@XmlElement(name = "group")
 	private ObservableList<CatGroup> groups = FXCollections.observableArrayList();
 	
 	public FosterHome() {
@@ -14,15 +15,8 @@ public class FosterHome extends Nameable {
 	
 	public FosterHome(String name) {
 		super(name);
-		this.groups.add(new CatGroup("1"));
-		this.groups.get(0).getCats().add(new Cat("Mittens"));
-		this.groups.get(0).getCats().add(new Cat("Spot"));
-		this.groups.add(new CatGroup("2"));
-		this.groups.get(1).getCats().add(new Cat("Fluffy"));
-		this.groups.add(new CatGroup("3"));
 	}
 
-	@XmlElement(name = "group")
 	public ObservableList<CatGroup> getGroups() {
 		return this.groups;
 	}
@@ -47,5 +41,14 @@ public class FosterHome extends Nameable {
 		for(CatGroup g : groups) {
 			g.removeCat(cat);
 		}
+	}
+	
+	public void populateDummies() {
+		this.groups.add(new CatGroup("1"));
+		this.groups.get(0).getCats().add(new Cat("Mittens"));
+		this.groups.get(0).getCats().add(new Cat("Spot"));
+		this.groups.add(new CatGroup("2"));
+		this.groups.get(1).getCats().add(new Cat("Fluffy"));
+		this.groups.add(new CatGroup("3"));
 	}
 }

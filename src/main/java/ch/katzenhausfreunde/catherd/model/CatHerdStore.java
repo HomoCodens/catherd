@@ -8,13 +8,12 @@ import javafx.collections.ObservableList;
 
 @XmlRootElement(name = "catherd")
 public class CatHerdStore {
+	@XmlElement(name = "fosterhome")
 	private ObservableList<FosterHome> fosterHomes = FXCollections.observableArrayList();
 	
 	public CatHerdStore() {
-		this.fosterHomes.add(new FosterHome());
 	}
 	
-	@XmlElement(name = "fosterhome")
 	public ObservableList<FosterHome> getFosterHomes() {
 		return this.fosterHomes;
 	}
@@ -33,5 +32,12 @@ public class CatHerdStore {
 				h.addCatGroup(group);
 			}
 		}
+	}
+	
+	public void populateDummies() {
+		FosterHome home = new FosterHome();
+		home.populateDummies();
+		this.fosterHomes.add(home);
+		
 	}
 }

@@ -7,6 +7,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.eclipse.persistence.jaxb.MarshallerProperties;
+
 import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import javafx.scene.control.Alert;
@@ -37,6 +39,8 @@ public class CatHerdDiskStorage {
 		try {
 			JAXBContext context = JAXBContext.newInstance(CatHerdStore.class);
 			Unmarshaller um = context.createUnmarshaller();
+			um.setProperty(MarshallerProperties.MEDIA_TYPE, "application/json");
+			um.setProperty(MarshallerProperties.JSON_INCLUDE_ROOT, true);
 			
 			store = (CatHerdStore)um.unmarshal(file);
 		} catch (Exception e) {
@@ -55,6 +59,8 @@ public class CatHerdDiskStorage {
 			JAXBContext context = JAXBContext.newInstance(CatHerdStore.class);
 			Marshaller m = context.createMarshaller();
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			m.setProperty(MarshallerProperties.MEDIA_TYPE, "application/json");
+			m.setProperty(MarshallerProperties.JSON_INCLUDE_ROOT, true);
 			
 			
 			m.marshal(store,  file);
