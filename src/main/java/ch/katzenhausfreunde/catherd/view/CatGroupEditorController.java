@@ -18,7 +18,10 @@ public class CatGroupEditorController {
 	}
 	
 	public void setCatGroup(CatGroup group) {
+		// Set inital text
 		catGroupName.setText(group.getName());
+
+		// Bind group's name to the field
 		group.nameProperty().bind(catGroupName.textProperty());
 	}
 }

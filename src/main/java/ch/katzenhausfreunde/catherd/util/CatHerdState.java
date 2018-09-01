@@ -4,9 +4,21 @@ import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
+/**
+ * Static/Singleton class that holds the applications state.
+ * Currently "state" means the data store and a flag indicating whether
+ * data in said store have changed.
+ * 
+ * @author thoenis
+ *
+ */
 public class CatHerdState {
 	private static CatHerdState instance;
 	private static CatHerdStore store;
+	/**
+	 * A BooleanProperty indicating if the data in the store have changed since
+	 * the app was launched. 
+	 */
 	private static BooleanProperty dirty = new SimpleBooleanProperty(false);
 	
 	private CatHerdState() {
@@ -20,6 +32,10 @@ public class CatHerdState {
 		return instance;
 	}
 	
+	/**
+	 * Set the dirty flag to true.
+	 * This function will be bound to the properties of the elements in the store.
+	 */
 	public static void touchStore() {
 		if(!isDirty()) {
 			System.out.println("As of now I am a dirty dirty state");
@@ -43,6 +59,9 @@ public class CatHerdState {
 		return store;
 	}
 	
+	/**
+	 * Makes all elements in the state's store register touchStore as listener on their properties.
+	 */
 	public static void arm() {
 		store.arm();
 	}

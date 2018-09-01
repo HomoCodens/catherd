@@ -8,8 +8,11 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * Ask for confirmation when quitting if data changed
 * Bind saving to UI
   * Enable/Disable save button when state changes
+  * Ask for confirmation when quitting with unsaved changes
 * Bind generation of documents to UI
 * Lots&Lots of fields
   * Custom "person" input
+* Ask for name when creating new item
+* Custom stack trace error dialog instead of just printStackTrace
   
  Thanks to [code.makery.ch](https://code.makery.ch/library/javafx-tutorial/) for getting me up top speed on JavaFX.

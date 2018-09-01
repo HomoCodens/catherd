@@ -18,7 +18,10 @@ public class CatEditorController {
 	}
 	
 	public void setCat(Cat cat) {
+		// Set initial text
 		catName.setText(cat.getName());
+		
+		// Bind Cat's name property to the text in the text field.
 		cat.nameProperty().bind(catName.textProperty());
 	}
 }

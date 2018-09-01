@@ -16,6 +16,12 @@ import ch.katzenhausfreunde.catherd.model.Cat;
 import ch.katzenhausfreunde.catherd.model.CatGroup;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 
+/**
+ * @author thoenis
+ * 
+ * May be subject to change in the future.
+ *
+ */
 public class DocumentRenderer {
 	private List<PDField> fieldsToFlatten = new ArrayList<PDField>();
 	private FosterHome home;
@@ -46,7 +52,6 @@ public class DocumentRenderer {
 		try {
 			PDDocument contract = PDDocument.load(inFile);
 			PDAcroForm form = contract.getDocumentCatalog().getAcroForm();
-			List<PDField> fieldsToFlatten = new ArrayList<PDField>();
 			
 			// Fill in all foster home related info
 			fillField("Textfeld 1", form, home.getName());

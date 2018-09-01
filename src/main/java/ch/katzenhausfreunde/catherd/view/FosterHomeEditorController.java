@@ -18,7 +18,10 @@ public class FosterHomeEditorController {
 	}
 	
 	public void setFosterHome(FosterHome home) {
+		// Set initial Text
 		fosterHomeName.setText(home.getName());
+		
+		// Bind home's name to field
 		home.nameProperty().bind(fosterHomeName.textProperty());
 	}
 }
