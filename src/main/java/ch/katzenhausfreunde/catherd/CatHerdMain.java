@@ -32,7 +32,8 @@ public class CatHerdMain extends Application {
 		this.state = CatHerdState.getInstance();
 		
 		// Attempt loading stored state and use default if not available
-		CatHerdStore loadedStore = CatHerdDiskStorage.loadFromFile(new File("E:\\blason.json"));
+		File inFile = CatHerdDiskStorage.getSavePath();
+		CatHerdStore loadedStore = CatHerdDiskStorage.loadFromFile(inFile);
 		if(loadedStore != null) {
 			CatHerdState.setStore(loadedStore);
 		} else {
@@ -43,13 +44,6 @@ public class CatHerdMain extends Application {
 		
 		// Start listening for changes in the state objects
 		CatHerdState.arm();
-		
-		// Dev sandbox stuff
-		CatHerdDiskStorage.saveToFile(new File("E:\\blason.json"), CatHerdState.getStore());
-		FosterHome home = CatHerdState.getStore().getFosterHomes().get(0);
-		CatGroup group = home.getGroups().get(0);
-		DocumentRenderer renderer = new DocumentRenderer(home, group);
-		renderer.renderAllGroupDocuments(Paths.get("E:\\"));
 	}
 	
 	/* (non-Javadoc)

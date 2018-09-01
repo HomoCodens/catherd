@@ -33,6 +33,9 @@ public class RootController {
 	@FXML
 	private BorderPane rightPane;
 	
+	@FXML
+	private BorderPane rootPane;
+	
 	public RootController() {
 		
 	}
@@ -41,6 +44,7 @@ public class RootController {
 	private void initialize() {
 		showWelcomeScreen();
 		initTree();
+		initMenu();
 	}
 	
 	
@@ -243,6 +247,17 @@ public class RootController {
         
         // Add the tree to the left side of the screen
         leftPane.setCenter(tree);
+	}
+	
+	private void initMenu() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(CatHerdMain.class.getResource("view/MainMenu.fxml"));
+			AnchorPane mainMenu = (AnchorPane) loader.load();
+			rootPane.setTop(mainMenu);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void showWelcomeScreen() {

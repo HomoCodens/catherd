@@ -86,7 +86,8 @@ public class CatHerdDiskStorage {
 	 * @param file File in which to store the data.
 	 * @param store The CatHerdStore to be saved.
 	 */
-	public static void saveToFile(File file, CatHerdStore store) {
+	public static void saveToFile(File file) {
+		CatHerdStore store = CatHerdState.getStore();
 		try {
 			// Create a JSON Marshaller
 			JAXBContext context = JAXBContext.newInstance(CatHerdStore.class);
@@ -97,6 +98,9 @@ public class CatHerdDiskStorage {
 			
 			// Store the data.
 			m.marshal(store,  file);
+			
+			// Store the last used path for future reference
+			setSavePath(file);
 		} catch (Exception e) { // catches ANY exception
 	        Alert alert = new Alert(AlertType.ERROR);
 	        alert.setTitle("Error");

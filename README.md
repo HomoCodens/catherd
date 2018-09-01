@@ -14,5 +14,10 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
   * Custom "person" input
 * Ask for name when creating new item
 * Custom stack trace error dialog instead of just printStackTrace
-  
+* Factor menu into its own FXML/Controller if it gets too complex  
+* Tests?
+  * I think we'll manage without
+* Special characters in stored data
+* IDs keep changing on load
+ 
  Thanks to [code.makery.ch](https://code.makery.ch/library/javafx-tutorial/) for getting me up top speed on JavaFX.
