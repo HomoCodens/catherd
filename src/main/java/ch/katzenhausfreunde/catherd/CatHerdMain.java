@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  */
 public class CatHerdMain extends Application {
 	private Stage primaryStage;
-	private BorderPane rootLayout;
+	private RootController rootController;
 	private CatHerdState state;
 	
 	public CatHerdMain() {
@@ -71,7 +71,10 @@ public class CatHerdMain extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(CatHerdMain.class.getResource("view/Root.fxml"));
-			rootLayout = (BorderPane) loader.load();
+			BorderPane rootLayout = (BorderPane) loader.load();
+			rootController = loader.getController();
+			rootController.setMain(this);
+			rootController.initTree();
 			
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
@@ -80,5 +83,9 @@ public class CatHerdMain extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void storeLoaded() {
+		rootController.initTree();
 	}
 }

@@ -10,6 +10,7 @@ import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.model.Nameable;
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -36,22 +37,25 @@ public class RootController {
 	@FXML
 	private BorderPane rootPane;
 	
+	private CatHerdMain main;
+	
 	public RootController() {
 		
 	}
 	
 	@FXML
 	private void initialize() {
-		showWelcomeScreen();
-		initTree();
-		initMenu();
 	}
 	
+	public void setMain(CatHerdMain main) {
+		this.main = main;
+		initMenu();
+	}
 	
 	/**
 	 * Initialize the TreeView on the left used to display groups/cats
 	 */
-	public void initTree() {
+	public void initTree() {		
 		CatHerdStore store = CatHerdState.getStore();
 		
 		// Initialize an invisible root item
@@ -247,6 +251,9 @@ public class RootController {
         
         // Add the tree to the left side of the screen
         leftPane.setCenter(tree);
+        
+        // Show welcome screen when tree is redrawn because nothing will be selected
+        showWelcomeScreen();
 	}
 	
 	private void initMenu() {
@@ -254,6 +261,10 @@ public class RootController {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(CatHerdMain.class.getResource("view/MainMenu.fxml"));
 			AnchorPane mainMenu = (AnchorPane) loader.load();
+			
+			MainMenuController menuController = loader.getController();
+			menuController.setMain(main);
+			
 			rootPane.setTop(mainMenu);
 		} catch (IOException e) {
 			e.printStackTrace();

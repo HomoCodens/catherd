@@ -57,6 +57,7 @@ public class CatHerdState {
 	
 	public static void setStore(CatHerdStore s) {
 		store = s;
+		cleanStore();
 	}
 	
 	public static CatHerdStore getStore() {

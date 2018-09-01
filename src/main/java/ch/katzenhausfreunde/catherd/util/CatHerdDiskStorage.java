@@ -68,6 +68,9 @@ public class CatHerdDiskStorage {
 			
 			// Load the data
 			store = (CatHerdStore)um.unmarshal(file);
+			
+			// Remember the path used
+			setSavePath(file);
 		} catch (Exception e) {
 			// If loading failed, show an alert and then return null so the app will use an empty store.
 	        Alert alert = new Alert(AlertType.ERROR);
