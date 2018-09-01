@@ -4,8 +4,11 @@ http://www.katzenhaus-freunde.ch
 Half curiosity to learn JavaFX, half pro bono work. Half fun.
 
 # TODO:
-* Formalize store
-* Write PDF generator classes
+* Document the living daylight out of everything (it's high time)
+* Ask for confirmation when quitting if data changed
+* Bind saving to UI
+  * Enable/Disable save button when state changes
+* Bind generation of documents to UI
 * Lots&Lots of fields
   * Custom "person" input
   
