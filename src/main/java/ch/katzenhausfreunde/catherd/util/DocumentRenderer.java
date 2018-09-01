@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,26 +25,14 @@ import ch.katzenhausfreunde.catherd.model.FosterHome;
  */
 public class DocumentRenderer {
 	private List<PDField> fieldsToFlatten = new ArrayList<PDField>();
-	private FosterHome home;
-	private CatGroup group;
-	private Cat cat;
 	
-	public DocumentRenderer(FosterHome home, CatGroup group) {
-		this.home = home;
-		this.group = group;
-	}
-	
-	public DocumentRenderer(FosterHome home, CatGroup group, Cat cat) {
-		this(home, group);
-		this.cat = cat;
-	}
-	
-	public void renderDocuments(Path destination) {
-		renderDocuments(cat, destination);
-	}
-	
-	public void renderDocuments(Cat cat, Path destination) {
-		File outFile = destination.resolve(cat.getName().toLowerCase().replace(" ", "_") + "_vertrag.pdf").toFile();
+	public boolean renderDocuments(Cat cat, File destination) {
+		Path dest = Paths.get(destination.getAbsolutePath());
+		
+		FosterHome home = CatHerdState.getCatsHome(cat);
+		CatGroup group = CatHerdState.getCatsGroup(cat);
+		
+		File outFile = dest.resolve(cat.getName().toLowerCase().replace(" ", "_") + "_vertrag.pdf").toFile();
 				
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		URL resource = loader.getResource("resources/pdf/contract.pdf");
@@ -70,13 +59,15 @@ public class DocumentRenderer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return true;
 	}
 	
-	public void renderAllGroupDocuments(Path destination) {
+	public boolean renderDocuments(CatGroup group, File destination) {
 		for(Cat c : group.getCats()) {
 			renderDocuments(c, destination);
 			fieldsToFlatten.clear();
 		}
+		return true;
 	}
 	
 	private void fillField(String fieldName, PDAcroForm form, String value) throws IOException {

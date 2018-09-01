@@ -1,5 +1,6 @@
 package ch.katzenhausfreunde.catherd.view;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.model.Nameable;
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
+import ch.katzenhausfreunde.catherd.util.DocumentRenderer;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,6 +27,8 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
 public class RootController {	
@@ -85,10 +89,14 @@ public class RootController {
         	 * Confirmation dialog used when deleting items
         	 */
         	Alert confirmation = new Alert(AlertType.CONFIRMATION);
+        	Alert notification = new Alert(AlertType.INFORMATION);
         	
             public CatCell() {
             	confirmation.setHeaderText(null);
             	confirmation.setTitle("Bestätigen");
+            	
+            	notification.setHeaderText(null);
+            	notification.setTitle("Erfolg");
             }
      
             /* (non-Javadoc)
@@ -106,6 +114,7 @@ public class RootController {
             		ContextMenu menu = new ContextMenu();
             		MenuItem addMenuItem = new MenuItem();
             		MenuItem removeMenuItem = new MenuItem();
+            		MenuItem renderMenuItem = new MenuItem();
             		
             		// Number of items for generating numbered default names
             		int n_items = getTreeItem().getChildren().size();
@@ -181,9 +190,30 @@ public class RootController {
                 			}
                 		});
                 		
+                		// Set the "render documents" item
+                		renderMenuItem.setText("Dokumente für Gruppe erstellen");
+                		renderMenuItem.setOnAction((ActionEvent e) -> {
+                			DirectoryChooser dirChooser = new DirectoryChooser();
+                			File outDir = dirChooser.showDialog(main.getPrimaryStage());
+                			
+                			
+                			CatGroup group = (CatGroup)item;
+                			DocumentRenderer renderer = new DocumentRenderer();
+                			boolean success = renderer.renderDocuments(group, outDir);
+                			if(success) {
+	                			notification.setContentText("Verträge für " + group.getName() + " erfolgreich erstellt.");
+	                			notification.show();
+                			}
+                		});
+                		
                 		// Register menu items
                 		menu.getItems().add(addMenuItem);
                 		menu.getItems().add(removeMenuItem);
+                		
+                		CatGroup group = (CatGroup)item;
+                		if(group.getCats().size() > 0) {
+                			menu.getItems().add(renderMenuItem);
+                		}
                 		
                 	// Add remove Cat MenuItem if item is a Cat
                 	} else if(item instanceof Cat) {
@@ -208,8 +238,24 @@ public class RootController {
                 			}
                 		});
                 		
-                		// Register the remove option
+                		renderMenuItem.setText("Dokumente für Katze erstellen");
+                		renderMenuItem.setOnAction((ActionEvent e) -> {
+                			DirectoryChooser dirChooser = new DirectoryChooser();
+                			File outDir = dirChooser.showDialog(main.getPrimaryStage());
+                			
+                			
+                			Cat cat = (Cat)item;
+                			DocumentRenderer renderer = new DocumentRenderer();
+                			boolean success = renderer.renderDocuments(cat, outDir);
+                			if(success) {
+	                			notification.setContentText("Vertrag für " + cat.getName() + " erfolgreich erstellt.");
+	                			notification.show();
+                			}
+                		});
+                		
+                		// Register the menu items
                 		menu.getItems().add(removeMenuItem);
+                		menu.getItems().add(renderMenuItem);
                 	}
             		
             		// Register the context menu

@@ -34,6 +34,8 @@ public class CatHerdStore {
 		}
 	}
 	
+	
+	
 	public void arm() {
 		fosterHomes.forEach((fh) -> fh.arm());
 	}
