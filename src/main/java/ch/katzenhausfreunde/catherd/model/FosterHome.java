@@ -79,6 +79,11 @@ public class FosterHome extends Nameable {
 		}
 	}
 	
+	public void arm() {
+		super.arm();
+		groups.forEach((gr) -> gr.arm());
+	}
+	
 	/**
 	 * Add some dummy testingdata to the home. For development purposes only.
 	 */

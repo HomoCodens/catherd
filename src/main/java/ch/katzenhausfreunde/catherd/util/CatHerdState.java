@@ -43,6 +43,10 @@ public class CatHerdState {
 		dirty.set(true);
 	}
 	
+	public static void cleanStore() {
+		dirty.set(false);
+	}
+	
 	public static boolean isDirty() {
 		return dirty.get();
 	}

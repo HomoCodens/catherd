@@ -18,4 +18,8 @@ public class Cat extends Nameable {
 	public Cat(String name) {
 		super(name);
 	}
+	
+	public void arm() {
+		super.arm();
+	}
 }

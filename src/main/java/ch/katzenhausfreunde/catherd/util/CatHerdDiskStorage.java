@@ -100,6 +100,7 @@ public class CatHerdDiskStorage {
 			m.marshal(store,  file);
 			
 			// Store the last used path for future reference
+			CatHerdState.cleanStore();
 			setSavePath(file);
 		} catch (Exception e) { // catches ANY exception
 	        Alert alert = new Alert(AlertType.ERROR);

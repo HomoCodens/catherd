@@ -32,4 +32,9 @@ public class CatGroup extends Nameable {
 	public void removeCat(Cat cat) {
 		cats.remove(cat);
 	}
+	
+	public void arm() {
+		super.arm();
+		cats.forEach((ct) -> ct.arm());
+	}
 }
