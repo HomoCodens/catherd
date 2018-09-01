@@ -9,6 +9,7 @@ import ch.katzenhausfreunde.catherd.model.CatGroup;
 import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.model.Nameable;
+import ch.katzenhausfreunde.catherd.util.CatHerdState;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -47,7 +48,7 @@ public class RootController {
 	
 	public void setMain(CatHerdMain main) {
 		this.main = main;
-		this.store = main.getStore();
+		this.store = CatHerdState.getStore();
 		
 		TreeItem<Nameable> rootItem = new TreeItem<Nameable>(new Nameable("root"));
 		

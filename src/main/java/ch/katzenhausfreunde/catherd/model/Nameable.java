@@ -4,11 +4,15 @@ import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import ch.katzenhausfreunde.catherd.util.CatHerdState;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Nameable {
 	private StringProperty name;
+	private CatHerdStore store;
+	
+	@XmlElement(name = "id")
 	private UUID id;
 	
 	public Nameable() {
@@ -23,7 +27,7 @@ public class Nameable {
 	public String toString() {
 		return getName();
 	}
-	
+
 	public UUID getId() {
 		return id;
 	}
@@ -39,5 +43,10 @@ public class Nameable {
 	
 	public void setName(String name) {
 		this.name.set(name);
+	}
+	
+	public void arm() {
+		System.out.println(getName() + " locked'n'loaded");
+		this.name.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 	}
 }

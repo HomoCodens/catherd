@@ -17,6 +17,7 @@ import ch.katzenhausfreunde.catherd.model.CatGroup;
 import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.util.CatHerdDiskStorage;
+import ch.katzenhausfreunde.catherd.util.CatHerdState;
 import ch.katzenhausfreunde.catherd.util.DocumentRenderer;
 import ch.katzenhausfreunde.catherd.view.RootController;
 import javafx.application.Application;
@@ -31,20 +32,24 @@ public class CatHerdMain extends Application {
 	
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	private CatHerdStore store;
+	private CatHerdState state;
 	
 	public CatHerdMain() {
 		System.out.println("Hi meow.");
 		
+		this.state = CatHerdState.getInstance();
+		
 		CatHerdStore loadedStore = CatHerdDiskStorage.loadFromFile(new File("E:\\blason.json"));
 		if(loadedStore != null) {
-			this.store = loadedStore;
+			CatHerdState.setStore(loadedStore);
 		} else {
-			this.store = new CatHerdStore();
-			this.store.populateDummies();
+			CatHerdStore store = new CatHerdStore();
+			store.populateDummies();
+			CatHerdState.setStore(store);
 		}
-		CatHerdDiskStorage.saveToFile(new File("E:\\blason.json"), store);
-		FosterHome home = store.getFosterHomes().get(0);
+		CatHerdState.arm();
+		CatHerdDiskStorage.saveToFile(new File("E:\\blason.json"), CatHerdState.getStore());
+		FosterHome home = CatHerdState.getStore().getFosterHomes().get(0);
 		CatGroup group = home.getGroups().get(0);
 
 		DocumentRenderer renderer = new DocumentRenderer(home, group);
@@ -82,9 +87,5 @@ public class CatHerdMain extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public CatHerdStore getStore() {
-		return store;
 	}
 }
