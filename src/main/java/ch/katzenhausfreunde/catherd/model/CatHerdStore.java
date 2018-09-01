@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 
 @XmlRootElement(name = "catherd")
 public class CatHerdStore {
-	@XmlElement(name = "fosterhome")
+	@XmlElement(name = "fosterhomes")
 	private ObservableList<FosterHome> fosterHomes = FXCollections.observableArrayList();
 	
 	public CatHerdStore() {

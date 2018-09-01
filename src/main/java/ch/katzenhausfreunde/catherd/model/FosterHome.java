@@ -12,7 +12,7 @@ public class FosterHome extends Nameable {
 	/**
 	 * A list of CatGroup object belonging to this home.
 	 */
-	@XmlElement(name = "group")
+	@XmlElement(name = "groups")
 	private ObservableList<CatGroup> groups = FXCollections.observableArrayList();
 	
 	/**
