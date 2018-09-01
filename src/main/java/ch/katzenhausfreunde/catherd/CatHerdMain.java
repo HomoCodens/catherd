@@ -88,4 +88,8 @@ public class CatHerdMain extends Application {
 	public void storeLoaded() {
 		rootController.initTree();
 	}
+	
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
 }

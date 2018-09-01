@@ -20,7 +20,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * Special characters in stored data
 * IDs keep changing on load
 * icons galore
-* Modality and parent for fileChoosers and dialogs
 * static state holder feels wonky, maybe move state (and dirty flag) back into main
  
  Thanks to [code.makery.ch](https://code.makery.ch/library/javafx-tutorial/) for getting me up top speed on JavaFX.
