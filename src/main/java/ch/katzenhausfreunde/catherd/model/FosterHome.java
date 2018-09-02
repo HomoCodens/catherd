@@ -9,14 +9,14 @@ import javafx.collections.ObservableList;
  *
  */
 public class FosterHome extends Nameable {
+	@XmlElement(name = "fosterParent")
+	private Person fosterParent = new Person();
+	
 	/**
 	 * A list of CatGroup object belonging to this home.
 	 */
 	@XmlElement(name = "groups")
 	private ObservableList<CatGroup> groups = FXCollections.observableArrayList();
-	
-	@XmlElement(name = "fosterParent")
-	private Person fosterParent = new Person();
 	
 	/**
 	 * Generate a FosterHome with the default name "Meine Pflegestelle"
