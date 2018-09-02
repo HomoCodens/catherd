@@ -1,12 +1,25 @@
 package ch.katzenhausfreunde.catherd.view;
 
+import java.io.IOException;
+
+import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
+import ch.katzenhausfreunde.catherd.view.customcontrols.PersonController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
 
 public class FosterHomeEditorController {
 	@FXML
 	private TextField fosterHomeName;
+	
+	@FXML
+	private Accordion accordion;
+	
+	private PersonController personController;
 	
 	public FosterHomeEditorController() {
 		
@@ -14,7 +27,21 @@ public class FosterHomeEditorController {
 	
 	@FXML
 	private void initialize() {
-		
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(CatHerdMain.class.getResource("view/customcontrols/Person.fxml"));
+			AnchorPane catEditor = (AnchorPane) loader.load();
+			
+			personController = loader.getController();
+			
+			TitledPane personPortion = new TitledPane("Pflegeperson", catEditor);
+			personPortion.prefWidthProperty().bind(accordion.widthProperty());
+			
+			accordion.getPanes().clear();
+			accordion.getPanes().add(personPortion);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void setFosterHome(FosterHome home) {
@@ -23,5 +50,7 @@ public class FosterHomeEditorController {
 		
 		// Bind home's name to field
 		home.nameProperty().bind(fosterHomeName.textProperty());
+		
+		personController.setPerson(home.getFosterParent());
 	}
 }

@@ -15,18 +15,22 @@ public class FosterHome extends Nameable {
 	@XmlElement(name = "groups")
 	private ObservableList<CatGroup> groups = FXCollections.observableArrayList();
 	
+	@XmlElement(name = "fosterParent")
+	private Person fosterParent = new Person();
+	
 	/**
 	 * Generate a FosterHome with the default name "Meine Pflegestelle"
 	 */
 	public FosterHome() {
-		this("Meine Pflegestelle");
+		this("Meine Pflegestelle", new Person());
 	}
 	
 	/**
 	 * @param name Generate a FosterHome with the given properties.
 	 */
-	public FosterHome(String name) {
+	public FosterHome(String name, Person fosterParent) {
 		super(name);
+		this.fosterParent = fosterParent;
 	}
 
 	/**
@@ -34,6 +38,10 @@ public class FosterHome extends Nameable {
 	 */
 	public ObservableList<CatGroup> getGroups() {
 		return this.groups;
+	}
+	
+	public Person getFosterParent() {
+		return fosterParent;
 	}
 	
 	/**
@@ -82,6 +90,7 @@ public class FosterHome extends Nameable {
 	public void arm() {
 		super.arm();
 		groups.forEach((gr) -> gr.arm());
+		fosterParent.arm();
 	}
 	
 	/**
