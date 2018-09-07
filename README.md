@@ -35,6 +35,9 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * menu separators?
 * use custom file extension to avoid confusion? Sounds a bit eevil though.
 * MoneyField exceptions on null value
+* doublecheck fvr vs frv
+* limit amount of text/lines in textareas
+* Aks them to properly label the PDF form fields
  
  
 ## Custom controls
