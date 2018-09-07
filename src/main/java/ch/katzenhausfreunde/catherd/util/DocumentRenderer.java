@@ -85,7 +85,7 @@ public class DocumentRenderer {
 			fillField("Textfeld 17", form, cat.getName());
 			fillField("Textfeld 171", form, cat.getDateOfBirth());
 			fillField("Textfeld 173", form, cat.getColor());
-			// Sex goes here
+			fillField("Geschlecht", form, cat.getSex() != "weiblich" ? "Auswahl1" : "Auswahl2");
 			fillField("Textfeld 172", form, cat.getCastratedDate());
 			fillField("Textfeld 18", form, cat.getBreed());
 			fillField("Stammbaum", form, cat.getLineage() ? "Auswahl1" : "Auswahl2");
