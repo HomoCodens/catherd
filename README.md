@@ -38,6 +38,9 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * doublecheck fvr vs frv
 * limit amount of text/lines in textareas
 * Aks them to properly label the PDF form fields
+* indicate currently open file in title
+* width of stuff
+* chipImplantedDate is not read in??
  
  
 ## Custom controls

@@ -16,7 +16,6 @@ public class MoneyField extends TextField {
 	
 	public MoneyField() {
 		super();
-		System.out.println("Yay, money!");
 		
 		this.amount = new SimpleFloatProperty();
 		
