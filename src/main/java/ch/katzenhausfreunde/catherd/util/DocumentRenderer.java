@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.apache.pdfbox.pdmodel.fdf.FDFDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
@@ -92,7 +93,7 @@ public class DocumentRenderer {
 			fillField("Freilauf", form, cat.getRunFree() ? "Auswahl1" : "Auswahl2");
 			fillField("Einzelkatze", form, cat.getContact() ? "Auswahl2" : "Auswahl1");
 			fillField("Textfeld 21", form, cat.getChipNo());
-			fillField("Textfeld 22", form, cat.getChipImplentedDate());
+			fillField("Textfeld 22", form, cat.getChipImplantedDate());
 			fillField("1. SS", form, cat.getFVRVaccination1Date() != null ? "Auswahl1" : "Off");
 			fillField("Textfeld 24", form, cat.getFVRVaccination1Date());
 			fillField("2. SS", form, cat.getFVRVaccination2Date() != null ? "Auswahl1" : "Off");
@@ -120,9 +121,6 @@ public class DocumentRenderer {
 			fillField("Chipspende", form, cat.getChipDonation() ? "Auswahl1" : "Off");
 			fillField("Textfeld 43", form, cat.getDonation());
 			fillField("Kastration", form, cat.getCastratedDate() != null ? "Auswahl1" : "Off");
-			if(cat.getCastratedDate() != null) {
-				// render castration doc
-			}
 			fillField("Textfeld 44", form, cat.getNotes());
 			fillField("Textfeld 42", form, cat.getSoldDate());
 			// Whee weeny oneliners
@@ -130,6 +128,11 @@ public class DocumentRenderer {
 			
 			
 			//form.flatten(fieldsToFlatten, true);
+			
+			if(cat.getCastratedDate() == null) {
+				PDPage castrationPage = renderCastration(cat, destination);
+				contract.addPage(castrationPage);
+			}
 			
 			contract.save(outFile);
 			contract.close();
@@ -141,6 +144,41 @@ public class DocumentRenderer {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public PDPage renderCastration(Cat cat, File destination) throws InvalidPasswordException, IOException {
+		fieldsToFlatten.clear();
+		
+		FosterHome home = CatHerdState.getCatsHome(cat);
+				
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		URL resource = loader.getResource("pdf/castration.pdf");
+		File inFile = new File(resource.getFile());
+		
+		PDDocument castration = PDDocument.load(inFile);
+		PDAcroForm form = castration.getDocumentCatalog().getAcroForm();
+
+		fillField("Textfeld 195", form, cat.getDateOfBirth().plusMonths(7));
+		
+		Person buyer = cat.getBuyer();
+		fillField("Textfeld 176", form, buyer.getLastName() + " " + buyer.getFirstName());
+		fillField("Textfeld 178", form, buyer.getStreet());
+		fillField("Textfeld 179", form, buyer.getPostalAndTown());
+		
+		fillField("Textfeld 180", form, cat.getNewName());
+		fillField("Textfeld 181", form, cat.getName());
+		fillField("Textfeld 182", form, cat.getDateOfBirth());
+		fillField("Webseite", form, cat.getSex() != "weiblich" ? "Auswahl1" : "Auswahl2"); // Website???
+		fillField("Textfeld 183", form, cat.getChipNo());
+		// Just to flatten it
+		fillField("Textfeld 209", form, "");
+		fillField("Textfeld 196", form, home.getName());
+		Person fosterParent = home.getFosterParent();
+		fillField("Textfeld 197", form, (fosterParent.getPostalAndTown() != null ? fosterParent.getPostalAndTown() : "").replaceAll("[0-9,. ]", "") + formatDate(cat.getSoldDate()));
+		
+		form.flatten(fieldsToFlatten, true);
+		
+		return castration.getPage(0);
 	}
 	
 	private void fillField(String fieldName, PDAcroForm form, String value) throws IOException {
