@@ -1,6 +1,7 @@
 package ch.katzenhausfreunde.catherd.model;
 
 import javax.xml.bind.annotation.XmlElement;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

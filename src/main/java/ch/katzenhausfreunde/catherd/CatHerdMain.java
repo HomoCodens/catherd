@@ -2,14 +2,10 @@ package ch.katzenhausfreunde.catherd;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 
-import ch.katzenhausfreunde.catherd.model.CatGroup;
 import ch.katzenhausfreunde.catherd.model.CatHerdStore;
-import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.util.CatHerdDiskStorage;
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
-import ch.katzenhausfreunde.catherd.util.DocumentRenderer;
 import ch.katzenhausfreunde.catherd.view.RootController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

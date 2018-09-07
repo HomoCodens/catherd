@@ -1,24 +1,17 @@
 package ch.katzenhausfreunde.catherd.view;
 
 import java.io.IOException;
-import java.util.concurrent.Callable;
 
 import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.Cat;
-import ch.katzenhausfreunde.catherd.model.Person;
 import ch.katzenhausfreunde.catherd.view.customcontrols.MoneyField;
 import ch.katzenhausfreunde.catherd.view.customcontrols.PersonController;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;

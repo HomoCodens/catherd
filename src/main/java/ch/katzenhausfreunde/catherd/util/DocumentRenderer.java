@@ -13,7 +13,6 @@ import java.util.List;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
-import org.apache.pdfbox.pdmodel.fdf.FDFDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
@@ -45,6 +44,8 @@ public class DocumentRenderer {
 	}
 	
 	public boolean renderContract(Cat cat, File destination) {
+		fieldsToFlatten.clear();
+		
 		Path dest = Paths.get(destination.getAbsolutePath());
 		
 		FosterHome home = CatHerdState.getCatsHome(cat);
@@ -127,7 +128,7 @@ public class DocumentRenderer {
 			fillField("Textfeld 45", form, (fosterParent.getPostalAndTown() != null ? fosterParent.getPostalAndTown() : "").replaceAll("[0-9,. ]", "") + formatDate(cat.getSoldDate()));
 			
 			
-			//form.flatten(fieldsToFlatten, true);
+			form.flatten(fieldsToFlatten, true);
 			
 			if(cat.getCastratedDate() == null) {
 				PDPage castrationPage = renderCastration(cat, destination);

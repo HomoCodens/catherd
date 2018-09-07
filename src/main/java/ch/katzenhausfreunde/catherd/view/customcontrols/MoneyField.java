@@ -5,12 +5,10 @@ import java.util.Locale;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.FloatProperty;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextField;
-import javafx.util.StringConverter;
 
 public class MoneyField extends TextField {
 	private FloatProperty amount;
