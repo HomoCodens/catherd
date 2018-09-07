@@ -47,6 +47,7 @@ public class CatHerdState {
 	}
 	
 	public static void cleanStore() {
+		System.out.println("JK, squeaky clean (again)");
 		dirty.set(false);
 	}
 	

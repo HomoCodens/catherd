@@ -33,6 +33,12 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * Small overview in editors?
 * use context menu items in main menu
 * menu separators?
+* use custom file extension to avoid confusion? Sounds a bit eevil though.
+* MoneyField exceptions on null value
  
+ 
+## Custom controls
+
+If you are working with SceneBuilder, add the controls in the customcontrols package to it before beginning.
  
  Thanks to [code.makery.ch](https://code.makery.ch/library/javafx-tutorial/) for getting me up top speed on JavaFX.
