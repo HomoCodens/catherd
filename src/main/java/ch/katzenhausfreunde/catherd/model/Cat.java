@@ -49,6 +49,7 @@ public class Cat extends Nameable {
 	private ObjectProperty<LocalDate> vermifuge1Date; // Vermifuge... what a word!
 	private ObjectProperty<LocalDate> vermifuge2Date;
 	private StringProperty illnesses;
+	private Person buyer;
 	private StringProperty characterTraits;
 	private FloatProperty charge;
 	private FloatProperty downPayment;
@@ -97,6 +98,7 @@ public class Cat extends Nameable {
 		vermifuge1Date = new SimpleObjectProperty<LocalDate>(null); // Vermifuge... what a word!
 		vermifuge2Date = new SimpleObjectProperty<LocalDate>(null);
 		illnesses = new SimpleStringProperty(null);
+		buyer = new Person();
 		characterTraits = new SimpleStringProperty(null);
 		charge = new SimpleFloatProperty();
 		downPayment = new SimpleFloatProperty();
@@ -136,6 +138,7 @@ public class Cat extends Nameable {
 		vermifuge1Date.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore()); // Vermifuge... what a word!
 		vermifuge2Date.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		illnesses.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
+		buyer.arm();
 		characterTraits.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		charge.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		downPayment.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
@@ -460,6 +463,14 @@ public class Cat extends Nameable {
 		return illnesses;
 	}
 
+	public final Person getBuyer() {
+		return buyer;
+	}
+	
+	public final void setBuyer(Person buyer) {
+		this.buyer = buyer;
+	}
+	
 	public final String getCharacterTraits() {
 		return characterTraits.get();
 	}

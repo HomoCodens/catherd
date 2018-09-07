@@ -1,9 +1,13 @@
 package ch.katzenhausfreunde.catherd.view;
 
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
+import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.Cat;
+import ch.katzenhausfreunde.catherd.model.Person;
 import ch.katzenhausfreunde.catherd.view.customcontrols.MoneyField;
+import ch.katzenhausfreunde.catherd.view.customcontrols.PersonController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.BooleanProperty;
@@ -13,11 +17,15 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
 
 public class CatEditorController {
 	@FXML
@@ -96,6 +104,10 @@ public class CatEditorController {
 	private TextArea illnesses;
 	
 	@FXML
+	AnchorPane buyerPane;
+	private PersonController buyer;
+	
+	@FXML
 	private TextArea characterTraits;
 	
 	@FXML
@@ -147,6 +159,23 @@ public class CatEditorController {
 		};
 			
 		chipNo.textProperty().addListener(textFieldNumberifyer);
+		
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(CatHerdMain.class.getResource("view/customcontrols/Person.fxml"));
+			AnchorPane buyerEditor = (AnchorPane) loader.load();
+			
+			buyer = loader.getController();
+			
+			TitledPane buyerPaneContent = new TitledPane("Käufer", buyerEditor);
+			buyerPaneContent.setExpanded(false);
+			buyerPaneContent.setAnimated(false);
+			//personPortion.prefWidthProperty().bind(accordion.widthProperty());
+
+			buyerPane.getChildren().add(buyerPaneContent);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void setCat(Cat cat) {
@@ -231,6 +260,8 @@ public class CatEditorController {
 		
 		this.illnesses.setText(cat.getIllnesses());
 		cat.illnessesProperty().bind(this.illnesses.textProperty());
+		
+		this.buyer.setPerson(cat.getBuyer());
 		
 		this.characterTraits.setText(cat.getCharacterTraits());
 		cat.characterTraitsProperty().bind(this.characterTraits.textProperty());

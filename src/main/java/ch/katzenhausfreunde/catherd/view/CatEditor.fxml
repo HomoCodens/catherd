@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import ch.katzenhausfreunde.catherd.view.customcontrols.MoneyField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -8,7 +9,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import ch.katzenhausfreunde.catherd.view.customcontrols.MoneyField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -222,15 +222,7 @@
                       </TitledPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane>
-                     <children>
-                      <TitledPane animated="false" expanded="false" text="Käufer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                        </content>
-                      </TitledPane>
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane fx:id="buyerPane" />
                   <AnchorPane>
                      <children>
                         <TitledPane animated="false" expanded="false" text="Finanzen" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
