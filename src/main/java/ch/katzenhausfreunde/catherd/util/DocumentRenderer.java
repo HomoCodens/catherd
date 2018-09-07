@@ -70,6 +70,16 @@ public class DocumentRenderer {
 			fillField("Textfeld 7", form, fosterParent.getMobile());
 			fillField("Textfeld 8", form, fosterParent.getEMail());
 			
+			// Fill in buyer info
+			Person buyer = cat.getBuyer();
+			fillField("Textfeld 9", form, buyer.getLastName());
+			fillField("Textfeld 10", form, buyer.getFirstName());
+			fillField("Textfeld 11", form, buyer.getStreet());
+			fillField("Textfeld 12", form, buyer.getPostalAndTown());
+			fillField("Textfeld 13", form, buyer.getPhone());
+			fillField("Textfeld 14", form, buyer.getMobile());
+			fillField("Textfeld 15", form, buyer.getEMail());
+			
 			// Fill in all cat related info
 			fillField("Textfeld 16", form, cat.getNewName());
 			fillField("Textfeld 17", form, cat.getName());
