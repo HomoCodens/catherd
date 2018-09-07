@@ -71,6 +71,7 @@ public class RootController {
 		// Build the tree
 		for(FosterHome h : store.getFosterHomes()) {
 			TreeItem<Nameable> fosterHome = new TreeItem<Nameable>(h);
+			fosterHome.setExpanded(true);
 			rootItem.getChildren().add(fosterHome);
         
 	        for(CatGroup g: h.getGroups()) {
