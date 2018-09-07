@@ -174,6 +174,9 @@ public class CatEditorController {
 		this.castratedDate.setValue(cat.getCastratedDate());
 		cat.castratedDateProperty().bind(this.castratedDate.valueProperty());
 		
+		this.breed.setText(cat.getBreed());
+		cat.breedProperty().bind(this.breed.textProperty());
+		
 		this.lineage.setSelected(cat.getLineage());
 		cat.lineageProperty().bind(this.lineage.selectedProperty());
 		
