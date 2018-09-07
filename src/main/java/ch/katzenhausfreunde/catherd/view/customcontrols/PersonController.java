@@ -1,6 +1,8 @@
 package ch.katzenhausfreunde.catherd.view.customcontrols;
 
 import ch.katzenhausfreunde.catherd.model.Person;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -28,6 +30,19 @@ public class PersonController {
 	
 	@FXML 
 	private void initialize() {
+		ChangeListener<String> textFieldPhoneNumberifyer = (observable, oldValue, newValue) -> {
+			if(newValue == null) {
+				return;
+			} else {
+				if(!newValue.matches("^\\+?(?:\\d+ ?)*")) {
+					StringProperty field = (StringProperty)observable;
+					field.set(oldValue);
+				}
+			}
+		};
+			
+		phone.textProperty().addListener(textFieldPhoneNumberifyer);
+		mobile.textProperty().addListener(textFieldPhoneNumberifyer);
 	}
 	
 	public void setPerson(Person person) {
