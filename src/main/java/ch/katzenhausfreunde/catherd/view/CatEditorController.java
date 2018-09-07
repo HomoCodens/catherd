@@ -219,7 +219,7 @@ public class CatEditorController {
 		this.chipNo.setText(cat.getChipNo());
 		cat.chipNoProperty().bind(this.chipNo.textProperty());
 		
-		this.chipImplantedDate.setValue(cat.getChipImplentedDate());
+		this.chipImplantedDate.setValue(cat.getChipImplantedDate());
 		cat.chipImplantedDateProperty().bind(this.chipImplantedDate.valueProperty());
 		
 		this.leucosisVaccination1Date.setValue(cat.getLeucosisVaccination1Date());

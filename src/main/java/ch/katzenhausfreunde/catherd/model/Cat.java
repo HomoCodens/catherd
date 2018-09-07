@@ -277,7 +277,7 @@ public class Cat extends Nameable {
 	
 	@XmlJavaTypeAdapter(LocalDateAdapter.class)
 	@XmlElement(name = "chipImplantedDate")
-	public final LocalDate getChipImplentedDate() {
+	public final LocalDate getChipImplantedDate() {
 		return chipImplantedDate.get();
 	}
 
