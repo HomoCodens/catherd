@@ -90,8 +90,9 @@ public class DocumentRenderer {
 		Path dest = Paths.get(destination.getAbsolutePath());
 		
 		FosterHome home = CatHerdState.getCatsHome(cat);
+		CatGroup group = CatHerdState.getCatsGroup(cat);
 		
-		File outFile = dest.resolve(cat.getName().toLowerCase().replace(" ", "_") + "_vertrag.pdf").toFile();
+		File outFile = dest.resolve(fileNameSafeString(group.getName()) + "_" + fileNameSafeString(cat.getName()) + "_vertrag.pdf").toFile();
 				
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		URL resource = loader.getResource("pdf/contract.pdf");
@@ -267,6 +268,13 @@ public class DocumentRenderer {
 	
 	public void cancel() {
 		this.currentTask.cancel();
+	}
+	
+	private String fileNameSafeString(String s) {
+		if(s == null) {
+			return null;
+		}
+		return s.toLowerCase().replaceAll("[^a-zA-Z0-9]", "").replaceAll(" ", "_");
 	}
 	
 	public IntegerProperty doneDocsProperty() {

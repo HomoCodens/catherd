@@ -12,7 +12,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * add proper titles to filechoosers
 * set proper starting dirs in choosers
 * add group name to file output
-* doublecheck fvr vs frv
 * limit amount of text/lines in textareas
 * indicate currently open file in title
 * rendering starts even if dirchooser closed
@@ -30,6 +29,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * MoneyField exceptions on null value
 * width of stuff
 * chipImplantedDate is not read in??
+* content of Datenblätter (vet visits)
 
 ## Maybe
 * Custom stack trace error dialog instead of just printStackTrace
