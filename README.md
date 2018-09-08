@@ -41,6 +41,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * indicate currently open file in title
 * width of stuff
 * chipImplantedDate is not read in??
+* i18n? Nah... xD
  
  
 ## Custom controls

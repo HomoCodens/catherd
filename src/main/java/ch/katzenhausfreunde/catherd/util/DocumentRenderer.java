@@ -20,6 +20,14 @@ import ch.katzenhausfreunde.catherd.model.Cat;
 import ch.katzenhausfreunde.catherd.model.CatGroup;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.model.Person;
+import ch.katzenhausfreunde.catherd.view.customcontrols.ProgressDialog;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * @author thoenis
@@ -28,7 +36,23 @@ import ch.katzenhausfreunde.catherd.model.Person;
  *
  */
 public class DocumentRenderer {
+	private IntegerProperty totalDocs = new SimpleIntegerProperty();
+	private IntegerProperty doneDocs = new SimpleIntegerProperty();
+	private BooleanProperty renderInProgress = new SimpleBooleanProperty(false);
+	
+	private ProgressDialog progressDialog;
+	
 	private List<PDField> fieldsToFlatten = new ArrayList<PDField>();
+	
+	public DocumentRenderer() {
+		try {
+			progressDialog = new ProgressDialog();
+			progressDialog.progressProperty().bind(doneDocs.divide(totalDocs.floatValue()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public boolean renderDocuments(Cat cat, File destination) {
 		renderContract(cat, destination);
@@ -36,14 +60,24 @@ public class DocumentRenderer {
 	}
 	
 	public boolean renderDocuments(CatGroup group, File destination) {
+		initProgress(group.getCats().size());
 		for(Cat c : group.getCats()) {
 			renderDocuments(c, destination);
 			fieldsToFlatten.clear();
 		}
+		renderInProgress.set(false);
+		/*initProgress(10);
+		for(int i = 0; i < 10; i++) {
+			System.out.println(i);
+			System.out.println(this.doneDocs.divide(this.totalDocs.floatValue()).getValue());
+			progressDialog.setProgress(this.doneDocs.floatValue()/this.totalDocs.floatValue());
+			documentRendered();
+		}*/
 		return true;
 	}
 	
 	public boolean renderContract(Cat cat, File destination) {
+		initProgress(1);
 		fieldsToFlatten.clear();
 		
 		Path dest = Paths.get(destination.getAbsolutePath());
@@ -144,6 +178,7 @@ public class DocumentRenderer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		documentRendered();
 		return true;
 	}
 	
@@ -159,7 +194,7 @@ public class DocumentRenderer {
 		PDDocument castration = PDDocument.load(inFile);
 		PDAcroForm form = castration.getDocumentCatalog().getAcroForm();
 
-		fillField("Textfeld 195", form, cat.getDateOfBirth().plusMonths(7));
+		fillField("Textfeld 195", form, castrationDate(cat.getDateOfBirth()));
 		
 		Person buyer = cat.getBuyer();
 		fillField("Textfeld 176", form, buyer.getLastName() + " " + buyer.getFirstName());
@@ -201,6 +236,35 @@ public class DocumentRenderer {
 	}
 	
 	private String formatDate(LocalDate date) {
+		if(date == null) {
+			return null;
+		}
 		return date.format(DateTimeFormatter.ofPattern("dd.MM.uuuu"));
+	}
+	
+	private String castrationDate(LocalDate date) {
+		if(date == null) {
+			return null;
+		}
+		return formatDate(date.plusMonths(7));
+	}
+	
+	private void initProgress(int nDocs) {
+		if(!renderInProgress.get()) {
+			System.out.println("Initializing progress window with " + nDocs);
+			totalDocs.set(nDocs);
+			doneDocs.set(0);
+			renderInProgress.set(true);
+			
+			Stage pdStage = new Stage();
+			pdStage.setScene(new Scene(progressDialog));
+			//pdStage.initOwner(primaryStage);
+			//pdStage.initModality(Modality.WINDOW_MODAL);
+			pdStage.show();
+		}
+	}
+	
+	private void documentRendered() {
+		doneDocs.set(doneDocs.get()+1);
 	}
 }
