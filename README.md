@@ -11,9 +11,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * Special characters in stored data
 * add proper titles to filechoosers
 * set proper starting dirs in choosers
-* add group name to file output
 * limit amount of text/lines in textareas
-* indicate currently open file in title
 * rendering starts even if dirchooser closed
 
 ## Later

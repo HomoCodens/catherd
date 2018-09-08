@@ -8,6 +8,7 @@ import ch.katzenhausfreunde.catherd.util.CatHerdDiskStorage;
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
 import ch.katzenhausfreunde.catherd.view.RootController;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -48,7 +49,14 @@ public class CatHerdMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("CatHerd");
+		this.primaryStage.titleProperty().bind(Bindings.createStringBinding(() -> {
+			String loaded = CatHerdDiskStorage.getLoadedPath();
+			String out = "CatHerd";
+			if(loaded != null) {
+				out = out + " - " + loaded;
+			}
+			return out;
+		}, CatHerdDiskStorage.loadedPathProperty()));
 		//this.primaryStage.getIcons().add(new Image("file:resources/images/if_Address_Book_86957.png"));
 			
 		initRootLayout();

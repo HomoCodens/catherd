@@ -11,6 +11,8 @@ import org.eclipse.persistence.jaxb.MarshallerProperties;
 
 import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.CatHerdStore;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -22,6 +24,8 @@ import javafx.scene.control.Alert.AlertType;
  *
  */
 public class CatHerdDiskStorage {
+	private static StringProperty loadedPath = new SimpleStringProperty(null);
+	
 	/**
 	 * Get the Path last used to save data.
 	 * 
@@ -71,6 +75,7 @@ public class CatHerdDiskStorage {
 			
 			// Remember the path used
 			setSavePath(file);
+			loadedPath.set(file.toString());
 		} catch (Exception e) {
 			// If loading failed, show an alert and then return null so the app will use an empty store.
 	        Alert alert = new Alert(AlertType.ERROR);
@@ -105,6 +110,7 @@ public class CatHerdDiskStorage {
 			// Store the last used path for future reference
 			CatHerdState.cleanStore();
 			setSavePath(file);
+			loadedPath.set(file.toString());
 		} catch (Exception e) { // catches ANY exception
 	        Alert alert = new Alert(AlertType.ERROR);
 	        alert.setTitle("Error");
@@ -115,5 +121,13 @@ public class CatHerdDiskStorage {
 	        
 	        alert.showAndWait();
 	    }
+	}
+	
+	public static String getLoadedPath() {
+		return loadedPath.get();
+	}
+	
+	public static StringProperty loadedPathProperty() {
+		return loadedPath;
 	}
 }

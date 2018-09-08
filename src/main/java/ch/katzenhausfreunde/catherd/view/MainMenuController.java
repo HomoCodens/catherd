@@ -55,6 +55,7 @@ public class MainMenuController {
 
 		if(outFile != null) {
 			CatHerdDiskStorage.saveToFile(outFile);
+			main.getPrimaryStage().setTitle("CatHerd - " + outFile);
 		}
 	}
 	
