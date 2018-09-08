@@ -30,6 +30,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -199,29 +200,13 @@ public class RootController {
                 			DirectoryChooser dirChooser = new DirectoryChooser();
                 			File outDir = dirChooser.showDialog(main.getPrimaryStage());
                 			
-                			
-                			CatGroup group = (CatGroup)item;
-                			DocumentRenderer renderer = new DocumentRenderer();
-            			
-            				ProgressDialog progressDialog = new ProgressDialog();
-            				progressDialog.progressProperty().bind(
-            						Bindings.createFloatBinding(() -> { 
-            							return renderer.doneDocsProperty().floatValue()/renderer.totalDocsProperty().floatValue(); 
-            							}, renderer.doneDocsProperty(), renderer.totalDocsProperty()));
-            				progressDialog.messageProperty().bind(renderer.currentTaskMessageProperty());
-            				progressDialog.cancelledProperty().addListener((observable, oldValue, newValue) -> {
-            					if(newValue == true) {
-            						renderer.cancel();
-            					}
-            				});
-            				
-            				Stage progressStage = new Stage();
-            				progressStage.setScene(new Scene(progressDialog));
-            				//progressStage.initOwner(primaryStage);
-            				//progressStage.initModality(Modality.WINDOW_MODAL);
-                			
-            				progressStage.show();
-                			renderer.renderDocuments(group, outDir);
+                			if(outDir != null) {
+	                			CatGroup group = (CatGroup)item;
+	                			DocumentRenderer renderer = new DocumentRenderer();
+	            			
+	                			showProgress(renderer);
+	                			renderer.renderDocuments(group, outDir);
+                			}
                 		});
                 		
                 		// Register menu items
@@ -382,5 +367,31 @@ public class RootController {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void showProgress(DocumentRenderer renderer) {
+		ProgressDialog progressDialog = new ProgressDialog();
+		progressDialog.progressProperty().bind(
+				Bindings.createFloatBinding(() -> { 
+					return renderer.doneDocsProperty().floatValue()/renderer.totalDocsProperty().floatValue(); 
+					}, renderer.doneDocsProperty(), renderer.totalDocsProperty()));
+		progressDialog.messageProperty().bind(renderer.currentTaskMessageProperty());
+		progressDialog.cancelledProperty().addListener((observable, oldValue, newValue) -> {
+			if(newValue == true) {
+				renderer.cancel();
+			}
+		});
+		
+		Stage progressStage = new Stage();
+		progressStage.setScene(new Scene(progressDialog));
+		progressStage.setResizable(false);
+		progressStage.setOnCloseRequest((e) -> {
+			renderer.cancel();
+			e.consume();
+		});
+		progressStage.initOwner(main.getPrimaryStage());
+		progressStage.initModality(Modality.WINDOW_MODAL);
+		
+		progressStage.show();
 	}
 }

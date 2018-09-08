@@ -71,7 +71,11 @@ public class DocumentRenderer {
 	        		 _renderContract(c, destination);
 	        		 Platform.runLater(() -> incrementProgress());
 	        	 }
-	        	 Platform.runLater(() -> setCurrentTaskMessage("Fertig!"));
+	        	 if(isCancelled()) {
+	        		 Platform.runLater(() -> setCurrentTaskMessage("Abgebrochen"));
+	        	 } else {
+	        		 Platform.runLater(() -> setCurrentTaskMessage("Fertig!"));
+	        	 }
 	        	 return null;
 	         }
 	     };
