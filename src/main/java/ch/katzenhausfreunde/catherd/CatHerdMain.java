@@ -2,6 +2,7 @@ package ch.katzenhausfreunde.catherd;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
 
 import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import ch.katzenhausfreunde.catherd.util.CatHerdDiskStorage;
@@ -22,6 +23,7 @@ public class CatHerdMain extends Application {
 	private Stage primaryStage;
 	private RootController rootController;
 	private CatHerdState state;
+	private String version = "unbekannt";
 	
 	public CatHerdMain() {
 		System.out.println("Hi meow.");
@@ -41,6 +43,13 @@ public class CatHerdMain extends Application {
 		
 		// Start listening for changes in the state objects
 		CatHerdState.arm();
+		
+		final Properties properties = new Properties();
+		try {
+			properties.load(this.getClass().getClassLoader().getResourceAsStream("project.properties"));
+			version = properties.getProperty("version");
+		} catch (IOException e) {
+		}
 	}
 	
 	/* (non-Javadoc)
