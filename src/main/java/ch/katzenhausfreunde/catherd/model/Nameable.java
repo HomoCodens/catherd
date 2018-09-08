@@ -3,8 +3,10 @@ package ch.katzenhausfreunde.catherd.model;
 import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
+import ch.katzenhausfreunde.catherd.util.UUIDAdapter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -21,8 +23,9 @@ public class Nameable {
 	/**
 	 * The id of the object. Mainly here in case it's needed in the future.
 	 */
+	@XmlJavaTypeAdapter(UUIDAdapter.class)
 	@XmlElement(name = "id")
-	private UUID id;
+	private UUID id = UUID.randomUUID();;
 	
 	/**
 	 * Creates a Nameable with an empty String ("") for its name.
@@ -38,7 +41,6 @@ public class Nameable {
 	 */
 	public Nameable(String name) {
 		this.name = new SimpleStringProperty(name);
-		this.id = UUID.randomUUID();
 	}
 	
 	/* (non-Javadoc)
@@ -53,6 +55,10 @@ public class Nameable {
 	 */
 	public UUID getId() {
 		return id;
+	}
+	
+	public void setID(UUID id) {
+		this.id = id;
 	}
 	
 	/**

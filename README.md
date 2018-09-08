@@ -16,7 +16,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * Tests?
   * I think we'll manage without
 * Special characters in stored data
-* IDs keep changing on load
 * icons galore
 * static state holder feels wonky, maybe move state (and dirty flag) back into main
 * custom styling?
