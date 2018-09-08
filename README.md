@@ -42,6 +42,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * width of stuff
 * chipImplantedDate is not read in??
 * i18n? Nah... xD
+* rendering starts even if dirchooser closed
  
  
 ## Custom controls

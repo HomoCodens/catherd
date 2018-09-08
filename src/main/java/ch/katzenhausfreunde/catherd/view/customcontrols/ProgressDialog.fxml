@@ -33,7 +33,8 @@
    <bottom>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="cancelButton" layoutX="148.0" mnemonicParsing="false" text="Abbrechen" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="15.0" />
+            <Button fx:id="cancelButton" onAction="#onCancel" layoutX="148.0" mnemonicParsing="false" text="Abbrechen" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="15.0" />
+            <Button fx:id="okButton" onAction="#onOK" layoutX="313.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="OK" />
          </children>
       </AnchorPane>
    </bottom>

@@ -12,10 +12,13 @@ import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.model.Nameable;
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
 import ch.katzenhausfreunde.catherd.util.DocumentRenderer;
+import ch.katzenhausfreunde.catherd.view.customcontrols.ProgressDialog;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -27,6 +30,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class RootController {	
@@ -198,6 +202,25 @@ public class RootController {
                 			
                 			CatGroup group = (CatGroup)item;
                 			DocumentRenderer renderer = new DocumentRenderer();
+            			
+            				ProgressDialog progressDialog = new ProgressDialog();
+            				progressDialog.progressProperty().bind(
+            						Bindings.createFloatBinding(() -> { 
+            							return renderer.doneDocsProperty().floatValue()/renderer.totalDocsProperty().floatValue(); 
+            							}, renderer.doneDocsProperty(), renderer.totalDocsProperty()));
+            				progressDialog.messageProperty().bind(renderer.currentTaskMessageProperty());
+            				progressDialog.cancelledProperty().addListener((observable, oldValue, newValue) -> {
+            					if(newValue == true) {
+            						renderer.cancel();
+            					}
+            				});
+            				
+            				Stage progressStage = new Stage();
+            				progressStage.setScene(new Scene(progressDialog));
+            				//progressStage.initOwner(primaryStage);
+            				//progressStage.initModality(Modality.WINDOW_MODAL);
+                			
+            				progressStage.show();
                 			renderer.renderDocuments(group, outDir);
                 		});
                 		

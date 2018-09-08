@@ -20,17 +20,14 @@ import ch.katzenhausfreunde.catherd.model.Cat;
 import ch.katzenhausfreunde.catherd.model.CatGroup;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.model.Person;
-import ch.katzenhausfreunde.catherd.view.customcontrols.ProgressDialog;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.concurrent.Task;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  * @author thoenis
@@ -43,27 +40,13 @@ public class DocumentRenderer {
 	private IntegerProperty doneDocs = new SimpleIntegerProperty();
 	private BooleanProperty renderInProgress = new SimpleBooleanProperty(false);
 	
-	private ProgressDialog progressDialog;
-	private Stage progressStage;
-	
 	private Task<Void> currentTask;
+	private StringProperty currentTaskMessage = new SimpleStringProperty();
 	
 	private List<PDField> fieldsToFlatten = new ArrayList<PDField>();
 	
 	public DocumentRenderer() {
-		try {
-			progressDialog = new ProgressDialog();
-			progressDialog.progressProperty().bind(Bindings.createFloatBinding(() -> { return doneDocs.floatValue()/totalDocs.floatValue(); }, doneDocs, totalDocs));
-			
-			
-			progressStage = new Stage();
-			progressStage.setScene(new Scene(progressDialog));
-			//progressStage.initOwner(primaryStage);
-			//progressStage.initModality(Modality.WINDOW_MODAL);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.renderInProgress.bind(doneDocs.isNotEqualTo(totalDocs));
 	}
 	
 	public void renderDocuments(Cat cat, File destination) {
@@ -81,12 +64,14 @@ public class DocumentRenderer {
 	         protected Void call() throws Exception {
 	        	 for(Cat c : group.getCats()) {
 	        		 if(isCancelled()) {
+	        			 Platform.runLater(() -> doneDocs.set(totalDocs.get()));
 	        			 break;
 	        		 }
-	        		 Platform.runLater(() -> progressDialog.setMessage("Vertrag für " + c.getName() + "..."));
+	        		 Platform.runLater(() -> setCurrentTaskMessage("Vertrag für " + c.getName() + "..."));
 	        		 _renderContract(c, destination);
 	        		 Platform.runLater(() -> incrementProgress());
 	        	 }
+	        	 Platform.runLater(() -> setCurrentTaskMessage("Fertig!"));
 	        	 return null;
 	         }
 	     };
@@ -267,15 +252,32 @@ public class DocumentRenderer {
 	
 	private void initProgress(int nDocs) {
 		if(!renderInProgress.get()) {
-			System.out.println("Initializing progress window with " + nDocs);
 			totalDocs.set(nDocs);
 			doneDocs.set(0);
-			renderInProgress.set(true);
-			progressStage.show();
 		}
 	}
 	
 	private void incrementProgress() {
 		doneDocs.set(doneDocs.get()+1);
+	}
+	
+	public void cancel() {
+		this.currentTask.cancel();
+	}
+	
+	public IntegerProperty doneDocsProperty() {
+		return this.doneDocs;
+	}
+	
+	public IntegerProperty totalDocsProperty() {
+		return this.totalDocs;
+	}
+	
+	public void setCurrentTaskMessage(String newMessage) {
+		this.currentTaskMessage.set(newMessage);
+	}
+	
+	public StringProperty currentTaskMessageProperty() {
+		return this.currentTaskMessage;
 	}
 }
