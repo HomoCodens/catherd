@@ -21,10 +21,13 @@ import ch.katzenhausfreunde.catherd.model.CatGroup;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.model.Person;
 import ch.katzenhausfreunde.catherd.view.customcontrols.ProgressDialog;
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -41,42 +44,57 @@ public class DocumentRenderer {
 	private BooleanProperty renderInProgress = new SimpleBooleanProperty(false);
 	
 	private ProgressDialog progressDialog;
+	private Stage progressStage;
+	
+	private Task<Void> currentTask;
 	
 	private List<PDField> fieldsToFlatten = new ArrayList<PDField>();
 	
 	public DocumentRenderer() {
 		try {
 			progressDialog = new ProgressDialog();
-			progressDialog.progressProperty().bind(doneDocs.divide(totalDocs.floatValue()));
+			progressDialog.progressProperty().bind(Bindings.createFloatBinding(() -> { return doneDocs.floatValue()/totalDocs.floatValue(); }, doneDocs, totalDocs));
+			
+			
+			progressStage = new Stage();
+			progressStage.setScene(new Scene(progressDialog));
+			//progressStage.initOwner(primaryStage);
+			//progressStage.initModality(Modality.WINDOW_MODAL);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public boolean renderDocuments(Cat cat, File destination) {
-		renderContract(cat, destination);
-		return true;
+	public void renderDocuments(Cat cat, File destination) {
+		initProgress(1);
+		new Thread(() -> {
+			_renderContract(cat, destination);
+			Platform.runLater(() -> incrementProgress());
+		}).start();
 	}
 	
-	public boolean renderDocuments(CatGroup group, File destination) {
+	public void renderDocuments(CatGroup group, File destination) {
 		initProgress(group.getCats().size());
-		for(Cat c : group.getCats()) {
-			renderDocuments(c, destination);
-			fieldsToFlatten.clear();
-		}
-		renderInProgress.set(false);
-		/*initProgress(10);
-		for(int i = 0; i < 10; i++) {
-			System.out.println(i);
-			System.out.println(this.doneDocs.divide(this.totalDocs.floatValue()).getValue());
-			progressDialog.setProgress(this.doneDocs.floatValue()/this.totalDocs.floatValue());
-			documentRendered();
-		}*/
-		return true;
+		currentTask = new Task<Void>() {
+	         @Override 
+	         protected Void call() throws Exception {
+	        	 for(Cat c : group.getCats()) {
+	        		 if(isCancelled()) {
+	        			 break;
+	        		 }
+	        		 Platform.runLater(() -> progressDialog.setMessage("Vertrag für " + c.getName() + "..."));
+	        		 _renderContract(c, destination);
+	        		 Platform.runLater(() -> incrementProgress());
+	        	 }
+	        	 return null;
+	         }
+	     };
+	     Thread t = new Thread(currentTask);
+	     t.start();
 	}
 	
-	public boolean renderContract(Cat cat, File destination) {
+	private void _renderContract(Cat cat, File destination) {
 		initProgress(1);
 		fieldsToFlatten.clear();
 		
@@ -165,7 +183,7 @@ public class DocumentRenderer {
 			form.flatten(fieldsToFlatten, true);
 			
 			if(cat.getCastratedDate() == null) {
-				PDPage castrationPage = renderCastration(cat, destination);
+				PDPage castrationPage = _renderCastration(cat, destination);
 				contract.addPage(castrationPage);
 			}
 			
@@ -178,11 +196,9 @@ public class DocumentRenderer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		documentRendered();
-		return true;
 	}
 	
-	public PDPage renderCastration(Cat cat, File destination) throws InvalidPasswordException, IOException {
+	private PDPage _renderCastration(Cat cat, File destination) throws InvalidPasswordException, IOException {
 		fieldsToFlatten.clear();
 		
 		FosterHome home = CatHerdState.getCatsHome(cat);
@@ -255,16 +271,11 @@ public class DocumentRenderer {
 			totalDocs.set(nDocs);
 			doneDocs.set(0);
 			renderInProgress.set(true);
-			
-			Stage pdStage = new Stage();
-			pdStage.setScene(new Scene(progressDialog));
-			//pdStage.initOwner(primaryStage);
-			//pdStage.initModality(Modality.WINDOW_MODAL);
-			pdStage.show();
+			progressStage.show();
 		}
 	}
 	
-	private void documentRendered() {
+	private void incrementProgress() {
 		doneDocs.set(doneDocs.get()+1);
 	}
 }

@@ -198,11 +198,7 @@ public class RootController {
                 			
                 			CatGroup group = (CatGroup)item;
                 			DocumentRenderer renderer = new DocumentRenderer();
-                			boolean success = renderer.renderDocuments(group, outDir);
-                			if(success) {
-	                			notification.setContentText("Verträge für " + group.getName() + " erfolgreich erstellt.");
-	                			notification.show();
-                			}
+                			renderer.renderDocuments(group, outDir);
                 		});
                 		
                 		// Register menu items
@@ -245,11 +241,7 @@ public class RootController {
                 			
                 			Cat cat = (Cat)item;
                 			DocumentRenderer renderer = new DocumentRenderer();
-                			boolean success = renderer.renderDocuments(cat, outDir);
-                			if(success) {
-	                			notification.setContentText("Vertrag für " + cat.getName() + " erfolgreich erstellt.");
-	                			notification.show();
-                			}
+                			renderer.renderDocuments(cat, outDir);
                 		});
                 		
                 		// Register the menu items
