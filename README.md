@@ -9,23 +9,23 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 ## NOW
 * use separate paths for documents and store?
 	* set proper starting dirs in choosers
-* limit amount of text/lines in textareas
+* Ask for name when creating new item
+* lambdaify listenery
+  * How prevalent is java8 anyway? I mean, it's 2018
+* chipImplantedDate is not read in??
+* Can "Save" even if load failed
+
 
 ## Later
 * Document the living daylight out of everything (it's high time)
-* Ask for name when creating new item
 * icons galore
 * add default home to store when loading empty
-* lambdaify listenery
-  * How prevalent is java8 anyway? I mean, it's 2018
 * Small overview in editors?
 * use context menu items in main menu
 * menu separators?
 * width of stuff
-* chipImplantedDate is not read in??
 * content of Datenblätter (vet visits)
 * "About" window
-* Can "Save" even if load failed
 * keyboard shortcuts
 
 ## Maybe
@@ -39,7 +39,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
   * Maybe for phone numbers, email & chip nrs
 * Aks them to properly label the PDF form fields
 * i18n? Nah... xD
-
+* limit amount of text/lines in textareas
 
  
  
