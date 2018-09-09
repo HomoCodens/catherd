@@ -2,6 +2,7 @@ package ch.katzenhausfreunde.catherd;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Properties;
 
 import ch.katzenhausfreunde.catherd.model.CatHerdStore;
@@ -10,9 +11,15 @@ import ch.katzenhausfreunde.catherd.util.CatHerdState;
 import ch.katzenhausfreunde.catherd.view.RootController;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -67,7 +74,32 @@ public class CatHerdMain extends Application {
 			return out;
 		}, CatHerdDiskStorage.loadedPathProperty()));
 		//this.primaryStage.getIcons().add(new Image("file:resources/images/if_Address_Book_86957.png"));
-			
+		
+		// Ask for confirmation when closing with unsaved changes
+		this.primaryStage.setOnCloseRequest((e) -> {
+			if(CatHerdState.isDirty()) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Beenden");
+				alert.setHeaderText("Ungespeicherte Änderungen");
+				alert.setContentText("Trotzdem beenden?");
+				
+				ButtonType confirm = new ButtonType("Beenden", ButtonData.OK_DONE);
+				ButtonType save = new ButtonType("Speichern");
+				ButtonType cancel = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
+				
+				alert.getButtonTypes().setAll(confirm, save, cancel);
+				
+				Optional<ButtonType> result = alert.showAndWait();
+				if(result.get() == cancel) {
+					e.consume();
+				} else if(result.get() == save) {
+					if(handleSave() == null) {
+						e.consume();
+					}
+				}
+			}
+		});
+		
 		initRootLayout();
 	}
 
@@ -96,6 +128,45 @@ public class CatHerdMain extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void handleOpen() {
+		FileChooser fileChooser = getJSONChooser();
+		File inFile = fileChooser.showOpenDialog(getPrimaryStage());
+		
+		if(inFile != null) {
+			CatHerdStore store = CatHerdDiskStorage.loadFromFile(inFile);
+			CatHerdState.setStore(store);
+			storeLoaded();
+		}
+	}
+	
+	public File handleSave() {
+		File outFile = CatHerdDiskStorage.getSavePath();
+		if(outFile != null) {
+			CatHerdDiskStorage.saveToFile(outFile);
+			return outFile;
+		} else {
+			return handleSaveAs();
+		}
+	}
+	
+	public File handleSaveAs() {
+		FileChooser fileChooser = getJSONChooser();	
+		File outFile = fileChooser.showSaveDialog(getPrimaryStage());
+
+		if(outFile != null) {
+			CatHerdDiskStorage.saveToFile(outFile);
+		}
+		
+		return outFile;
+	}
+	
+	private FileChooser getJSONChooser() {
+		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON Dateien", "*.json");
+		fileChooser.getExtensionFilters().add(extFilter);
+		return fileChooser;
 	}
 	
 	public void storeLoaded() {

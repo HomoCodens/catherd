@@ -28,41 +28,16 @@ public class MainMenuController {
 	
 	@FXML
 	public void handleOpen() {
-		FileChooser fileChooser = getJSONChooser();
-		File inFile = fileChooser.showOpenDialog(main.getPrimaryStage());
-		
-		if(inFile != null) {
-			CatHerdStore store = CatHerdDiskStorage.loadFromFile(inFile);
-			CatHerdState.setStore(store);
-			main.storeLoaded();
-		}
+		main.handleOpen();
 	}
 	
 	@FXML
 	private void handleSave() {
-		File outFile = CatHerdDiskStorage.getSavePath();
-		if(outFile != null) {
-			CatHerdDiskStorage.saveToFile(outFile);
-		} else {
-			handleSaveAs();
-		}
+		main.handleSave();
 	}
 	
 	@FXML
 	private void handleSaveAs() {
-		FileChooser fileChooser = getJSONChooser();	
-		File outFile = fileChooser.showSaveDialog(main.getPrimaryStage());
-
-		if(outFile != null) {
-			CatHerdDiskStorage.saveToFile(outFile);
-			main.getPrimaryStage().setTitle("CatHerd - " + outFile);
-		}
-	}
-	
-	private FileChooser getJSONChooser() {
-		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON Dateien", "*.json");
-		fileChooser.getExtensionFilters().add(extFilter);
-		return fileChooser;
+		main.handleSaveAs();
 	}
 }
