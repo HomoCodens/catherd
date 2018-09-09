@@ -1,6 +1,10 @@
 package ch.katzenhausfreunde.catherd.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.prefs.Preferences;
 
 import javax.xml.bind.JAXBContext;
@@ -8,6 +12,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.eclipse.persistence.jaxb.MarshallerProperties;
+import org.eclipse.persistence.jaxb.UnmarshallerProperties;
 
 import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.CatHerdStore;
@@ -70,8 +75,11 @@ public class CatHerdDiskStorage {
 			um.setProperty(MarshallerProperties.MEDIA_TYPE, "application/json");
 			um.setProperty(MarshallerProperties.JSON_INCLUDE_ROOT, true);
 			
+			InputStream is = new FileInputStream(file);
+			Reader r = new InputStreamReader(is, "UTF-8");
+			
 			// Load the data
-			store = (CatHerdStore)um.unmarshal(file);
+			store = (CatHerdStore)um.unmarshal(r);
 			
 			// Remember the path used
 			setSavePath(file);
@@ -83,6 +91,8 @@ public class CatHerdDiskStorage {
 	        alert.setHeaderText("Could not load data");
 	        alert.setContentText("Could not load data from file:\n" + file.getPath());
 
+	        e.printStackTrace();
+	        
 	        alert.showAndWait();
 		}
 		return store;
@@ -103,6 +113,7 @@ public class CatHerdDiskStorage {
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			m.setProperty(MarshallerProperties.MEDIA_TYPE, "application/json");
 			m.setProperty(MarshallerProperties.JSON_INCLUDE_ROOT, true);
+			m.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
 			
 			// Store the data.
 			m.marshal(store,  file);

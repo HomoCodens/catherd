@@ -8,6 +8,7 @@ import java.util.Properties;
 import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import ch.katzenhausfreunde.catherd.util.CatHerdDiskStorage;
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
+import ch.katzenhausfreunde.catherd.util.console;
 import ch.katzenhausfreunde.catherd.view.RootController;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;

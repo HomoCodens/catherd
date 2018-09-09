@@ -7,10 +7,8 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 *a lot as you can see*
 
 ## NOW
-* Ask for confirmation when quitting with unsaved changes
-* Special characters in stored data
-* add proper titles to filechoosers
-* set proper starting dirs in choosers
+* use separate paths for documents and store?
+	* set proper starting dirs in choosers
 * limit amount of text/lines in textareas
 
 ## Later
@@ -27,6 +25,8 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * chipImplantedDate is not read in??
 * content of Datenblätter (vet visits)
 * "About" window
+* Can "Save" even if load failed
+* keyboard shortcuts
 
 ## Maybe
 * Custom stack trace error dialog instead of just printStackTrace
@@ -35,7 +35,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * static state holder feels wonky, maybe move state (and dirty flag) back into main
 * custom styling?
 * custom classloader / splash screen
-* use separate paths for documents and store?
 * Input validation? Much of the data is "suit yourself" anyway
   * Maybe for phone numbers, email & chip nrs
 * Aks them to properly label the PDF form fields
