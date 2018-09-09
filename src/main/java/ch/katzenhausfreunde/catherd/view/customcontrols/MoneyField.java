@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
 
 public class MoneyField extends TextField {
 	private FloatProperty amount;
@@ -17,10 +18,22 @@ public class MoneyField extends TextField {
 	public MoneyField() {
 		super();
 		
+		this.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			if(newValue) {
+				System.out.println("We need to fuckus!");
+			} else {
+				String t = getText();
+				if(t == null || t.isEmpty()) {
+					setAmount(0.0f);
+				}
+				System.out.println("MoneyField out, over.");
+			}
+		});
+		
 		this.amount = new SimpleFloatProperty();
 		
 		this.nullSafeTextProperty = new SimpleStringProperty(null);
-		this.nullSafeTextProperty.bind(Bindings.when(textProperty().isNotNull()).then(textProperty()).otherwise("0.00"));
+		this.nullSafeTextProperty.bind(Bindings.when(textProperty().isNotNull().and(textProperty().isNotEqualTo(""))).then(textProperty()).otherwise("0.00"));
 		
 		this.textProperty().addListener((observable, oldValue, newValue) -> {
 			if(newValue == null) {
@@ -33,30 +46,14 @@ public class MoneyField extends TextField {
 			}
 		});
 		
-		// 'cause GERMAN doesn't recognize . as decimal. And we lurvs us some CANADA.
-		// Nüp, can't handle NULL apparently...
-		this.textProperty().bindBidirectional(amountProperty(), NumberFormat.getNumberInstance(Locale.CANADA));
-		//this.textProperty().bindBidirectional(this.nullSafeTextProperty());
-		//this.nullSafeTextProperty().bindBidirectional(amountProperty(), NumberFormat.getNumberInstance(Locale.CANADA));
-		/*StringConverter<Float> bla = new StringConverter<Float>() {
-
-			@Override
-			public Float fromString(String string) {
-				if(string == null) {
-					return null;
-				} else {
-					return Float.parseFloat(string);
-				}
+		this.amountProperty().bind(Bindings.createFloatBinding(() -> {
+			String s = getText();
+			if(s == null || s.isEmpty()) {
+				return 0.0f;
+			} else {
+				return Float.parseFloat(s);
 			}
-
-			@Override
-			public String toString(Float object) {
-				return object.toString();
-			}
-			
-		};
-		
-		this.textProperty().bindBidirectional(amountProperty()., bla);*/
+		}, textProperty()));
 	}
 	
 	public float getAmount() {
@@ -64,7 +61,10 @@ public class MoneyField extends TextField {
 	}
 	
 	public void setAmount(float newAmount) {
-		amount.set(newAmount);
+		//amount.set(newAmount);
+		
+		// Talk about hacks though...
+		this.textProperty().set(new Float(Math.floor(100*newAmount)/100).toString());
 	}
 	
 	public FloatProperty amountProperty() {
