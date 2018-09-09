@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -48,14 +49,31 @@
                   </AnchorPane>
                   <AnchorPane VBox.vgrow="NEVER">
                      <children>
-                      <TitledPane animated="false" expanded="false" text="Infos Katze" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                      <TitledPane animated="false" text="Infos Katze" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <content>
                           <AnchorPane>
                                  <children>
                                     <VBox layoutX="19.600000381469727" layoutY="19.600000381469727">
                                        <children>
-                                          <Label text="Charaktereigenschaften" />
-                                          <TextArea fx:id="characterTraits" prefHeight="99.0" prefWidth="388.0" />
+                                          <HBox>
+                                             <children>
+                                                <Label text="Charaktereigenschaften" />
+                                                <Label text="(max. 2 Zeilen à 75 Zeichen)" textFill="#a4a4a4" />
+                                             </children>
+                                          </HBox>
+                                          <TextArea fx:id="characterTraits" prefHeight="99.0" prefWidth="388.0" wrapText="true" />
+                                          <HBox alignment="CENTER_RIGHT">
+                                             <children>
+                                                <Label text="Zeilen: " />
+                                                <Label fx:id="characterLinesRemaining" text="0/2">
+                                                   <HBox.margin>
+                                                      <Insets right="12.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <Label text="Zeichen auf aktueller Zeile: " />
+                                                <Label fx:id="characterCharactersRemaining" text="0/75" />
+                                             </children>
+                                          </HBox>
                                           <GridPane hgap="10.0">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="74.0" minWidth="10.0" prefWidth="72.0" />
@@ -213,7 +231,7 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <TextArea fx:id="illnesses" prefHeight="104.0" prefWidth="347.0" />
+                                          <TextArea fx:id="illnesses" prefHeight="104.0" prefWidth="347.0" wrapText="true" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -289,7 +307,7 @@
                                              </children>
                                           </GridPane>
                                           <Label text="Bemerkungen" />
-                                          <TextArea fx:id="notes" prefHeight="120.0" prefWidth="440.0" />
+                                          <TextArea fx:id="notes" prefHeight="120.0" prefWidth="440.0" wrapText="true" />
                                        </children>
                                     </VBox>
                                  </children>

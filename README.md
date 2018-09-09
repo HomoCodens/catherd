@@ -14,7 +14,8 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
   * How prevalent is java8 anyway? I mean, it's 2018
 * chipImplantedDate is not read in??
 * Can "Save" even if load failed
-
+* limit amount of text/lines in textareas
+* Ask which kind of contract to render
 
 ## Later
 * Document the living daylight out of everything (it's high time)
@@ -27,6 +28,8 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * content of Datenblätter (vet visits)
 * "About" window
 * keyboard shortcuts
+* Defautl button type on quit confirmation
+
 
 ## Maybe
 * Custom stack trace error dialog instead of just printStackTrace
@@ -39,7 +42,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
   * Maybe for phone numbers, email & chip nrs
 * Aks them to properly label the PDF form fields
 * i18n? Nah... xD
-* limit amount of text/lines in textareas
+* textformatters instead of listeners on moneyfields, textareas
 
  
  
