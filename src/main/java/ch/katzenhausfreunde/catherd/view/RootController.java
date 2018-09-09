@@ -246,10 +246,11 @@ public class RootController {
                 			DirectoryChooser dirChooser = new DirectoryChooser();
                 			File outDir = dirChooser.showDialog(main.getPrimaryStage());
                 			
-                			
-                			Cat cat = (Cat)item;
-                			DocumentRenderer renderer = new DocumentRenderer();
-                			renderer.renderDocuments(cat, outDir);
+                			if(outDir != null) {
+	                			Cat cat = (Cat)item;
+	                			DocumentRenderer renderer = new DocumentRenderer();
+	                			renderer.renderDocuments(cat, outDir);
+                			}
                 		});
                 		
                 		// Register the menu items

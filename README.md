@@ -12,7 +12,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * add proper titles to filechoosers
 * set proper starting dirs in choosers
 * limit amount of text/lines in textareas
-* rendering starts even if dirchooser closed
 
 ## Later
 * Document the living daylight out of everything (it's high time)
@@ -24,10 +23,10 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * Small overview in editors?
 * use context menu items in main menu
 * menu separators?
-* MoneyField exceptions on null value
 * width of stuff
 * chipImplantedDate is not read in??
 * content of Datenblätter (vet visits)
+* "About" window
 
 ## Maybe
 * Custom stack trace error dialog instead of just printStackTrace
