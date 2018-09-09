@@ -49,7 +49,7 @@
                   </AnchorPane>
                   <AnchorPane VBox.vgrow="NEVER">
                      <children>
-                      <TitledPane animated="false" text="Infos Katze" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                      <TitledPane animated="false" expanded="false" text="Infos Katze" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <content>
                           <AnchorPane>
                                  <children>
@@ -58,19 +58,12 @@
                                           <HBox>
                                              <children>
                                                 <Label text="Charaktereigenschaften" />
-                                                <Label text="(max. 2 Zeilen à 75 Zeichen)" textFill="#a4a4a4" />
                                              </children>
                                           </HBox>
                                           <TextArea fx:id="characterTraits" prefHeight="99.0" prefWidth="388.0" wrapText="true" />
                                           <HBox alignment="CENTER_RIGHT">
                                              <children>
-                                                <Label text="Zeilen: " />
-                                                <Label fx:id="characterLinesRemaining" text="0/2">
-                                                   <HBox.margin>
-                                                      <Insets right="12.0" />
-                                                   </HBox.margin>
-                                                </Label>
-                                                <Label text="Zeichen auf aktueller Zeile: " />
+                                                <Label text="Zeichen: " />
                                                 <Label fx:id="characterCharactersRemaining" text="0/75" />
                                              </children>
                                           </HBox>
@@ -232,6 +225,12 @@
                                              </font>
                                           </Label>
                                           <TextArea fx:id="illnesses" prefHeight="104.0" prefWidth="347.0" wrapText="true" />
+                                          <HBox alignment="CENTER_RIGHT">
+                                             <children>
+                                                <Label text="Zeichen: " />
+                                                <Label fx:id="illnessesCharactersRemaining" text="0/75" />
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </VBox>
                                  </children>
@@ -286,7 +285,7 @@
                      <children>
                         <TitledPane animated="false" expanded="false" text="Daten &amp; Bemerkungen">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="198.0" prefWidth="438.0">
+                            <AnchorPane>
                                  <children>
                                     <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                        <children>
@@ -308,6 +307,12 @@
                                           </GridPane>
                                           <Label text="Bemerkungen" />
                                           <TextArea fx:id="notes" prefHeight="120.0" prefWidth="440.0" wrapText="true" />
+                                          <HBox alignment="CENTER_RIGHT">
+                                             <children>
+                                                <Label text="Zeichen: " />
+                                                <Label fx:id="notesCharactersRemaining" text="0/75" />
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </VBox>
                                  </children>

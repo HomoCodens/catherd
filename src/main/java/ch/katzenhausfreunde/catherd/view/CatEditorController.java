@@ -9,6 +9,7 @@ import ch.katzenhausfreunde.catherd.model.Cat;
 import ch.katzenhausfreunde.catherd.util.console;
 import ch.katzenhausfreunde.catherd.view.customcontrols.MoneyField;
 import ch.katzenhausfreunde.catherd.view.customcontrols.PersonController;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
@@ -100,6 +101,9 @@ public class CatEditorController {
 	
 	@FXML
 	private TextArea illnesses;
+	@FXML
+	private Label illnessesCharactersRemaining;
+	private int illnessesMaxChars = 195;
 	
 	@FXML
 	AnchorPane buyerPane;
@@ -108,9 +112,8 @@ public class CatEditorController {
 	@FXML
 	private TextArea characterTraits;
 	@FXML
-	private Label characterLinesRemaining;
-	@FXML
 	private Label characterCharactersRemaining;
+	private int characterMaxChars = 140;
 	
 	@FXML
 	private MoneyField charge;
@@ -137,6 +140,9 @@ public class CatEditorController {
 	
 	@FXML
 	private TextArea notes;
+	@FXML
+	private Label notesCharactersRemaining;
+	private int notesMaxChars = 325;
 	
 	public CatEditorController() {
 	}
@@ -161,6 +167,10 @@ public class CatEditorController {
 		};
 			
 		chipNo.textProperty().addListener(textFieldNumberifyer);
+		
+		illnessesCharactersRemaining.textProperty().bind(illnesses.textProperty().length().asString().concat("/" + illnessesMaxChars));
+		characterCharactersRemaining.textProperty().bind(characterTraits.textProperty().length().asString().concat("/" + characterMaxChars));
+		notesCharactersRemaining.textProperty().bind(notes.textProperty().length().asString().concat("/" + notesMaxChars));
 		
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -262,71 +272,30 @@ public class CatEditorController {
 		
 		this.illnesses.setText(cat.getIllnesses());
 		cat.illnessesProperty().bind(this.illnesses.textProperty());
+		this.illnesses.setTextFormatter(new TextFormatter<>((change) -> {
+			change.setText(change.getText().replaceAll("\n", ""));
+			if(change.getControlNewText().length() > illnessesMaxChars) {
+				change.setText(change.getText().substring(0, illnessesMaxChars - change.getControlText().length()));
+				change.setAnchor(change.getControlAnchor());
+				change.setCaretPosition(change.getControlCaretPosition());
+				change.selectRange(change.getCaretPosition(), change.getCaretPosition());
+				Toolkit.getDefaultToolkit().beep();
+			}
+			return change;
+		}));
 		
 		this.buyer.setPerson(cat.getBuyer());
 		
 		this.characterTraits.setText(cat.getCharacterTraits());
 		cat.characterTraitsProperty().bind(this.characterTraits.textProperty());
-		/*this.characterTraits.textProperty().addListener((a, b, c) -> {
-			String[] lines = c.split("\n");
-			int nLines = lines.length;
-			int changedLine = 0;
-			for(; changedLine < nLines; changedLine++) {
-				if(lines[changedLine] != b.split("\n")[changedLine]) {
-					break;
-				}
-			}
-			System.out.println("Actually, working on line " + changedLine);
-			if(lines[nLines - 1].length() >= 75 && lines[nLines-1].charAt(lines[nLines-1].length() - 1) != "\n".toCharArray()[0]) {
-				if(nLines == 3) {
-					characterTraits.setText(b);
-					Toolkit.getDefaultToolkit().beep();
-					return;
-				}
-				lines[nLines - 1] = lines[nLines - 1].concat("\n");
-			}
-			console.log(lines[nLines - 1].length());
-			System.out.println(String.join("\n", lines));
-			characterTraits.setText(String.join("\n", lines));
-		});*/
 		this.characterTraits.setTextFormatter(new TextFormatter<>((change) -> {
-			console.log("Text: " + change.getText());
-			console.log("Start: " + change.getRangeStart());
-			console.log("End: " + change.getRangeEnd());
-			console.log("CaretPosition: " + change.getCaretPosition());
-			console.log("OldText: " + change.getControlText());
-			console.log("NewText: " + change.getControlNewText());
-			String[] lines = change.getControlNewText().split("\n");
-			int nLines = lines.length;
-			int[] lineLengths = new int[nLines];
-			for(int i = 0; i < nLines; i++) {
-				lineLengths[i] = lines[i].length();
-			}
-			int bla = 0;
-			int lineBeingEdited = 0;
-			for(int i = 0; i < nLines; i++) {
-				bla += lineLengths[i];
-				if(bla + 1 <=  change.getCaretPosition()) {
-					lineBeingEdited = i;
-				}
-			}
-			if(change.getText() != "\n") {
-				characterLinesRemaining.setText(nLines + "/2");
-				characterCharactersRemaining.setText(lineLengths[lineBeingEdited] + "/75");
-			} else {
-				characterLinesRemaining.setText(nLines + 1 + "/2");
-				characterCharactersRemaining.setText("0/75");
-			}
-			if(!change.getText().isEmpty()) {
-				if(lineLengths[lineBeingEdited] >= 75) {
-					if(nLines == 2) {
-						Toolkit.getDefaultToolkit().beep();
-						return null;
-					}
-					change.setText(change.getText().concat("\n"));
-					change.setCaretPosition(change.getCaretPosition() + 1);
-					change.selectRange(change.getCaretPosition(), change.getCaretPosition());
-				}
+			change.setText(change.getText().replaceAll("\n", ""));
+			if(change.getControlNewText().length() > characterMaxChars) {
+				change.setText(change.getText().substring(0, characterMaxChars - change.getControlText().length()));
+				change.setAnchor(change.getControlAnchor());
+				change.setCaretPosition(change.getControlCaretPosition());
+				change.selectRange(change.getCaretPosition(), change.getCaretPosition());
+				Toolkit.getDefaultToolkit().beep();
 			}
 			return change;
 		}));
@@ -383,5 +352,17 @@ public class CatEditorController {
 		
 		this.notes.setText(cat.getNotes());
 		cat.notesProperty().bind(this.notes.textProperty());
+		this.notes.setTextFormatter(new TextFormatter<>((change) -> {
+			change.setText(change.getText().replaceAll("\n", ""));
+			if(change.getControlNewText().length() > notesMaxChars) {
+				change.setText(change.getText().substring(0, notesMaxChars - change.getControlText().length()));
+				change.setAnchor(change.getControlAnchor());
+				change.setCaretPosition(change.getControlCaretPosition());
+				change.selectRange(change.getCaretPosition(), change.getCaretPosition());
+				Toolkit.getDefaultToolkit().beep();
+			}
+			return change;
+		}));
+		
 	}
 }
