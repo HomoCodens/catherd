@@ -12,6 +12,8 @@ import ch.katzenhausfreunde.catherd.util.console;
 import ch.katzenhausfreunde.catherd.view.RootController;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -31,7 +33,7 @@ public class CatHerdMain extends Application {
 	private Stage primaryStage;
 	private RootController rootController;
 	private CatHerdState state;
-	private String version = "unbekannt";
+	private StringProperty version;
 	
 	public CatHerdMain() {
 		System.out.println("Hi meow.");
@@ -52,10 +54,11 @@ public class CatHerdMain extends Application {
 		// Start listening for changes in the state objects
 		CatHerdState.arm();
 		
+		this.version = new SimpleStringProperty("unbekannt");
 		final Properties properties = new Properties();
 		try {
 			properties.load(this.getClass().getClassLoader().getResourceAsStream("project.properties"));
-			version = properties.getProperty("version");
+			version.set(properties.getProperty("version"));
 		} catch (IOException e) {
 		}
 	}
@@ -176,5 +179,13 @@ public class CatHerdMain extends Application {
 	
 	public Stage getPrimaryStage() {
 		return primaryStage;
+	}
+	
+	public String getVersion() {
+		return version.get();
+	}
+	
+	public StringProperty versionProperty() {
+		return version;
 	}
 }
