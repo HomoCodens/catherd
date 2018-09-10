@@ -25,7 +25,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * menu separators?
 * width of stuff
 * content of Datenblätter (vet visits)
-* "About" window
 * keyboard shortcuts
 * Defautl button type on quit confirmation
 
