@@ -9,7 +9,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 ## NOW
 * use separate paths for documents and store?
 	* set proper starting dirs in choosers
-* Ask for name when creating new item
 * lambdaify listenery
   * How prevalent is java8 anyway? I mean, it's 2018
 * chipImplantedDate is not read in??

@@ -25,6 +25,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -130,19 +131,29 @@ public class RootController {
                 		addMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 							@Override
 							public void handle(ActionEvent e) {
-								// Create new group
-								CatGroup newGroup = new CatGroup("Gruppe " + (n_items + 1));
+								String newGroupName = "Gruppe " + (n_items + 1);
 								
-								// Add group to this item's FosterHome
-								TreeItem<Nameable> parent = getTreeItem();
-								((FosterHome)item).addCatGroup(newGroup);
+								TextInputDialog nameDialog = new TextInputDialog(newGroupName);
+								nameDialog.setTitle("Neue Gruppe");
+								nameDialog.setContentText("Name der neuen Gruppe");
+								nameDialog.setHeaderText(null);
 								
-								// Add the group to the tree
-                				TreeItem<Nameable> newGroupItem = new TreeItem<Nameable>((Nameable)newGroup);
-                				parent.getChildren().add(newGroupItem);
-                				
-                				// Expand item that was just added to
-                				parent.setExpanded(true);
+								Optional<String> result = nameDialog.showAndWait();
+								if(result.isPresent()) {
+									// Create new group
+									CatGroup newGroup = new CatGroup(result.get());
+									
+									// Add group to this item's FosterHome
+									TreeItem<Nameable> parent = getTreeItem();
+									((FosterHome)item).addCatGroup(newGroup);
+									
+									// Add the group to the tree
+	                				TreeItem<Nameable> newGroupItem = new TreeItem<Nameable>((Nameable)newGroup);
+	                				parent.getChildren().add(newGroupItem);
+	                				
+	                				// Expand item that was just added to
+	                				parent.setExpanded(true);
+								}
 							}
                 		});
                 		
@@ -157,19 +168,29 @@ public class RootController {
                 		addMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 							@Override
 							public void handle(ActionEvent e) {
-								// Create new cat
-								Cat newCat = new Cat("Katze " + (n_items + 1));
+								String newCatName = "Katze " + (n_items + 1);
 								
-								// Add cat to item's group
-								TreeItem<Nameable> parent = getTreeItem();
-								((CatGroup)item).addCat(newCat);
+					        	TextInputDialog nameDialog = new TextInputDialog(newCatName);
+					        	nameDialog.setTitle("Neue Katze");
+								nameDialog.setContentText("Name der neuen Katze");
+								nameDialog.setHeaderText(null);
 								
-								// Add cat to tree
-                				TreeItem<Nameable> newCatItem = new TreeItem<Nameable>((Nameable)newCat);
-                				parent.getChildren().add(newCatItem);
-                				
-                				// Expand item that was just added to
-                				parent.setExpanded(true);
+								Optional<String> result = nameDialog.showAndWait();
+								if (result.isPresent()){
+									// Create new cat
+									Cat newCat = new Cat(result.get());
+									
+									// Add cat to item's group
+									TreeItem<Nameable> parent = getTreeItem();
+									((CatGroup)item).addCat(newCat);
+									
+									// Add cat to tree
+	                				TreeItem<Nameable> newCatItem = new TreeItem<Nameable>((Nameable)newCat);
+	                				parent.getChildren().add(newCatItem);
+	                				
+	                				// Expand item that was just added to
+	                				parent.setExpanded(true);   
+								}
 							}
                 		});
                 		
