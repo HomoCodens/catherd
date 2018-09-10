@@ -11,6 +11,7 @@ import ch.katzenhausfreunde.catherd.model.CatHerdStore;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.model.Nameable;
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
+import ch.katzenhausfreunde.catherd.util.ContractType;
 import ch.katzenhausfreunde.catherd.util.DocumentRenderer;
 import ch.katzenhausfreunde.catherd.view.customcontrols.ProgressDialog;
 import javafx.beans.binding.Bindings;
@@ -197,15 +198,19 @@ public class RootController {
                 		// Set the "render documents" item
                 		renderMenuItem.setText("Dokumente für Gruppe erstellen");
                 		renderMenuItem.setOnAction((ActionEvent e) -> {
-                			DirectoryChooser dirChooser = new DirectoryChooser();
-                			File outDir = dirChooser.showDialog(main.getPrimaryStage());
-                			
-                			if(outDir != null) {
-	                			CatGroup group = (CatGroup)item;
-	                			DocumentRenderer renderer = new DocumentRenderer();
-	            			
-	                			showProgress(renderer);
-	                			renderer.renderDocuments(group, outDir);
+                			ContractType type = askForContractType();
+
+                			if(type != null) {
+	                			DirectoryChooser dirChooser = new DirectoryChooser();
+	                			File outDir = dirChooser.showDialog(main.getPrimaryStage());
+	                			
+	                			if(outDir != null) {
+		                			CatGroup group = (CatGroup)item;
+		                			DocumentRenderer renderer = new DocumentRenderer();
+		            			
+		                			showProgress(renderer);
+		                			renderer.renderDocuments(group, outDir, type);
+	                			}
                 			}
                 		});
                 		
@@ -243,13 +248,17 @@ public class RootController {
                 		
                 		renderMenuItem.setText("Dokumente für Katze erstellen");
                 		renderMenuItem.setOnAction((ActionEvent e) -> {
-                			DirectoryChooser dirChooser = new DirectoryChooser();
-                			File outDir = dirChooser.showDialog(main.getPrimaryStage());
-                			
-                			if(outDir != null) {
-	                			Cat cat = (Cat)item;
-	                			DocumentRenderer renderer = new DocumentRenderer();
-	                			renderer.renderDocuments(cat, outDir);
+                			ContractType type = askForContractType();
+                			if(type != null) {
+	                			
+	                			DirectoryChooser dirChooser = new DirectoryChooser();
+	                			File outDir = dirChooser.showDialog(main.getPrimaryStage());
+	                			
+	                			if(outDir != null) {
+		                			Cat cat = (Cat)item;
+		                			DocumentRenderer renderer = new DocumentRenderer();
+		                			renderer.renderDocuments(cat, outDir, type);
+	                			}
                 			}
                 		});
                 		
@@ -394,5 +403,26 @@ public class RootController {
 		progressStage.initModality(Modality.WINDOW_MODAL);
 		
 		progressStage.show();
+	}
+	
+	private ContractType askForContractType() {
+		ButtonType res = new ButtonType("Reservation");
+		ButtonType sal = new ButtonType("Verkauf");
+		
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.getButtonTypes().setAll(res, sal);
+		Optional<ButtonType> out = alert.showAndWait();
+		alert.setTitle("Verträge erstellen");
+		alert.setHeaderText("Welche Art Vertrag soll erstellt werden?");
+		
+		if(out.isPresent()) {
+			if(out.get() == res) {
+				return ContractType.RESERVATION;
+			} else {
+				return ContractType.SALE;
+			}
+		}
+		
+		return null;
 	}
 }

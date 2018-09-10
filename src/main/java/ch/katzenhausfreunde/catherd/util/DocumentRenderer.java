@@ -49,15 +49,15 @@ public class DocumentRenderer {
 		this.renderInProgress.bind(doneDocs.isNotEqualTo(totalDocs));
 	}
 	
-	public void renderDocuments(Cat cat, File destination) {
+	public void renderDocuments(Cat cat, File destination, ContractType type) {
 		initProgress(1);
 		new Thread(() -> {
-			_renderContract(cat, destination);
+			_renderContract(cat, destination, type);
 			Platform.runLater(() -> incrementProgress());
 		}).start();
 	}
 	
-	public void renderDocuments(CatGroup group, File destination) {
+	public void renderDocuments(CatGroup group, File destination, ContractType type) {
 		initProgress(group.getCats().size());
 		currentTask = new Task<Void>() {
 	         @Override 
@@ -68,7 +68,7 @@ public class DocumentRenderer {
 	        			 break;
 	        		 }
 	        		 Platform.runLater(() -> setCurrentTaskMessage("Vertrag für " + c.getName() + "..."));
-	        		 _renderContract(c, destination);
+	        		 _renderContract(c, destination, type);
 	        		 Platform.runLater(() -> incrementProgress());
 	        	 }
 	        	 if(isCancelled()) {
@@ -83,7 +83,7 @@ public class DocumentRenderer {
 	     t.start();
 	}
 	
-	private void _renderContract(Cat cat, File destination) {
+	private void _renderContract(Cat cat, File destination, ContractType type) {
 		initProgress(1);
 		fieldsToFlatten.clear();
 		
@@ -101,6 +101,8 @@ public class DocumentRenderer {
 		try {
 			PDDocument contract = PDDocument.load(inFile);
 			PDAcroForm form = contract.getDocumentCatalog().getAcroForm();
+			
+			fillField("Kombinationsfeld 1", form, type == ContractType.RESERVATION ? "(Reservation)" : "(Verkauf)");
 			
 			// Fill in all foster home related info
 			fillField("Textfeld 1", form, home.getName());
@@ -167,7 +169,9 @@ public class DocumentRenderer {
 			fillField("Textfeld 44", form, cat.getNotes());
 			fillField("Textfeld 42", form, cat.getSoldDate());
 			// Whee weeny oneliners
-			fillField("Textfeld 45", form, (fosterParent.getPostalAndTown() != null ? fosterParent.getPostalAndTown() : "").replaceAll("[0-9,. ]", "") + formatDate(cat.getSoldDate()));
+			fillField("Textfeld 45", form, 
+					(fosterParent.getPostalAndTown() != null ? fosterParent.getPostalAndTown() : "").replaceAll("[0-9,. ]", "") + 
+					formatDate(type == ContractType.RESERVATION ? cat.getReservedDate() : cat.getSoldDate()));
 			
 			
 			form.flatten(fieldsToFlatten, true);

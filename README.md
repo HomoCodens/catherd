@@ -14,7 +14,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
   * How prevalent is java8 anyway? I mean, it's 2018
 * chipImplantedDate is not read in??
 * Can "Save" even if load failed
-* Ask which kind of contract to render
 
 ## Later
 * Document the living daylight out of everything (it's high time)
