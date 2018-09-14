@@ -128,33 +128,30 @@ public class RootController {
             		// Register option to add new group if item is a FosterHome
             		if(item instanceof FosterHome) {
             			addMenuItem.setText("Neue Gruppe");
-                		addMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-							@Override
-							public void handle(ActionEvent e) {
-								String newGroupName = "Gruppe " + (n_items + 1);
+                		addMenuItem.setOnAction((e) -> {
+							String newGroupName = "Gruppe " + (n_items + 1);
+							
+							TextInputDialog nameDialog = new TextInputDialog(newGroupName);
+							nameDialog.setTitle("Neue Gruppe");
+							nameDialog.setContentText("Name der neuen Gruppe");
+							nameDialog.setHeaderText(null);
+							
+							Optional<String> result = nameDialog.showAndWait();
+							if(result.isPresent()) {
+								// Create new group
+								CatGroup newGroup = new CatGroup(result.get());
 								
-								TextInputDialog nameDialog = new TextInputDialog(newGroupName);
-								nameDialog.setTitle("Neue Gruppe");
-								nameDialog.setContentText("Name der neuen Gruppe");
-								nameDialog.setHeaderText(null);
+								// Add group to this item's FosterHome
+								TreeItem<Nameable> parent = getTreeItem();
+								((FosterHome)item).addCatGroup(newGroup);
 								
-								Optional<String> result = nameDialog.showAndWait();
-								if(result.isPresent()) {
-									// Create new group
-									CatGroup newGroup = new CatGroup(result.get());
-									
-									// Add group to this item's FosterHome
-									TreeItem<Nameable> parent = getTreeItem();
-									((FosterHome)item).addCatGroup(newGroup);
-									
-									// Add the group to the tree
-	                				TreeItem<Nameable> newGroupItem = new TreeItem<Nameable>((Nameable)newGroup);
-	                				parent.getChildren().add(newGroupItem);
-	                				
-	                				// Expand item that was just added to
-	                				parent.setExpanded(true);
-	                				CatHerdState.touchStore();
-								}
+								// Add the group to the tree
+                				TreeItem<Nameable> newGroupItem = new TreeItem<Nameable>((Nameable)newGroup);
+                				parent.getChildren().add(newGroupItem);
+                				
+                				// Expand item that was just added to
+                				parent.setExpanded(true);
+                				CatHerdState.touchStore();
 							}
                 		});
                 		
@@ -166,57 +163,51 @@ public class RootController {
                 		
                 		// Set the add MenuItem
                 		addMenuItem.setText("Neue Katze");
-                		addMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-							@Override
-							public void handle(ActionEvent e) {
-								String newCatName = "Katze " + (n_items + 1);
+                		addMenuItem.setOnAction((e) -> {
+							String newCatName = "Katze " + (n_items + 1);
+							
+				        	TextInputDialog nameDialog = new TextInputDialog(newCatName);
+				        	nameDialog.setTitle("Neue Katze");
+							nameDialog.setContentText("Name der neuen Katze");
+							nameDialog.setHeaderText(null);
+							
+							Optional<String> result = nameDialog.showAndWait();
+							if (result.isPresent()){
+								// Create new cat
+								Cat newCat = new Cat(result.get());
 								
-					        	TextInputDialog nameDialog = new TextInputDialog(newCatName);
-					        	nameDialog.setTitle("Neue Katze");
-								nameDialog.setContentText("Name der neuen Katze");
-								nameDialog.setHeaderText(null);
+								// Add cat to item's group
+								TreeItem<Nameable> parent = getTreeItem();
+								((CatGroup)item).addCat(newCat);
 								
-								Optional<String> result = nameDialog.showAndWait();
-								if (result.isPresent()){
-									// Create new cat
-									Cat newCat = new Cat(result.get());
-									
-									// Add cat to item's group
-									TreeItem<Nameable> parent = getTreeItem();
-									((CatGroup)item).addCat(newCat);
-									
-									// Add cat to tree
-	                				TreeItem<Nameable> newCatItem = new TreeItem<Nameable>((Nameable)newCat);
-	                				parent.getChildren().add(newCatItem);
-	                				
-	                				// Expand item that was just added to
-	                				parent.setExpanded(true);
-	                				CatHerdState.touchStore();
-								}
+								// Add cat to tree
+                				TreeItem<Nameable> newCatItem = new TreeItem<Nameable>((Nameable)newCat);
+                				parent.getChildren().add(newCatItem);
+                				
+                				// Expand item that was just added to
+                				parent.setExpanded(true);
+                				CatHerdState.touchStore();
 							}
                 		});
                 		
                 		// Set the remove MenuItem
                 		removeMenuItem.setText("Gruppe entfernen");
-                		removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-                			@Override
-                			public void handle(ActionEvent e) {
-                				// Ask for confirmation from the user
-                				confirmation.setContentText("Gruppe " + item.getName() + " wirklich entfernen?");
-                				Optional<ButtonType> result = confirmation.showAndWait();
-                				
-                				// If they really want to remove the group
-                				if (result.get() == ButtonType.OK){
-                					// Remove the group from the FosterHome
-                					FosterHome parent = (FosterHome)getTreeItem().getParent().getValue();
-                					parent.removeCatGroup((CatGroup)item);
-                					
-                					// Remove the group from the tree
-                    				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
-                    				node.getParent().getChildren().remove(node);
-                    				CatHerdState.touchStore();
-                				}
-                			}
+                		removeMenuItem.setOnAction((e) -> {
+            				// Ask for confirmation from the user
+            				confirmation.setContentText("Gruppe " + item.getName() + " wirklich entfernen?");
+            				Optional<ButtonType> result = confirmation.showAndWait();
+            				
+            				// If they really want to remove the group
+            				if (result.get() == ButtonType.OK){
+            					// Remove the group from the FosterHome
+            					FosterHome parent = (FosterHome)getTreeItem().getParent().getValue();
+            					parent.removeCatGroup((CatGroup)item);
+            					
+            					// Remove the group from the tree
+                				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
+                				node.getParent().getChildren().remove(node);
+                				CatHerdState.touchStore();
+            				}
                 		});
                 		
                 		// Set the "render documents" item
@@ -252,23 +243,20 @@ public class RootController {
                 		
                 		// Create MenuItem
                 		removeMenuItem.setText("Katze entfernen");
-                		removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-                			@Override
-                			public void handle(ActionEvent e) {
-                				// Ask for confirmation
-                				confirmation.setContentText("Katze " + item.getName() + " wirklich entfernen?");
-                				Optional<ButtonType> result = confirmation.showAndWait();
-                				if (result.get() == ButtonType.OK) {
-                					// Remove the cat from its gruop
-                					CatGroup parent = (CatGroup)getTreeItem().getParent().getValue();
-	                				parent.removeCat((Cat)item);
-	                				
-	                				// Remove the cat from the tree
-	                				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
-	                				node.getParent().getChildren().remove(node);
-	                				CatHerdState.touchStore();
-                				}
-                			}
+                		removeMenuItem.setOnAction((e) -> {
+            				// Ask for confirmation
+            				confirmation.setContentText("Katze " + item.getName() + " wirklich entfernen?");
+            				Optional<ButtonType> result = confirmation.showAndWait();
+            				if (result.get() == ButtonType.OK) {
+            					// Remove the cat from its gruop
+            					CatGroup parent = (CatGroup)getTreeItem().getParent().getValue();
+                				parent.removeCat((Cat)item);
+                				
+                				// Remove the cat from the tree
+                				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
+                				node.getParent().getChildren().remove(node);
+                				CatHerdState.touchStore();
+            				}
                 		});
                 		
                 		renderMenuItem.setText("Dokumente für Katze erstellen");
