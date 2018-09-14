@@ -9,9 +9,8 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 ## NOW
 * use separate paths for documents and store?
 	* set proper starting dirs in choosers
-* lambdaify listenery
-  * How prevalent is java8 anyway? I mean, it's 2018
-* chipImplantedDate is not read in??
+ * tick boxes not invalidating state?
+ * arm new additions?
 * Can "Save" even if load failed
 
 ## Later
@@ -19,6 +18,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * icons galore
 * add default home to store when loading empty
 * Small overview in editors?
+	* Stats & reports! (can be done w/ other app via json too though)
 * use context menu items in main menu
 * menu separators?
 * width of stuff

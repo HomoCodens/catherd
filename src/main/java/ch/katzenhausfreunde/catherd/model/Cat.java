@@ -279,7 +279,7 @@ public class Cat extends Nameable {
 		return chipImplantedDate.get();
 	}
 
-	public final void setContact(LocalDate chipImplantedDate) {
+	public final void setChipImplantedDate(LocalDate chipImplantedDate) {
 		this.chipImplantedDate.set(chipImplantedDate);
 	}
 	
