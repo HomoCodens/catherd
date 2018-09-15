@@ -9,9 +9,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 ## NOW
 * use separate paths for documents and store?
 	* set proper starting dirs in choosers
- * tick boxes not invalidating state?
- * arm new additions?
-* Can "Save" even if load failed
 
 ## Later
 * Document the living daylight out of everything (it's high time)

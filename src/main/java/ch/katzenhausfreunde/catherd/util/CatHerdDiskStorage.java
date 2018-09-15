@@ -87,10 +87,12 @@ public class CatHerdDiskStorage {
 		} catch (Exception e) {
 			// If loading failed, show an alert and then return null so the app will use an empty store.
 	        Alert alert = new Alert(AlertType.ERROR);
-	        alert.setTitle("Error");
-	        alert.setHeaderText("Could not load data");
-	        alert.setContentText("Could not load data from file:\n" + file.getPath());
+	        alert.setTitle("Fehler");
+	        alert.setHeaderText("Konnte Daten nicht laden");
+	        alert.setContentText("Fehler beim Laden der Datei\n" + file.getPath());
 
+	        setSavePath(null);
+	        
 	        e.printStackTrace();
 	        
 	        alert.showAndWait();
