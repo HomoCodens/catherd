@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -16,6 +17,7 @@ import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
+import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.Cat;
 import ch.katzenhausfreunde.catherd.model.CatGroup;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
@@ -55,6 +57,7 @@ public class DocumentRenderer {
 			_renderContract(cat, destination, type);
 			Platform.runLater(() -> incrementProgress());
 		}).start();
+		setDocsPath(destination);
 	}
 	
 	public void renderDocuments(CatGroup group, File destination, ContractType type) {
@@ -81,10 +84,10 @@ public class DocumentRenderer {
 	     };
 	     Thread t = new Thread(currentTask);
 	     t.start();
+	     setDocsPath(destination);
 	}
 	
 	private void _renderContract(Cat cat, File destination, ContractType type) {
-		initProgress(1);
 		fieldsToFlatten.clear();
 		
 		Path dest = Paths.get(destination.getAbsolutePath());
@@ -279,6 +282,25 @@ public class DocumentRenderer {
 			return null;
 		}
 		return s.toLowerCase().replaceAll("[^a-zA-Z0-9]", "").replaceAll(" ", "_");
+	}
+	
+	public static File getDocsPath() {
+		Preferences prefs = Preferences.userNodeForPackage(CatHerdMain.class);
+		String docsPath = prefs.get("docsPath",  null);
+		if(docsPath != null) {
+			return new File(docsPath);
+		} else {
+			return null;
+		}
+	}
+	
+	public static void setDocsPath(File file) {
+		Preferences prefs = Preferences.userNodeForPackage(CatHerdMain.class);
+		if(file != null) {
+			prefs.put("docsPath", file.getPath());
+		} else {
+			prefs.remove("docsPath");
+		}
 	}
 	
 	public IntegerProperty doneDocsProperty() {

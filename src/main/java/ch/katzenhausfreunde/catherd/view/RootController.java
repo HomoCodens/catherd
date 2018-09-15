@@ -217,6 +217,7 @@ public class RootController {
 
                 			if(type != null) {
 	                			DirectoryChooser dirChooser = new DirectoryChooser();
+	                			dirChooser.setInitialDirectory(DocumentRenderer.getDocsPath());
 	                			File outDir = dirChooser.showDialog(main.getPrimaryStage());
 	                			
 	                			if(outDir != null) {
@@ -265,6 +266,7 @@ public class RootController {
                 			if(type != null) {
 	                			
 	                			DirectoryChooser dirChooser = new DirectoryChooser();
+	                			dirChooser.setInitialDirectory(DocumentRenderer.getDocsPath());
 	                			File outDir = dirChooser.showDialog(main.getPrimaryStage());
 	                			
 	                			if(outDir != null) {

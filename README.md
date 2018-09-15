@@ -9,6 +9,10 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 ## NOW
 * use separate paths for documents and store?
 	* set proper starting dirs in choosers
+* width of stuff
+* content of Datenblätter (vet visits)
+* keyboard shortcuts
+* Defautl button type on quit confirmation
 
 ## Later
 * Document the living daylight out of everything (it's high time)
@@ -18,10 +22,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 	* Stats & reports! (can be done w/ other app via json too though)
 * use context menu items in main menu
 * menu separators?
-* width of stuff
-* content of Datenblätter (vet visits)
-* keyboard shortcuts
-* Defautl button type on quit confirmation
+
 
 
 ## Maybe
