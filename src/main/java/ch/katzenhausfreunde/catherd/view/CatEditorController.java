@@ -7,6 +7,7 @@ import java.util.Arrays;
 import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.Cat;
 import ch.katzenhausfreunde.catherd.util.console;
+import ch.katzenhausfreunde.catherd.view.customcontrols.LengthLimitedTextArea;
 import ch.katzenhausfreunde.catherd.view.customcontrols.MoneyField;
 import ch.katzenhausfreunde.catherd.view.customcontrols.PersonController;
 import javafx.beans.binding.Bindings;
@@ -100,20 +101,16 @@ public class CatEditorController {
 	private DatePicker vermifuge2Date;
 	
 	@FXML
-	private TextArea illnesses;
-	@FXML
-	private Label illnessesCharactersRemaining;
-	private int illnessesMaxChars = 195;
+	private AnchorPane illnessesContainer;
+	private LengthLimitedTextArea illnesses;
 	
 	@FXML
 	AnchorPane buyerPane;
 	private PersonController buyer;
 	
 	@FXML
-	private TextArea characterTraits;
-	@FXML
-	private Label characterCharactersRemaining;
-	private int characterMaxChars = 140;
+	private AnchorPane characterTraitsContainer;
+	private LengthLimitedTextArea characterTraits;
 	
 	@FXML
 	private MoneyField charge;
@@ -139,10 +136,8 @@ public class CatEditorController {
 	private MoneyField donation;
 	
 	@FXML
-	private TextArea notes;
-	@FXML
-	private Label notesCharactersRemaining;
-	private int notesMaxChars = 325;
+	private AnchorPane notesContainer;
+	private LengthLimitedTextArea notes;
 	
 	public CatEditorController() {
 	}
@@ -168,9 +163,15 @@ public class CatEditorController {
 			
 		chipNo.textProperty().addListener(textFieldNumberifyer);
 		
-		illnessesCharactersRemaining.textProperty().bind(illnesses.textProperty().length().asString().concat("/" + illnessesMaxChars));
-		characterCharactersRemaining.textProperty().bind(characterTraits.textProperty().length().asString().concat("/" + characterMaxChars));
-		notesCharactersRemaining.textProperty().bind(notes.textProperty().length().asString().concat("/" + notesMaxChars));
+		//Easier than fiddling around with scene builder and dependencies...
+		characterTraits = new LengthLimitedTextArea(140);
+		characterTraitsContainer.getChildren().add(characterTraits);
+		
+		illnesses = new LengthLimitedTextArea(195);
+		illnessesContainer.getChildren().add(illnesses);
+		
+		notes = new LengthLimitedTextArea(325);
+		notesContainer.getChildren().add(notes);
 		
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -272,33 +273,11 @@ public class CatEditorController {
 		
 		this.illnesses.setText(cat.getIllnesses());
 		cat.illnessesProperty().bind(this.illnesses.textProperty());
-		this.illnesses.setTextFormatter(new TextFormatter<>((change) -> {
-			change.setText(change.getText().replaceAll("\n", ""));
-			if(change.getControlNewText().length() > illnessesMaxChars) {
-				change.setText(change.getText().substring(0, illnessesMaxChars - change.getControlText().length()));
-				change.setAnchor(change.getControlAnchor());
-				change.setCaretPosition(change.getControlCaretPosition());
-				change.selectRange(change.getCaretPosition(), change.getCaretPosition());
-				Toolkit.getDefaultToolkit().beep();
-			}
-			return change;
-		}));
 		
 		this.buyer.setPerson(cat.getBuyer());
 		
 		this.characterTraits.setText(cat.getCharacterTraits());
 		cat.characterTraitsProperty().bind(this.characterTraits.textProperty());
-		this.characterTraits.setTextFormatter(new TextFormatter<>((change) -> {
-			change.setText(change.getText().replaceAll("\n", ""));
-			if(change.getControlNewText().length() > characterMaxChars) {
-				change.setText(change.getText().substring(0, characterMaxChars - change.getControlText().length()));
-				change.setAnchor(change.getControlAnchor());
-				change.setCaretPosition(change.getControlCaretPosition());
-				change.selectRange(change.getCaretPosition(), change.getCaretPosition());
-				Toolkit.getDefaultToolkit().beep();
-			}
-			return change;
-		}));
 		
 		this.charge.setAmount(cat.getCharge());
 		this.charge.amountProperty().addListener((observable, oldValue, newValue) -> {
@@ -352,17 +331,6 @@ public class CatEditorController {
 		
 		this.notes.setText(cat.getNotes());
 		cat.notesProperty().bind(this.notes.textProperty());
-		this.notes.setTextFormatter(new TextFormatter<>((change) -> {
-			change.setText(change.getText().replaceAll("\n", ""));
-			if(change.getControlNewText().length() > notesMaxChars) {
-				change.setText(change.getText().substring(0, notesMaxChars - change.getControlText().length()));
-				change.setAnchor(change.getControlAnchor());
-				change.setCaretPosition(change.getControlCaretPosition());
-				change.selectRange(change.getCaretPosition(), change.getCaretPosition());
-				Toolkit.getDefaultToolkit().beep();
-			}
-			return change;
-		}));
 		
 	}
 }
