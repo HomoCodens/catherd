@@ -156,7 +156,7 @@ public class CatHerdMain extends Application {
 	}
 	
 	public File handleSaveAs() {
-		FileChooser fileChooser = getJSONChooser();	
+		FileChooser fileChooser = getJSONChooser();
 		File outFile = fileChooser.showSaveDialog(getPrimaryStage());
 
 		if(outFile != null) {
@@ -170,6 +170,7 @@ public class CatHerdMain extends Application {
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON Dateien", "*.json");
 		fileChooser.getExtensionFilters().add(extFilter);
+		fileChooser.setInitialDirectory(new File(CatHerdDiskStorage.getSavePath().getParent()));
 		return fileChooser;
 	}
 	

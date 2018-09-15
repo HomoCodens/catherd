@@ -7,8 +7,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 *a lot as you can see*
 
 ## NOW
-* use separate paths for documents and store?
-	* set proper starting dirs in choosers
 * width of stuff
 * content of Datenblätter (vet visits)
 * keyboard shortcuts
