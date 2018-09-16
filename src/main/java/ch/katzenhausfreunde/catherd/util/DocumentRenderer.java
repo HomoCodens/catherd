@@ -54,14 +54,20 @@ public class DocumentRenderer {
 	
 	public void renderDocuments(Cat cat, File destination, ContractType type) {
 		initProgress(2);
-		new Thread(() -> {
-			Platform.runLater(() -> setCurrentTaskMessage("Vertrag für " + cat.getName() + "..."));
-			_renderContract(cat, destination, type);
-			Platform.runLater(() -> incrementProgress());
-			Platform.runLater(() -> setCurrentTaskMessage("Datenblatt für " + cat.getName() + "..."));
-			_renderDatasheet(cat, destination);
-			Platform.runLater(() -> incrementProgress());
-		}).start();
+		currentTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				Platform.runLater(() -> setCurrentTaskMessage("Vertrag für " + cat.getName() + "..."));
+				_renderContract(cat, destination, type);
+				Platform.runLater(() -> incrementProgress());
+				Platform.runLater(() -> setCurrentTaskMessage("Datenblatt für " + cat.getName() + "..."));
+				_renderDatasheet(cat, destination);
+				Platform.runLater(() -> incrementProgress());
+				return null;
+			}
+		};
+		Thread t = new Thread(currentTask);
+		t.start();
 		setDocsPath(destination);
 	}
 	

@@ -272,6 +272,7 @@ public class RootController {
 	                			if(outDir != null) {
 		                			Cat cat = (Cat)item;
 		                			DocumentRenderer renderer = new DocumentRenderer();
+		                			showProgress(renderer);
 		                			renderer.renderDocuments(cat, outDir, type);
 	                			}
                 			}
