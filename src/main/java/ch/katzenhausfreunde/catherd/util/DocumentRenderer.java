@@ -22,6 +22,7 @@ import ch.katzenhausfreunde.catherd.model.Cat;
 import ch.katzenhausfreunde.catherd.model.CatGroup;
 import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.model.Person;
+import ch.katzenhausfreunde.catherd.model.VeterinaryMeasure;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -52,16 +53,20 @@ public class DocumentRenderer {
 	}
 	
 	public void renderDocuments(Cat cat, File destination, ContractType type) {
-		initProgress(1);
+		initProgress(2);
 		new Thread(() -> {
+			Platform.runLater(() -> setCurrentTaskMessage("Vertrag für " + cat.getName() + "..."));
 			_renderContract(cat, destination, type);
+			Platform.runLater(() -> incrementProgress());
+			Platform.runLater(() -> setCurrentTaskMessage("Datenblatt für " + cat.getName() + "..."));
+			_renderDatasheet(cat, destination);
 			Platform.runLater(() -> incrementProgress());
 		}).start();
 		setDocsPath(destination);
 	}
 	
 	public void renderDocuments(CatGroup group, File destination, ContractType type) {
-		initProgress(group.getCats().size());
+		initProgress(2*group.getCats().size());
 		currentTask = new Task<Void>() {
 	         @Override 
 	         protected Void call() throws Exception {
@@ -72,6 +77,9 @@ public class DocumentRenderer {
 	        		 }
 	        		 Platform.runLater(() -> setCurrentTaskMessage("Vertrag für " + c.getName() + "..."));
 	        		 _renderContract(c, destination, type);
+	        		 Platform.runLater(() -> incrementProgress());
+	        		 Platform.runLater(() -> setCurrentTaskMessage("Datenblatt für " + c.getName() + "..."));
+	        		 _renderDatasheet(c, destination);
 	        		 Platform.runLater(() -> incrementProgress());
 	        	 }
 	        	 if(isCancelled()) {
@@ -228,6 +236,84 @@ public class DocumentRenderer {
 		form.flatten(fieldsToFlatten, true);
 		
 		return castration.getPage(0);
+	}
+	
+	private void _renderDatasheet(Cat cat, File destination) {
+		fieldsToFlatten.clear();
+		
+		Path dest = Paths.get(destination.getAbsolutePath());
+		
+		FosterHome home = CatHerdState.getCatsHome(cat);
+		CatGroup group = CatHerdState.getCatsGroup(cat);
+		
+		File outFile = dest.resolve(fileNameSafeString(group.getName()) + "_" + fileNameSafeString(cat.getName()) + "_datenblatt.pdf").toFile();
+				
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		URL resource = loader.getResource("pdf/datasheet.pdf");
+		File inFile = new File(resource.getFile());
+		
+		try {
+			PDDocument datasheet = PDDocument.load(inFile);
+			PDAcroForm form = datasheet.getDocumentCatalog().getAcroForm();
+			
+			fillField("Textfeld 1", form, home.getName());
+			
+			Person fosterParent = home.getFosterParent();
+			fillField("Textfeld 2", form, fosterParent.getLastName());
+			fillField("Textfeld 3", form, fosterParent.getFirstName());
+			
+			fillField("Textfeld 215", form, cat.getName());
+			fillField("Textfeld 214", form, group.getName());
+			fillField("Textfeld 213", form, cat.getDateOfBirth());
+			fillField("Geschlecht", form, cat.getSex() != "weiblich" ? "Auswahl1" : "Auswahl2");
+			fillField("Textfeld 211", form, cat.getCastratedDate());
+			fillField("Textfeld 209", form, cat.getChipNo());
+			fillField("Textfeld 208", form, cat.getChipImplantedDate());
+			fillField("Textfeld 217", form, "Einzug");
+			fillField("Textfeld 216", form, cat.getSoldDate());
+			
+			// Bit ugly due to the confusedly named form fields
+			for(int i = 0; i < cat.parasiteMeasures().size(); i++) {
+				VeterinaryMeasure vm = cat.parasiteMeasures().get(i);
+				if(i == 0) {
+						fillField("Textfeld 218", form, vm.getDate());
+						fillField("Textfeld 184", form, vm.getCause());
+						fillField("Textfeld 195", form, vm.getMeasures());
+				} else {
+						fillField("Textfeld " + (222 + i - 1), form, vm.getDate());
+						fillField("Textfeld " + (219 + i - 1), form, vm.getCause());
+						fillField("Textfeld " + (225 + i - 1), form, vm.getMeasures());
+				}
+			}
+			
+			for(int i = 0; i < cat.vetMeasures().size(); i++) {
+				VeterinaryMeasure vm = cat.vetMeasures().get(i);
+				int dateFieldIndex;
+				int causeFieldIndex;
+				int measureFieldIndex;
+				if(i < 4) {
+					dateFieldIndex = 239 - 3*i;
+					causeFieldIndex = 238 - 3*i;
+					measureFieldIndex = 237 - 3*i;
+				} else {
+					dateFieldIndex = 242 + 3*(i - 4);
+					causeFieldIndex = 241 + 3*(i - 4);
+					measureFieldIndex = 240 + 3*(i - 4);
+				}
+				fillField("Textfeld " + dateFieldIndex, form, vm.getDate());
+				fillField("Textfeld " + causeFieldIndex, form, vm.getCause());
+				fillField("Textfeld " + measureFieldIndex, form, vm.getMeasures());
+			}
+			
+			datasheet.save(outFile);
+			datasheet.close();
+		} catch (InvalidPasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void fillField(String fieldName, PDAcroForm form, String value) throws IOException {

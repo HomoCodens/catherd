@@ -300,11 +300,11 @@ public class CatEditorController {
 		} else {
 			ArrayList<VeterinaryMeasure> vms = new ArrayList<VeterinaryMeasure>();
 			vms.addAll(cat.parasiteMeasures());
-			for(int i = 0; i < vms.size() && i < 5; i++) {
+			for(int i = 0; i < vms.size() && i < 4; i++) {
 				addParasiteMeasure(vms.get(i), cat);
 			}
 		}
-		this.newParasiteMeasure.disableProperty().bind(Bindings.size(cat.parasiteMeasures()).greaterThanOrEqualTo(5));
+		this.newParasiteMeasure.disableProperty().bind(Bindings.size(cat.parasiteMeasures()).greaterThanOrEqualTo(4));
 		this.newParasiteMeasure.setOnAction((e) -> {
 			VeterinaryMeasure vm = new VeterinaryMeasure();
 			cat.addParasiteMeasure(vm);
@@ -322,7 +322,7 @@ public class CatEditorController {
 				addVetMeasure(vms.get(i), cat);
 			}
 		}
-		this.newVetMeasure.disableProperty().bind(Bindings.size(cat.vetMeasures()).greaterThanOrEqualTo(5));
+		this.newVetMeasure.disableProperty().bind(Bindings.size(cat.vetMeasures()).greaterThanOrEqualTo(8));
 		this.newVetMeasure.setOnAction((e) -> {
 			VeterinaryMeasure vm = new VeterinaryMeasure();
 			cat.addVetMeasure(vm);
