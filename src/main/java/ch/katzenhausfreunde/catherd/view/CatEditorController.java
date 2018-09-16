@@ -197,7 +197,7 @@ public class CatEditorController {
 			TitledPane buyerPaneContent = new TitledPane("Käufer", buyerEditor);
 			buyerPaneContent.setExpanded(false);
 			buyerPaneContent.setAnimated(false);
-			//personPortion.prefWidthProperty().bind(accordion.widthProperty());
+			buyerPaneContent.prefWidthProperty().bind(buyerPane.widthProperty());
 
 			buyerPane.getChildren().add(buyerPaneContent);
 		} catch(IOException e) {
