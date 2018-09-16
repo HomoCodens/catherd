@@ -227,15 +227,15 @@
                       </TitledPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane>
                      <children>
-                        <TitledPane animated="false" prefHeight="206.0" prefWidth="440.0" text="Datenblatteinträge" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TitledPane animated="false" expanded="false" text="Parasiten">
                           <content>
                             <AnchorPane>
                                  <children>
                                     <VBox prefHeight="174.0" prefWidth="438.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <VBox fx:id="parasiteMeasureContainer" prefHeight="200.0" prefWidth="100.0" />
+                                          <VBox fx:id="parasiteMeasureContainer" prefHeight="0.0" prefWidth="419.0" />
                                           <HBox alignment="TOP_CENTER">
                                              <children>
                                                 <Button fx:id="newParasiteMeasure" mnemonicParsing="false" text="+" />
@@ -246,6 +246,28 @@
                                  </children>
                               </AnchorPane>
                           </content>
+                        </TitledPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane>
+                     <children>
+                        <TitledPane animated="false" expanded="false" text="Tierarztbesuche">
+                           <content>
+                              <AnchorPane>
+                                 <children>
+                                    <VBox prefHeight="174.0" prefWidth="438.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <VBox fx:id="vetMeasureContainer" prefHeight="0.0" prefWidth="419.0" />
+                                          <HBox alignment="TOP_CENTER">
+                                             <children>
+                                                <Button fx:id="newVetMeasure" mnemonicParsing="false" text="+" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </content>
                         </TitledPane>
                      </children>
                   </AnchorPane>
@@ -325,6 +347,7 @@
                         </TitledPane>
                      </children>
                   </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                </children>
             </VBox>
          </content>

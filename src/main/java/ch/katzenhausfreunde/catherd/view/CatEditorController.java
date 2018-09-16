@@ -118,6 +118,12 @@ public class CatEditorController {
 	private Button newParasiteMeasure;
 	
 	@FXML
+	private VBox vetMeasureContainer;
+	
+	@FXML
+	private Button newVetMeasure;
+	
+	@FXML
 	AnchorPane buyerPane;
 	private PersonController buyer;
 	
@@ -304,6 +310,24 @@ public class CatEditorController {
 			cat.addParasiteMeasure(vm);
 			addParasiteMeasure(vm, cat);
 		});
+
+		if(cat.vetMeasures().size() == 0) {
+			VeterinaryMeasure vm = new VeterinaryMeasure();
+			addVetMeasure(vm, cat);
+			cat.addVetMeasure(vm);
+		} else {
+			ArrayList<VeterinaryMeasure> vms = new ArrayList<VeterinaryMeasure>();
+			vms.addAll(cat.vetMeasures());
+			for(int i = 0; i < vms.size() && i < 8; i++) {
+				addVetMeasure(vms.get(i), cat);
+			}
+		}
+		this.newVetMeasure.disableProperty().bind(Bindings.size(cat.vetMeasures()).greaterThanOrEqualTo(5));
+		this.newVetMeasure.setOnAction((e) -> {
+			VeterinaryMeasure vm = new VeterinaryMeasure();
+			cat.addVetMeasure(vm);
+			addVetMeasure(vm, cat);
+		});
 		
 		this.buyer.setPerson(cat.getBuyer());
 		
@@ -379,9 +403,30 @@ public class CatEditorController {
 		parasiteMeasureContainer.getChildren().add(vme);
 	}
 	
+	private void addVetMeasure(final VeterinaryMeasure vm, Cat cat) {
+		vm.arm();
+
+		int nMeasures = vetMeasureContainer.getChildren().size();
+		VeterinaryMeasureEditor vme = new VeterinaryMeasureEditor("Eintrag " + (nMeasures + 1));
+		vme.setMeasure(vm);
+		vme.setOnRemove((re) -> {
+			cat.removeVetMeasure(vm);
+			vetMeasureContainer.getChildren().remove(vme);
+			relabelVetMeasures();
+		});
+		vetMeasureContainer.getChildren().add(vme);
+	}
+	
 	private void relabelParasiteMeasures() {
 		for(int i = 0; i < parasiteMeasureContainer.getChildren().size(); i++) {
 			VeterinaryMeasureEditor vme = (VeterinaryMeasureEditor)parasiteMeasureContainer.getChildren().get(i);
+			vme.setLabel("Eintrag " + (i + 1));
+		}
+	}
+	
+	private void relabelVetMeasures() {
+		for(int i = 0; i < vetMeasureContainer.getChildren().size(); i++) {
+			VeterinaryMeasureEditor vme = (VeterinaryMeasureEditor)vetMeasureContainer.getChildren().get(i);
 			vme.setLabel("Eintrag " + (i + 1));
 		}
 	}

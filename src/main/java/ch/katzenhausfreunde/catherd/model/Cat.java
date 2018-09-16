@@ -51,6 +51,8 @@ public class Cat extends Nameable {
 	private StringProperty illnesses;
 	@XmlElement(name = "parasiteMeasures")
 	private ObservableList<VeterinaryMeasure> parasiteMeasures;
+	@XmlElement(name = "vetMeasures")
+	private ObservableList<VeterinaryMeasure> vetMeasures;
 	private Person buyer;
 	private StringProperty characterTraits;
 	private FloatProperty charge;
@@ -101,6 +103,7 @@ public class Cat extends Nameable {
 		vermifuge2Date = new SimpleObjectProperty<LocalDate>(null);
 		illnesses = new SimpleStringProperty(null);
 		parasiteMeasures = FXCollections.observableArrayList();
+		vetMeasures = FXCollections.observableArrayList();
 		buyer = new Person();
 		characterTraits = new SimpleStringProperty(null);
 		charge = new SimpleFloatProperty();
@@ -142,6 +145,9 @@ public class Cat extends Nameable {
 		vermifuge2Date.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		illnesses.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		for(VeterinaryMeasure vm : parasiteMeasures) {
+			vm.arm();
+		}
+		for(VeterinaryMeasure vm : vetMeasures) {
 			vm.arm();
 		}
 		buyer.arm();
@@ -473,6 +479,10 @@ public class Cat extends Nameable {
 		return parasiteMeasures;
 	}
 	
+	public final ObservableList<VeterinaryMeasure> vetMeasures() {
+		return vetMeasures;
+	}
+	
 	public final Person getBuyer() {
 		return buyer;
 	}
@@ -601,7 +611,11 @@ public class Cat extends Nameable {
 		parasiteMeasures.remove(vm);
 	}
 	
-	public void removeParasiteMeasure(int i) {
-		parasiteMeasures.remove(i);
+	public void addVetMeasure(VeterinaryMeasure vm) {
+		vetMeasures.add(vm);
+	}
+	
+	public void removeVetMeasure(VeterinaryMeasure vm) {
+		vetMeasures.remove(vm);
 	}
 }
