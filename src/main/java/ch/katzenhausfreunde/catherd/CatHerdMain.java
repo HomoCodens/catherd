@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
@@ -85,11 +86,13 @@ public class CatHerdMain extends Application {
 				alert.setHeaderText("Ungespeicherte Änderungen");
 				alert.setContentText("Trotzdem beenden?");
 				
-				ButtonType confirm = new ButtonType("Beenden", ButtonData.OK_DONE);
+				ButtonType confirm = new ButtonType("Beenden");
 				ButtonType save = new ButtonType("Speichern");
-				ButtonType cancel = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
+				ButtonType cancel = new ButtonType("Abbrechen");
 				
-				alert.getButtonTypes().setAll(confirm, save, cancel);
+				alert.getButtonTypes().setAll(save, confirm, cancel);
+				Button cancelButton = (Button)alert.getDialogPane().lookupButton(cancel);
+				cancelButton.setDefaultButton(true);
 				
 				Optional<ButtonType> result = alert.showAndWait();
 				if(result.get() == cancel) {

@@ -8,7 +8,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 
 ## NOW
 * width of stuff
-* Defautl button type on quit confirmation
 
 ## Later
 * Document the living daylight out of everything (it's high time)
