@@ -7,7 +7,6 @@ import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.view.customcontrols.PersonController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
@@ -17,7 +16,7 @@ public class FosterHomeEditorController {
 	private TextField fosterHomeName;
 	
 	@FXML
-	private Accordion accordion;
+	private AnchorPane personContainer;
 	
 	private PersonController personController;
 	
@@ -35,10 +34,9 @@ public class FosterHomeEditorController {
 			personController = loader.getController();
 			
 			TitledPane personPortion = new TitledPane("Pflegeperson", catEditor);
-			personPortion.prefWidthProperty().bind(accordion.widthProperty());
+			personPortion.prefWidthProperty().bind(personContainer.widthProperty());
 			
-			accordion.getPanes().clear();
-			accordion.getPanes().add(personPortion);
+			personContainer.getChildren().add(personPortion);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
