@@ -80,6 +80,11 @@ public class DocumentRenderer {
 					_renderDatasheet(cat, destination);
 					Platform.runLater(() -> incrementProgress());
 				}
+				if(isCancelled()) {
+	        		 Platform.runLater(() -> setCurrentTaskMessage("Abgebrochen"));
+	        	 } else {
+	        		 Platform.runLater(() -> setCurrentTaskMessage("Fertig!"));
+	        	 }
 				return null;
 			}
 		};
