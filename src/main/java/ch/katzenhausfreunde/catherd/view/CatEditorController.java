@@ -2,14 +2,17 @@ package ch.katzenhausfreunde.catherd.view;
 
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.Cat;
+import ch.katzenhausfreunde.catherd.model.VeterinaryMeasure;
 import ch.katzenhausfreunde.catherd.util.console;
 import ch.katzenhausfreunde.catherd.view.customcontrols.LengthLimitedTextArea;
 import ch.katzenhausfreunde.catherd.view.customcontrols.MoneyField;
 import ch.katzenhausfreunde.catherd.view.customcontrols.PersonController;
+import ch.katzenhausfreunde.catherd.view.customcontrols.VeterinaryMeasureEditor;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -17,15 +20,19 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 public class CatEditorController {
 	@FXML
@@ -103,6 +110,12 @@ public class CatEditorController {
 	@FXML
 	private AnchorPane illnessesContainer;
 	private LengthLimitedTextArea illnesses;
+	
+	@FXML
+	private VBox parasiteMeasureContainer;
+	
+	@FXML
+	private Button newParasiteMeasure;
 	
 	@FXML
 	AnchorPane buyerPane;
@@ -274,6 +287,24 @@ public class CatEditorController {
 		this.illnesses.setText(cat.getIllnesses());
 		cat.illnessesProperty().bind(this.illnesses.textProperty());
 		
+		if(cat.parasiteMeasures().size() == 0) {
+			VeterinaryMeasure vm = new VeterinaryMeasure();
+			addParasiteMeasure(vm, cat);
+			cat.addParasiteMeasure(vm);
+		} else {
+			ArrayList<VeterinaryMeasure> vms = new ArrayList<VeterinaryMeasure>();
+			vms.addAll(cat.parasiteMeasures());
+			for(int i = 0; i < vms.size() && i < 5; i++) {
+				addParasiteMeasure(vms.get(i), cat);
+			}
+		}
+		this.newParasiteMeasure.disableProperty().bind(Bindings.size(cat.parasiteMeasures()).greaterThanOrEqualTo(5));
+		this.newParasiteMeasure.setOnAction((e) -> {
+			VeterinaryMeasure vm = new VeterinaryMeasure();
+			cat.addParasiteMeasure(vm);
+			addParasiteMeasure(vm, cat);
+		});
+		
 		this.buyer.setPerson(cat.getBuyer());
 		
 		this.characterTraits.setText(cat.getCharacterTraits());
@@ -332,5 +363,26 @@ public class CatEditorController {
 		this.notes.setText(cat.getNotes());
 		cat.notesProperty().bind(this.notes.textProperty());
 		
+	}
+	
+	private void addParasiteMeasure(final VeterinaryMeasure vm, Cat cat) {
+		vm.arm();
+		
+		int nMeasures = parasiteMeasureContainer.getChildren().size();
+		VeterinaryMeasureEditor vme = new VeterinaryMeasureEditor("Eintrag " + (nMeasures + 1));
+		vme.setMeasure(vm);
+		vme.setOnRemove((re) -> {
+			cat.removeParasiteMeasure(vm);
+			parasiteMeasureContainer.getChildren().remove(vme);
+			relabelParasiteMeasures();
+		});
+		parasiteMeasureContainer.getChildren().add(vme);
+	}
+	
+	private void relabelParasiteMeasures() {
+		for(int i = 0; i < parasiteMeasureContainer.getChildren().size(); i++) {
+			VeterinaryMeasureEditor vme = (VeterinaryMeasureEditor)parasiteMeasureContainer.getChildren().get(i);
+			vme.setLabel("Eintrag " + (i + 1));
+		}
 	}
 }

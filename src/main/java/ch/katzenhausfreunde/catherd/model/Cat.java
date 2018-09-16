@@ -15,6 +15,8 @@ import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * @author thoenis
@@ -47,6 +49,8 @@ public class Cat extends Nameable {
 	private ObjectProperty<LocalDate> vermifuge1Date; // Vermifuge... what a word!
 	private ObjectProperty<LocalDate> vermifuge2Date;
 	private StringProperty illnesses;
+	@XmlElement(name = "parasiteMeasures")
+	private ObservableList<VeterinaryMeasure> parasiteMeasures;
 	private Person buyer;
 	private StringProperty characterTraits;
 	private FloatProperty charge;
@@ -96,6 +100,7 @@ public class Cat extends Nameable {
 		vermifuge1Date = new SimpleObjectProperty<LocalDate>(null); // Vermifuge... what a word!
 		vermifuge2Date = new SimpleObjectProperty<LocalDate>(null);
 		illnesses = new SimpleStringProperty(null);
+		parasiteMeasures = FXCollections.observableArrayList();
 		buyer = new Person();
 		characterTraits = new SimpleStringProperty(null);
 		charge = new SimpleFloatProperty();
@@ -136,6 +141,9 @@ public class Cat extends Nameable {
 		vermifuge1Date.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore()); // Vermifuge... what a word!
 		vermifuge2Date.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		illnesses.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
+		for(VeterinaryMeasure vm : parasiteMeasures) {
+			vm.arm();
+		}
 		buyer.arm();
 		characterTraits.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		charge.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
@@ -461,6 +469,10 @@ public class Cat extends Nameable {
 		return illnesses;
 	}
 
+	public final ObservableList<VeterinaryMeasure> parasiteMeasures() {
+		return parasiteMeasures;
+	}
+	
 	public final Person getBuyer() {
 		return buyer;
 	}
@@ -579,5 +591,17 @@ public class Cat extends Nameable {
 
 	public final StringProperty notesProperty() {
 		return notes;
+	}
+
+	public void addParasiteMeasure(VeterinaryMeasure vm) {
+		parasiteMeasures.add(vm);
+	}
+	
+	public void removeParasiteMeasure(VeterinaryMeasure vm) {
+		parasiteMeasures.remove(vm);
+	}
+	
+	public void removeParasiteMeasure(int i) {
+		parasiteMeasures.remove(i);
 	}
 }
