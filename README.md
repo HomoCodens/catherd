@@ -8,7 +8,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 
 ## NOW
 * width of stuff
-* options to render only contracts/datasheets
 * Defautl button type on quit confirmation
 
 ## Later

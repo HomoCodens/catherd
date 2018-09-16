@@ -1,20 +1,14 @@
 package ch.katzenhausfreunde.catherd.view;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.katzenhausfreunde.catherd.CatHerdMain;
-import ch.katzenhausfreunde.catherd.model.CatHerdStore;
-import ch.katzenhausfreunde.catherd.util.CatHerdDiskStorage;
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
-import ch.katzenhausfreunde.catherd.view.customcontrols.ProgressDialog;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
