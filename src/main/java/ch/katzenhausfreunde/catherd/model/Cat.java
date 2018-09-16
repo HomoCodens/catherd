@@ -57,6 +57,7 @@ public class Cat extends Nameable {
 	private StringProperty characterTraits;
 	private FloatProperty charge;
 	private FloatProperty downPayment;
+	private ObjectProperty<LocalDate> movedInDate;
 	private ObjectProperty<LocalDate> reservedDate;
 	private FloatProperty remainingPayment;
 	private ObjectProperty<LocalDate> soldDate;
@@ -108,6 +109,7 @@ public class Cat extends Nameable {
 		characterTraits = new SimpleStringProperty(null);
 		charge = new SimpleFloatProperty();
 		downPayment = new SimpleFloatProperty();
+		movedInDate = new SimpleObjectProperty<LocalDate>(null);
 		reservedDate = new SimpleObjectProperty<LocalDate>(null);
 		remainingPayment = new SimpleFloatProperty();
 		soldDate = new SimpleObjectProperty<LocalDate>(null);
@@ -154,6 +156,7 @@ public class Cat extends Nameable {
 		characterTraits.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		charge.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		downPayment.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
+		movedInDate.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		reservedDate.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		remainingPayment.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		soldDate.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
@@ -525,6 +528,20 @@ public class Cat extends Nameable {
 
 	public final FloatProperty downPaymentProperty() {
 		return downPayment;
+	}
+	
+	@XmlJavaTypeAdapter(LocalDateAdapter.class)
+	@XmlElement(name = "movedInDate")
+	public final LocalDate getMovedInDate() {
+		return movedInDate.get();
+	}
+	
+	public final void setMovedInDate(LocalDate reservedDate) {
+		this.movedInDate.set(reservedDate);
+	}
+	
+	public final ObjectProperty<LocalDate> movedInDateProperty() {
+		return movedInDate;
 	}
 	
 	@XmlJavaTypeAdapter(LocalDateAdapter.class)

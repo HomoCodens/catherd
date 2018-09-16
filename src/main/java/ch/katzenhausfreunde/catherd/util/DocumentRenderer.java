@@ -269,7 +269,7 @@ public class DocumentRenderer {
 			fillField("Textfeld 211", form, cat.getCastratedDate());
 			fillField("Textfeld 209", form, cat.getChipNo());
 			fillField("Textfeld 208", form, cat.getChipImplantedDate());
-			fillField("Textfeld 217", form, "Einzug");
+			fillField("Textfeld 217", form, cat.getMovedInDate());
 			fillField("Textfeld 216", form, cat.getSoldDate());
 			
 			// Bit ugly due to the confusedly named form fields

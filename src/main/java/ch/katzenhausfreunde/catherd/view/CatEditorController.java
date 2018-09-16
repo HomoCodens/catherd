@@ -140,6 +140,9 @@ public class CatEditorController {
 	private MoneyField downPayment;
 	
 	@FXML
+	private DatePicker movedInDate;
+	
+	@FXML
 	private DatePicker reservedDate;
 	
 	@FXML
@@ -364,6 +367,9 @@ public class CatEditorController {
 		
 		this.reservedDate.setValue(cat.getReservedDate());;
 		cat.reservedDateProperty().bind(this.reservedDate.valueProperty());
+		
+		this.movedInDate.setValue(cat.getMovedInDate());
+		cat.movedInDateProperty().bind(this.movedInDate.valueProperty());
 		
 		this.remainingPayment.setAmount(cat.getRemainingPayment());
 		this.remainingPayment.amountProperty().addListener((observable, oldValue, newValue) -> {
