@@ -18,341 +18,344 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="370.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.katzenhausfreunde.catherd.view.CatEditorController">
+<AnchorPane prefHeight="430.0" prefWidth="476.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.katzenhausfreunde.catherd.view.CatEditorController">
    <children>
-      <ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <VBox>
+            <AnchorPane>
                <children>
-                  <AnchorPane>
+                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
-                        <GridPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <AnchorPane>
                            <children>
-                              <Label text="Name im Verein" />
-                              <TextField fx:id="catName" GridPane.columnIndex="1" />
-                              <Label text="Neuer Name" GridPane.rowIndex="1" />
-                              <TextField fx:id="newName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <GridPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Name im Verein" />
+                                    <TextField fx:id="catName" GridPane.columnIndex="1" />
+                                    <Label text="Neuer Name" GridPane.rowIndex="1" />
+                                    <TextField fx:id="newName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </GridPane>
                            </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane VBox.vgrow="NEVER">
-                     <children>
-                      <TitledPane animated="false" expanded="false" text="Infos Katze" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                        <content>
-                          <AnchorPane>
-                                 <children>
-                                    <VBox layoutX="19.600000381469727" layoutY="19.600000381469727">
+                        </AnchorPane>
+                        <AnchorPane VBox.vgrow="NEVER">
+                           <children>
+                            <TitledPane animated="false" expanded="false" text="Infos Katze" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                              <content>
+                                <AnchorPane>
                                        <children>
-                                          <HBox>
+                                          <VBox layoutX="19.600000381469727" layoutY="19.600000381469727">
                                              <children>
-                                                <Label text="Charaktereigenschaften" />
+                                                <HBox>
+                                                   <children>
+                                                      <Label text="Charaktereigenschaften" />
+                                                   </children>
+                                                </HBox>
+                                                <AnchorPane fx:id="characterTraitsContainer" maxHeight="108.0" prefHeight="108.0" prefWidth="388.0" />
+                                                <GridPane hgap="10.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="74.0" minWidth="10.0" prefWidth="72.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.0" minWidth="10.0" prefWidth="86.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Geboren" />
+                                                      <DatePicker fx:id="dateOfBirth" GridPane.columnIndex="1" />
+                                                      <Label text="Farbe" GridPane.columnIndex="2" />
+                                                      <TextField fx:id="color" GridPane.columnIndex="3" />
+                                                      <Label text="Geschlecht" GridPane.rowIndex="1" />
+                                                      <ChoiceBox fx:id="sex" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <Label text="Kastriert am" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                      <DatePicker fx:id="castratedDate" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                                      <Label text="Rasse" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="breed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label text="Stammbaum" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                      <CheckBox fx:id="lineage" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                      <Label text="Freilauf" GridPane.rowIndex="3" />
+                                                      <CheckBox fx:id="runFree" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                      <Label text="Sozialkontakt" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                                      <CheckBox fx:id="contact" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                      <Label text="Chip-Nr." GridPane.rowIndex="4" />
+                                                      <TextField fx:id="chipNo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <Label text="Chip-Implantation am" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                                      <DatePicker fx:id="chipImplantedDate" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                                   </children>
+                                                </GridPane>
                                              </children>
-                                          </HBox>
-                                          <AnchorPane fx:id="characterTraitsContainer" maxHeight="108.0" prefHeight="108.0" prefWidth="388.0" />
-                                          <GridPane hgap="10.0">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="74.0" minWidth="10.0" prefWidth="72.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.0" minWidth="10.0" prefWidth="86.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <Label text="Geboren" />
-                                                <DatePicker fx:id="dateOfBirth" GridPane.columnIndex="1" />
-                                                <Label text="Farbe" GridPane.columnIndex="2" />
-                                                <TextField fx:id="color" GridPane.columnIndex="3" />
-                                                <Label text="Geschlecht" GridPane.rowIndex="1" />
-                                                <ChoiceBox fx:id="sex" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label text="Kastriert am" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                <DatePicker fx:id="castratedDate" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                                <Label text="Rasse" GridPane.rowIndex="2" />
-                                                <TextField fx:id="breed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label text="Stammbaum" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                                <CheckBox fx:id="lineage" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                                <Label text="Freilauf" GridPane.rowIndex="3" />
-                                                <CheckBox fx:id="runFree" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                                <Label text="Sozialkontakt" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                                <CheckBox fx:id="contact" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                                <Label text="Chip-Nr." GridPane.rowIndex="4" />
-                                                <TextField fx:id="chipNo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <Label text="Chip-Implantation am" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                                <DatePicker fx:id="chipImplantedDate" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                             </children>
-                                          </GridPane>
+                                          </VBox>
                                        </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </TitledPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane>
-                     <children>
-                      <TitledPane animated="false" expanded="false" text="Medizinisches" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                        <content>
-                          <AnchorPane>
-                                 <children>
-                                    <VBox layoutX="18.6" layoutY="19.6">
+                                    </AnchorPane>
+                              </content>
+                            </TitledPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                            <TitledPane animated="false" expanded="false" text="Medizinisches" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                              <content>
+                                <AnchorPane>
                                        <children>
-                                          <Label text="Impfungen">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <GridPane prefHeight="161.0" prefWidth="366.0">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
+                                          <VBox layoutX="18.6" layoutY="19.6">
                                              <children>
-                                                <Label text="1. Katzenschnupfen/-seuche" />
-                                                <DatePicker fx:id="FVRVaccination1Date" GridPane.columnIndex="1" />
-                                                <Label text="2. Katzenschnupfen/-seuche" GridPane.rowIndex="1" />
-                                                <DatePicker fx:id="FVRVaccination2Date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label text="1. Leukose" GridPane.rowIndex="2" />
-                                                <DatePicker fx:id="leucosisVaccination1Date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label text="2. Leukose" GridPane.rowIndex="3" />
-                                                <DatePicker fx:id="leucosisVaccination2Date" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label text="Impfungen">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <GridPane prefHeight="161.0" prefWidth="366.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="1. Katzenschnupfen/-seuche" />
+                                                      <DatePicker fx:id="FVRVaccination1Date" GridPane.columnIndex="1" />
+                                                      <Label text="2. Katzenschnupfen/-seuche" GridPane.rowIndex="1" />
+                                                      <DatePicker fx:id="FVRVaccination2Date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <Label text="1. Leukose" GridPane.rowIndex="2" />
+                                                      <DatePicker fx:id="leucosisVaccination1Date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label text="2. Leukose" GridPane.rowIndex="3" />
+                                                      <DatePicker fx:id="leucosisVaccination2Date" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                   </children>
+                                                </GridPane>
+                                                <GridPane prefHeight="40.0" prefWidth="347.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="10.0" prefWidth="47.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="185.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Andere" />
+                                                      <TextField fx:id="otherVaccination" GridPane.columnIndex="1" />
+                                                      <DatePicker fx:id="otherVaccinationDate" GridPane.columnIndex="2" />
+                                                   </children>
+                                                </GridPane>
+                                                <Label text="Bluttests">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <GridPane>
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Leukose" />
+                                                      <DatePicker fx:id="leucosisTestDate" GridPane.columnIndex="2" />
+                                                      <ChoiceBox fx:id="leucosisTestResult" prefWidth="150.0" GridPane.columnIndex="1" />
+                                                   </children>
+                                                </GridPane>
+                                                <GridPane>
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="10.0" prefWidth="50.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.0" minWidth="10.0" prefWidth="176.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="115.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Andere" />
+                                                      <TextField fx:id="otherTests" GridPane.columnIndex="1" />
+                                                      <DatePicker fx:id="otherTestsDate" GridPane.columnIndex="2" />
+                                                   </children>
+                                                </GridPane>
+                                                <Label text="Entwurmung">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <GridPane>
+                                                  <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="1." />
+                                                      <Label text="2." GridPane.columnIndex="2" />
+                                                      <DatePicker fx:id="vermifuge1Date" GridPane.columnIndex="1" />
+                                                      <DatePicker fx:id="vermifuge2Date" GridPane.columnIndex="3" />
+                                                   </children>
+                                                </GridPane>
+                                                <Label text="Krankheiten">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <AnchorPane fx:id="illnessesContainer" prefHeight="109.0" prefWidth="400.0" />
                                              </children>
-                                          </GridPane>
-                                          <GridPane prefHeight="40.0" prefWidth="347.0">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="10.0" prefWidth="47.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="185.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <Label text="Andere" />
-                                                <TextField fx:id="otherVaccination" GridPane.columnIndex="1" />
-                                                <DatePicker fx:id="otherVaccinationDate" GridPane.columnIndex="2" />
-                                             </children>
-                                          </GridPane>
-                                          <Label text="Bluttests">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <GridPane>
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <Label text="Leukose" />
-                                                <DatePicker fx:id="leucosisTestDate" GridPane.columnIndex="2" />
-                                                <ChoiceBox fx:id="leucosisTestResult" prefWidth="150.0" GridPane.columnIndex="1" />
-                                             </children>
-                                          </GridPane>
-                                          <GridPane>
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="10.0" prefWidth="50.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.0" minWidth="10.0" prefWidth="176.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="115.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <Label text="Andere" />
-                                                <TextField fx:id="otherTests" GridPane.columnIndex="1" />
-                                                <DatePicker fx:id="otherTestsDate" GridPane.columnIndex="2" />
-                                             </children>
-                                          </GridPane>
-                                          <Label text="Entwurmung">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <GridPane>
-                                            <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <Label text="1." />
-                                                <Label text="2." GridPane.columnIndex="2" />
-                                                <DatePicker fx:id="vermifuge1Date" GridPane.columnIndex="1" />
-                                                <DatePicker fx:id="vermifuge2Date" GridPane.columnIndex="3" />
-                                             </children>
-                                          </GridPane>
-                                          <Label text="Krankheiten">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <AnchorPane fx:id="illnessesContainer" prefHeight="109.0" prefWidth="400.0" />
+                                          </VBox>
                                        </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </TitledPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane>
-                     <children>
-                        <TitledPane animated="false" expanded="false" text="Parasiten">
-                          <content>
-                            <AnchorPane>
-                                 <children>
-                                    <VBox prefHeight="174.0" prefWidth="438.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    </AnchorPane>
+                              </content>
+                            </TitledPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <TitledPane animated="false" expanded="false" prefHeight="25.0" prefWidth="461.0" text="Parasiten" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <content>
+                                  <AnchorPane>
                                        <children>
-                                          <VBox fx:id="parasiteMeasureContainer" prefHeight="0.0" prefWidth="419.0" />
-                                          <HBox alignment="TOP_CENTER">
+                                          <VBox prefHeight="174.0" prefWidth="438.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <Button fx:id="newParasiteMeasure" mnemonicParsing="false" text="+" />
+                                                <VBox fx:id="parasiteMeasureContainer" prefHeight="0.0" prefWidth="419.0" />
+                                                <HBox alignment="TOP_CENTER">
+                                                   <children>
+                                                      <Button fx:id="newParasiteMeasure" mnemonicParsing="false" text="+" />
+                                                   </children>
+                                                </HBox>
                                              </children>
-                                          </HBox>
+                                          </VBox>
                                        </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </TitledPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane>
-                     <children>
-                        <TitledPane animated="false" expanded="false" text="Tierarztbesuche">
-                           <content>
-                              <AnchorPane>
-                                 <children>
-                                    <VBox prefHeight="174.0" prefWidth="438.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    </AnchorPane>
+                                </content>
+                              </TitledPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <TitledPane animated="false" expanded="false" prefHeight="25.0" prefWidth="461.0" text="Tierarztbesuche" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <AnchorPane>
                                        <children>
-                                          <VBox fx:id="vetMeasureContainer" prefHeight="0.0" prefWidth="419.0" />
-                                          <HBox alignment="TOP_CENTER">
+                                          <VBox prefHeight="174.0" prefWidth="438.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <Button fx:id="newVetMeasure" mnemonicParsing="false" text="+" />
+                                                <VBox fx:id="vetMeasureContainer" prefHeight="0.0" prefWidth="419.0" />
+                                                <HBox alignment="TOP_CENTER">
+                                                   <children>
+                                                      <Button fx:id="newVetMeasure" mnemonicParsing="false" text="+" />
+                                                   </children>
+                                                </HBox>
                                              </children>
-                                          </HBox>
+                                          </VBox>
                                        </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </TitledPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="buyerPane" />
-                  <AnchorPane>
-                     <children>
-                        <TitledPane animated="false" expanded="false" text="Finanzen" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                          <content>
-                            <AnchorPane>
-                                 <children>
-                                    <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="buyerPane" />
+                        <AnchorPane>
+                           <children>
+                              <TitledPane animated="false" expanded="false" text="Finanzen" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                <content>
+                                  <AnchorPane>
                                        <children>
-                                          <GridPane>
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
+                                          <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                              <children>
-                                                <Label text="Schutzbebühr" />
-                                                <MoneyField fx:id="charge" GridPane.columnIndex="1" />
-                                                <Label text="Anzahlung" GridPane.rowIndex="1" />
-                                                <MoneyField fx:id="downPayment" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label text="Restzahlung" GridPane.rowIndex="2" />
-                                                <MoneyField fx:id="remainingPayment" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label text="Chipspende" GridPane.rowIndex="3" />
-                                                <CheckBox fx:id="chipDonation" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                                                <Label text="Freiwillige Spende" GridPane.rowIndex="4" />
-                                                <MoneyField fx:id="donation" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <GridPane>
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Schutzbebühr" />
+                                                      <MoneyField fx:id="charge" GridPane.columnIndex="1" />
+                                                      <Label text="Anzahlung" GridPane.rowIndex="1" />
+                                                      <MoneyField fx:id="downPayment" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <Label text="Restzahlung" GridPane.rowIndex="2" />
+                                                      <MoneyField fx:id="remainingPayment" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label text="Chipspende" GridPane.rowIndex="3" />
+                                                      <CheckBox fx:id="chipDonation" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                                      <Label text="Freiwillige Spende" GridPane.rowIndex="4" />
+                                                      <MoneyField fx:id="donation" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                   </children>
+                                                </GridPane>
                                              </children>
-                                          </GridPane>
+                                          </VBox>
                                        </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </TitledPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane>
-                     <children>
-                        <TitledPane animated="false" prefHeight="25.0" prefWidth="440.0" text="Daten &amp; Bemerkungen" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <content>
-                            <AnchorPane>
-                                 <children>
-                                    <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                    </AnchorPane>
+                                </content>
+                              </TitledPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <TitledPane animated="false" expanded="false" prefHeight="25.0" prefWidth="440.0" text="Daten &amp; Bemerkungen" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <content>
+                                  <AnchorPane>
                                        <children>
-                                          <GridPane>
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
+                                          <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                              <children>
-                                                <Label text="Einzig am" />
-                                                <DatePicker fx:id="movedInDate" GridPane.columnIndex="1" />
-                                                <Label text="Reservation am" GridPane.rowIndex="1" />
-                                                <Label text="Übergabe am" GridPane.rowIndex="2" />
-                                                <DatePicker fx:id="reservedDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <DatePicker fx:id="soldDate" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <GridPane>
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Einzig am" />
+                                                      <DatePicker fx:id="movedInDate" GridPane.columnIndex="1" />
+                                                      <Label text="Reservation am" GridPane.rowIndex="1" />
+                                                      <Label text="Übergabe am" GridPane.rowIndex="2" />
+                                                      <DatePicker fx:id="reservedDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <DatePicker fx:id="soldDate" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                   </children>
+                                                </GridPane>
+                                                <Label text="Bemerkungen" />
+                                                <AnchorPane fx:id="notesContainer" prefHeight="133.0" prefWidth="419.0" />
                                              </children>
-                                          </GridPane>
-                                          <Label text="Bemerkungen" />
-                                          <AnchorPane fx:id="notesContainer" prefHeight="133.0" prefWidth="419.0" />
+                                          </VBox>
                                        </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </TitledPane>
+                                    </AnchorPane>
+                                </content>
+                              </TitledPane>
+                           </children>
+                        </AnchorPane>
                      </children>
-                  </AnchorPane>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  </VBox>
                </children>
-            </VBox>
+            </AnchorPane>
          </content>
       </ScrollPane>
    </children>

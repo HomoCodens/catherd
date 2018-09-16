@@ -421,6 +421,7 @@ public class RootController {
 			loader.setLocation(CatHerdMain.class.getResource("view/CatEditor.fxml"));
 			AnchorPane catEditor = (AnchorPane) loader.load();
 			rightPane.setCenter(catEditor);
+			catEditor.prefWidthProperty().bind(rightPane.widthProperty());
 			
 			CatEditorController controller = loader.getController();
 			controller.setCat(cat);
