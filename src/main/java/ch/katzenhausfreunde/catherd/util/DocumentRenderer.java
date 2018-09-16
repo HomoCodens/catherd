@@ -53,16 +53,33 @@ public class DocumentRenderer {
 	}
 	
 	public void renderDocuments(Cat cat, File destination, ContractType type) {
-		initProgress(2);
+		_renderDocuments(cat, destination, type, true, true);
+	}
+	
+	public void renderContract(Cat cat, File destination, ContractType type) {
+		_renderDocuments(cat, destination, type, true, false);
+	}
+	
+	public void renderDatasheet(Cat cat, File destination) {
+		_renderDocuments(cat, destination, null, false, true);
+	}
+	
+	private void _renderDocuments(Cat cat, File destination, ContractType type, boolean renderContract, boolean renderDatasheet) {
+		initProgress(renderContract && renderDatasheet ? 2 : 1);
 		currentTask = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				Platform.runLater(() -> setCurrentTaskMessage("Vertrag für " + cat.getName() + "..."));
-				_renderContract(cat, destination, type);
-				Platform.runLater(() -> incrementProgress());
-				Platform.runLater(() -> setCurrentTaskMessage("Datenblatt für " + cat.getName() + "..."));
-				_renderDatasheet(cat, destination);
-				Platform.runLater(() -> incrementProgress());
+				if(renderContract) {
+					Platform.runLater(() -> setCurrentTaskMessage("Vertrag für " + cat.getName() + "..."));
+					_renderContract(cat, destination, type);
+					Platform.runLater(() -> incrementProgress());
+				}
+				
+				if(renderDatasheet) {
+					Platform.runLater(() -> setCurrentTaskMessage("Datenblatt für " + cat.getName() + "..."));
+					_renderDatasheet(cat, destination);
+					Platform.runLater(() -> incrementProgress());
+				}
 				return null;
 			}
 		};
@@ -72,7 +89,19 @@ public class DocumentRenderer {
 	}
 	
 	public void renderDocuments(CatGroup group, File destination, ContractType type) {
-		initProgress(2*group.getCats().size());
+		_renderDocuments(group, destination, type, true, true);
+	}
+	
+	public void renderContracts(CatGroup group, File destination, ContractType type) {
+		_renderDocuments(group, destination, type, true, false);
+	}
+	
+	public void renderDatasheets(CatGroup group, File destination) {
+		_renderDocuments(group, destination, null, false, true);
+	}
+	
+	private void _renderDocuments(CatGroup group, File destination, ContractType type, boolean renderContract, boolean renderDatasheet) {
+		initProgress((renderContract && renderDatasheet ? 2 : 1)*group.getCats().size());
 		currentTask = new Task<Void>() {
 	         @Override 
 	         protected Void call() throws Exception {
@@ -81,12 +110,17 @@ public class DocumentRenderer {
 	        			 Platform.runLater(() -> doneDocs.set(totalDocs.get()));
 	        			 break;
 	        		 }
-	        		 Platform.runLater(() -> setCurrentTaskMessage("Vertrag für " + c.getName() + "..."));
-	        		 _renderContract(c, destination, type);
-	        		 Platform.runLater(() -> incrementProgress());
-	        		 Platform.runLater(() -> setCurrentTaskMessage("Datenblatt für " + c.getName() + "..."));
-	        		 _renderDatasheet(c, destination);
-	        		 Platform.runLater(() -> incrementProgress());
+	        		 if(renderContract) {
+		        		 Platform.runLater(() -> setCurrentTaskMessage("Vertrag für " + c.getName() + "..."));
+		        		 _renderContract(c, destination, type);
+		        		 Platform.runLater(() -> incrementProgress());
+	        		 }
+	        		 
+	        		 if(renderDatasheet) {
+		        		 Platform.runLater(() -> setCurrentTaskMessage("Datenblatt für " + c.getName() + "..."));
+		        		 _renderDatasheet(c, destination);
+		        		 Platform.runLater(() -> incrementProgress());
+	        		 }
 	        	 }
 	        	 if(isCancelled()) {
 	        		 Platform.runLater(() -> setCurrentTaskMessage("Abgebrochen"));

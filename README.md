@@ -8,8 +8,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 
 ## NOW
 * width of stuff
-* content of Datenblätter (vet visits)
-* keyboard shortcuts
+* options to render only contracts/datasheets
 * Defautl button type on quit confirmation
 
 ## Later

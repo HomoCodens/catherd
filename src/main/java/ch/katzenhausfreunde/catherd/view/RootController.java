@@ -24,7 +24,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -120,7 +122,13 @@ public class RootController {
             		ContextMenu menu = new ContextMenu();
             		MenuItem addMenuItem = new MenuItem();
             		MenuItem removeMenuItem = new MenuItem();
-            		MenuItem renderMenuItem = new MenuItem();
+            		Menu renderMenu = new Menu();
+            		MenuItem renderAllMenuItem = new MenuItem();
+            		MenuItem renderContractMenuItem = new MenuItem();
+            		MenuItem renderDatasheetMenuItem = new MenuItem();
+            		renderMenu.getItems().add(renderAllMenuItem);
+            		renderMenu.getItems().add(renderContractMenuItem);
+            		renderMenu.getItems().add(renderDatasheetMenuItem);
             		
             		// Number of items for generating numbered default names
             		int n_items = getTreeItem().getChildren().size();
@@ -210,15 +218,15 @@ public class RootController {
             				}
                 		});
                 		
-                		// Set the "render documents" item
-                		renderMenuItem.setText("Dokumente für Gruppe erstellen");
-                		renderMenuItem.setOnAction((ActionEvent e) -> {
+                		// Set the "render documents" items
+                		renderMenu.setText("Dokumente für Gruppe erstellen");
+                		
+                		renderAllMenuItem.setText("Alle");
+                		renderAllMenuItem.setOnAction((ActionEvent e) -> {
                 			ContractType type = askForContractType();
 
                 			if(type != null) {
-	                			DirectoryChooser dirChooser = new DirectoryChooser();
-	                			dirChooser.setInitialDirectory(DocumentRenderer.getDocsPath());
-	                			File outDir = dirChooser.showDialog(main.getPrimaryStage());
+	                			File outDir = askForDocDir();
 	                			
 	                			if(outDir != null) {
 		                			CatGroup group = (CatGroup)item;
@@ -230,13 +238,43 @@ public class RootController {
                 			}
                 		});
                 		
+                		renderContractMenuItem.setText("Verträge");
+                		renderContractMenuItem.setOnAction((ActionEvent e) -> {
+                			ContractType type = askForContractType();
+
+                			if(type != null) {
+	                			File outDir = askForDocDir();
+	                			
+	                			if(outDir != null) {
+		                			CatGroup group = (CatGroup)item;
+		                			DocumentRenderer renderer = new DocumentRenderer();
+		            			
+		                			showProgress(renderer);
+		                			renderer.renderContracts(group, outDir, type);
+	                			}
+                			}
+                		});
+                		
+                		renderDatasheetMenuItem.setText("Datenblätter");
+                		renderDatasheetMenuItem.setOnAction((ActionEvent e) -> {
+                			File outDir = askForDocDir();
+                			
+                			if(outDir != null) {
+	                			CatGroup group = (CatGroup)item;
+	                			DocumentRenderer renderer = new DocumentRenderer();
+	            			
+	                			showProgress(renderer);
+	                			renderer.renderDatasheets(group, outDir);
+                			}
+                		});
+                		
                 		// Register menu items
                 		menu.getItems().add(addMenuItem);
                 		menu.getItems().add(removeMenuItem);
                 		
                 		CatGroup group = (CatGroup)item;
                 		if(group.getCats().size() > 0) {
-                			menu.getItems().add(renderMenuItem);
+                			menu.getItems().add(renderMenu);
                 		}
                 		
                 	// Add remove Cat MenuItem if item is a Cat
@@ -260,14 +298,13 @@ public class RootController {
             				}
                 		});
                 		
-                		renderMenuItem.setText("Dokumente für Katze erstellen");
-                		renderMenuItem.setOnAction((ActionEvent e) -> {
+                		renderMenu.setText("Dokumente für Katze erstellen");
+                		
+                		renderAllMenuItem.setText("Alle");
+                		renderAllMenuItem.setOnAction((ActionEvent e) -> {
                 			ContractType type = askForContractType();
                 			if(type != null) {
-	                			
-	                			DirectoryChooser dirChooser = new DirectoryChooser();
-	                			dirChooser.setInitialDirectory(DocumentRenderer.getDocsPath());
-	                			File outDir = dirChooser.showDialog(main.getPrimaryStage());
+	                			File outDir = askForDocDir();
 	                			
 	                			if(outDir != null) {
 		                			Cat cat = (Cat)item;
@@ -278,9 +315,36 @@ public class RootController {
                 			}
                 		});
                 		
+                		renderContractMenuItem.setText("Vertrag");
+                		renderContractMenuItem.setOnAction((ActionEvent e) -> {
+                			ContractType type = askForContractType();
+                			if(type != null) {
+	                			File outDir = askForDocDir();
+	                			
+	                			if(outDir != null) {
+		                			Cat cat = (Cat)item;
+		                			DocumentRenderer renderer = new DocumentRenderer();
+		                			showProgress(renderer);
+		                			renderer.renderContract(cat, outDir, type);
+	                			}
+                			}
+                		});
+                		
+                		renderDatasheetMenuItem.setText("Datenblatt");
+                		renderDatasheetMenuItem.setOnAction((ActionEvent e) -> {
+            				File outDir = askForDocDir();
+                			
+                			if(outDir != null) {
+	                			Cat cat = (Cat)item;
+	                			DocumentRenderer renderer = new DocumentRenderer();
+	                			showProgress(renderer);
+	                			renderer.renderDatasheet(cat, outDir);
+                			}
+                		});
+                		
                 		// Register the menu items
                 		menu.getItems().add(removeMenuItem);
-                		menu.getItems().add(renderMenuItem);
+                		menu.getItems().add(renderMenu);
                 	}
             		
             		// Register the context menu
@@ -440,5 +504,11 @@ public class RootController {
 		}
 		
 		return null;
+	}
+	
+	private File askForDocDir() {
+		DirectoryChooser dirChooser = new DirectoryChooser();
+		dirChooser.setInitialDirectory(DocumentRenderer.getDocsPath());
+		return dirChooser.showDialog(main.getPrimaryStage());
 	}
 }
