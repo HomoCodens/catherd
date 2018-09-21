@@ -7,21 +7,26 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 *a lot as you can see*
 
 ## NOW
-* width of stuff
-
-## Later
-* Document the living daylight out of everything (it's high time)
 * icons galore
 * add default home to store when loading empty
+* Rethink naming of fields
+* Add metadata to created pdfs
+
+## Later
+* Make it preety
+ * behavior of PersonEditory
+ * some padding 
+* Custom stack trace error dialog instead of just printStackTrace
+ * or at least go through all the trycatch blocks and add meaningful errors (e.g. FileNotFoundException when pdf is open in other program)
+* Document the living daylight out of everything (it's high time)
 * Small overview in editors?
 	* Stats & reports! (can be done w/ other app via json too though)
 * use context menu items in main menu
 * menu separators?
 
 
-
 ## Maybe
-* Custom stack trace error dialog instead of just printStackTrace
+
 * Tests?
   * I think we'll manage without
 * static state holder feels wonky, maybe move state (and dirty flag) back into main
@@ -31,7 +36,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
   * Maybe for phone numbers, email & chip nrs
 * Aks them to properly label the PDF form fields
 * i18n? Nah... xD
-* textformatters instead of listeners on moneyfields, textareas
 
  
  

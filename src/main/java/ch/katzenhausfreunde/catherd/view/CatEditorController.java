@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
@@ -194,12 +195,7 @@ public class CatEditorController {
 			
 			buyer = loader.getController();
 			
-			TitledPane buyerPaneContent = new TitledPane("Käufer", buyerEditor);
-			buyerPaneContent.setExpanded(false);
-			buyerPaneContent.setAnimated(false);
-			buyerPaneContent.prefWidthProperty().bind(buyerPane.widthProperty());
-
-			buyerPane.getChildren().add(buyerPaneContent);
+			buyerPane.getChildren().add(buyerEditor);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

@@ -273,7 +273,15 @@
                               </TitledPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="buyerPane" />
+                        <AnchorPane VBox.vgrow="ALWAYS">
+                           <children>
+                              <TitledPane animated="false" expanded="false" prefHeight="25.0" prefWidth="461.0" text="Käufer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <content>
+                                  <AnchorPane fx:id="buyerPane" />
+                                </content>
+                              </TitledPane>
+                           </children>
+                        </AnchorPane>
                         <AnchorPane>
                            <children>
                               <TitledPane animated="false" expanded="false" text="Finanzen" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
