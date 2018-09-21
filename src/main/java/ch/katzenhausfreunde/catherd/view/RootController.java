@@ -21,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
@@ -508,17 +509,21 @@ public class RootController {
 	private ContractType askForContractType() {
 		ButtonType res = new ButtonType("Reservation");
 		ButtonType sal = new ButtonType("Verkauf");
+		ButtonType canc = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
 		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.getButtonTypes().setAll(res, sal);
-		Optional<ButtonType> out = alert.showAndWait();
+		alert.getButtonTypes().setAll(res, sal, canc);
 		alert.setTitle("Verträge erstellen");
 		alert.setHeaderText("Welche Art Vertrag soll erstellt werden?");
+
+		Optional<ButtonType> out = alert.showAndWait();
+		
+		System.out.println(out.get());
 		
 		if(out.isPresent()) {
 			if(out.get() == res) {
 				return ContractType.RESERVATION;
-			} else {
+			} else if(out.get() == sal) {
 				return ContractType.SALE;
 			}
 		}
