@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 import ch.katzenhausfreunde.catherd.model.CatHerdStore;
+import ch.katzenhausfreunde.catherd.model.FosterHome;
 import ch.katzenhausfreunde.catherd.util.CatHerdDiskStorage;
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
 import ch.katzenhausfreunde.catherd.view.RootController;
@@ -48,7 +49,7 @@ public class CatHerdMain extends Application {
 			CatHerdState.setStore(loadedStore);
 		} else {
 			CatHerdStore store = new CatHerdStore();
-			store.populateDummies();
+			store.addHome(new FosterHome());
 			CatHerdState.setStore(store);
 		}
 		
