@@ -9,7 +9,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 ## NOW
 * add default home to store when loading empty
 * Rethink naming of fields
-* blurriness/caching problem of textareas
 * Add metadata to created pdfs
 
 ## Later

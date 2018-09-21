@@ -3,6 +3,7 @@ package ch.katzenhausfreunde.catherd.view.customcontrols;
 import java.awt.Toolkit;
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -10,7 +11,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
@@ -65,6 +68,16 @@ public class LengthLimitedTextArea extends AnchorPane {
 			}
 			return change;
 		}));
+		
+		// cf https://stackoverflow.com/questions/23728517/blurred-text-in-javafx-textarea
+		Platform.runLater(() -> {
+			textArea.setCache(false);
+			ScrollPane sp = (ScrollPane)textArea.getChildrenUnmodifiable().get(0);
+			sp.setCache(false);
+			for (Node n : sp.getChildrenUnmodifiable()) {
+			    n.setCache(false);
+			}
+		});
 	}
 	
 	public String getText() {
