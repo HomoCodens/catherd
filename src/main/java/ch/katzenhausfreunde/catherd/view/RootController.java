@@ -29,8 +29,12 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -72,6 +76,8 @@ public class RootController {
 		// with CatHerd. Currently only one is possible though.
 		TreeItem<Nameable> rootItem = new TreeItem<Nameable>(new Nameable("root"));
 		
+		Image catIcon = new Image("file:icons/cat.png");
+		
 		// Build the tree
 		for(FosterHome h : store.getFosterHomes()) {
 			TreeItem<Nameable> fosterHome = new TreeItem<Nameable>(h);
@@ -81,7 +87,7 @@ public class RootController {
 	        for(CatGroup g: h.getGroups()) {
 	        	TreeItem<Nameable> group = new TreeItem<Nameable>(g);
 	        	for(Cat c : g.getCats()) {
-	        		TreeItem<Nameable> catNode = new TreeItem<Nameable>(c);
+	        		TreeItem<Nameable> catNode = new TreeItem<Nameable>(c, new ImageView(catIcon));
 	        		group.getChildren().add(catNode);
 	        	}
 	        	fosterHome.getChildren().add(group);
@@ -95,14 +101,13 @@ public class RootController {
         	 * Confirmation dialog used when deleting items
         	 */
         	Alert confirmation = new Alert(AlertType.CONFIRMATION);
-        	Alert notification = new Alert(AlertType.INFORMATION);
         	
             public CatCell() {
             	confirmation.setHeaderText(null);
             	confirmation.setTitle("Bestätigen");
-            	
-            	notification.setHeaderText(null);
-            	notification.setTitle("Erfolg");
+            	Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
+				stage.getIcons().addAll(main.getPrimaryStage().getIcons());
+				confirmation.initOwner(main.getPrimaryStage());
             }
      
             /* (non-Javadoc)
@@ -133,6 +138,8 @@ public class RootController {
             		
             		// Register option to add new group if item is a FosterHome
             		if(item instanceof FosterHome) {
+            			setGraphic(new ImageView(main.getPrimaryStage().getIcons().get(0)));
+            			
             			addMenuItem.setText("Neue Gruppe");
                 		addMenuItem.setOnAction((e) -> {
 							String newGroupName = "Gruppe " + (n_items + 1);
@@ -141,6 +148,9 @@ public class RootController {
 							nameDialog.setTitle("Neue Gruppe");
 							nameDialog.setContentText("Name der neuen Gruppe");
 							nameDialog.setHeaderText(null);
+							Stage stage = (Stage) nameDialog.getDialogPane().getScene().getWindow();
+							stage.getIcons().addAll(main.getPrimaryStage().getIcons());
+							nameDialog.initOwner(main.getPrimaryStage());
 							
 							Optional<String> result = nameDialog.showAndWait();
 							if(result.isPresent()) {
@@ -166,6 +176,9 @@ public class RootController {
                 		
                 	// Register add cat and remove group on group items
                 	} else if(item instanceof CatGroup) {
+                		ClassLoader ld = Thread.currentThread().getContextClassLoader();
+                		Image groupIcon = new Image(ld.getResourceAsStream("icons/group.png"));
+                		setGraphic(new ImageView(groupIcon));
                 		
                 		// Set the add MenuItem
                 		addMenuItem.setText("Neue Katze");
@@ -176,6 +189,9 @@ public class RootController {
 				        	nameDialog.setTitle("Neue Katze");
 							nameDialog.setContentText("Name der neuen Katze");
 							nameDialog.setHeaderText(null);
+							Stage stage = (Stage) nameDialog.getDialogPane().getScene().getWindow();
+							stage.getIcons().addAll(main.getPrimaryStage().getIcons());
+							nameDialog.initOwner(main.getPrimaryStage());
 							
 							Optional<String> result = nameDialog.showAndWait();
 							if (result.isPresent()){
@@ -187,7 +203,8 @@ public class RootController {
 								((CatGroup)item).addCat(newCat);
 								
 								// Add cat to tree
-                				TreeItem<Nameable> newCatItem = new TreeItem<Nameable>((Nameable)newCat);
+								Image catIcon = new Image("file:icons/cat.png");
+                				TreeItem<Nameable> newCatItem = new TreeItem<Nameable>((Nameable)newCat, new ImageView(catIcon));
                 				parent.getChildren().add(newCatItem);
                 				
                 				// Expand item that was just added to
@@ -277,6 +294,9 @@ public class RootController {
                 		
                 	// Add remove Cat MenuItem if item is a Cat
                 	} else if(item instanceof Cat) {
+                		ClassLoader ld = Thread.currentThread().getContextClassLoader();
+                		Image groupIcon = new Image(ld.getResourceAsStream("icons/cat.png"));
+                		setGraphic(new ImageView(groupIcon));
                 		
                 		// Create MenuItem
                 		removeMenuItem.setText("Katze entfernen");
@@ -351,6 +371,7 @@ public class RootController {
                 	// If the item is to be emptied, unbind and reset the text property
                 	this.textProperty().unbind();
                 	setText(null);
+                	setGraphic(null);
                 }
             }
         }

@@ -42,6 +42,7 @@ public class MainMenuController {
 			aboutStage.setScene(new Scene(aboutPane));
 			aboutStage.setResizable(false);
 			aboutStage.initOwner(main.getPrimaryStage());
+			aboutStage.getIcons().addAll(main.getPrimaryStage().getIcons());
 			aboutStage.initModality(Modality.WINDOW_MODAL);
 			
 			controller.setOnOK((e) -> aboutStage.close());

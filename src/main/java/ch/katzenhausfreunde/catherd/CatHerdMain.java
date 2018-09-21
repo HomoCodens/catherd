@@ -2,6 +2,7 @@ package ch.katzenhausfreunde.catherd;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -20,6 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -85,6 +87,9 @@ public class CatHerdMain extends Application {
 				alert.setTitle("Beenden");
 				alert.setHeaderText("Ungespeicherte Änderungen");
 				alert.setContentText("Trotzdem beenden?");
+				Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+				stage.getIcons().addAll(getPrimaryStage().getIcons());
+				alert.initOwner(getPrimaryStage());
 				
 				ButtonType confirm = new ButtonType("Beenden");
 				ButtonType save = new ButtonType("Speichern");
@@ -110,6 +115,7 @@ public class CatHerdMain extends Application {
 
 	public static void main(String[] args) {
 		// A warning told me to do that xD
+		// It does speed up pdf rendering though
 		System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
 		launch(args);
 	}
@@ -124,11 +130,16 @@ public class CatHerdMain extends Application {
 			BorderPane rootLayout = (BorderPane) loader.load();
 			rootController = loader.getController();
 			rootController.setMain(this);
-			rootController.initTree();
 			
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
+			
+			ClassLoader ld = Thread.currentThread().getContextClassLoader();
+			Image mainIcon = new Image(ld.getResource("icons/house.png").toString());
+			primaryStage.getIcons().add(mainIcon);
 
+			rootController.initTree();
+			
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();

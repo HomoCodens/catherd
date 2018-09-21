@@ -7,9 +7,10 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 *a lot as you can see*
 
 ## NOW
-* icons galore
 * add default home to store when loading empty
+* make cancelling possible when asked for contract type
 * Rethink naming of fields
+* blurriness/caching problem of textareas
 * Add metadata to created pdfs
 
 ## Later
