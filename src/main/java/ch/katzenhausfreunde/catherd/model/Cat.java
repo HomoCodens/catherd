@@ -27,12 +27,12 @@ import javafx.collections.ObservableList;
 public class Cat extends Nameable {
 	private StringProperty newName;
 	private ObjectProperty<LocalDate> dateOfBirth;
-	private StringProperty color;
+	private StringProperty coat;
 	private StringProperty sex;
 	private ObjectProperty<LocalDate> castratedDate;
 	private StringProperty breed;
 	private BooleanProperty lineage;
-	private BooleanProperty runFree;
+	private BooleanProperty outside;
 	private BooleanProperty contact;
 	private StringProperty chipNo;
 	private ObjectProperty<LocalDate> chipImplantedDate;
@@ -64,7 +64,6 @@ public class Cat extends Nameable {
 	private BooleanProperty chipDonation;
 	private FloatProperty donation;
 	private StringProperty notes;
-	private ObjectProperty<LocalDate> handOver;
 	
 	/**
 	 * 
@@ -81,12 +80,12 @@ public class Cat extends Nameable {
 		
 		newName = new SimpleStringProperty(null);
 		dateOfBirth = new SimpleObjectProperty<LocalDate>(null);
-		color = new SimpleStringProperty(null);
+		coat = new SimpleStringProperty(null);
 		sex = new SimpleStringProperty(null);
 		castratedDate = new SimpleObjectProperty<LocalDate>(null);
 		breed = new SimpleStringProperty(null);
 		lineage = new SimpleBooleanProperty(false);
-		runFree = new SimpleBooleanProperty(false);
+		outside = new SimpleBooleanProperty(false);
 		contact = new SimpleBooleanProperty(false);
 		chipNo = new SimpleStringProperty();
 		chipImplantedDate = new SimpleObjectProperty<LocalDate>(null);
@@ -116,7 +115,6 @@ public class Cat extends Nameable {
 		chipDonation = new SimpleBooleanProperty(false);
 		donation = new SimpleFloatProperty();
 		notes = new SimpleStringProperty();
-		handOver = new SimpleObjectProperty<LocalDate>();
 	}
 	
 	public void arm() {
@@ -124,12 +122,12 @@ public class Cat extends Nameable {
 				
 		newName.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore()); 
 		dateOfBirth.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
-		color.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
+		coat.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		sex.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		castratedDate.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		breed.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		lineage.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
-		runFree.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
+		outside.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		contact.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		chipNo.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		chipImplantedDate.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
@@ -163,7 +161,6 @@ public class Cat extends Nameable {
 		chipDonation.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		donation.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		notes.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
-		handOver.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 	}
 
 	public final String getNewName() {
@@ -192,16 +189,16 @@ public class Cat extends Nameable {
 		return dateOfBirth;
 	}
 	
-	public final String getColor() {
-		return color.get();
+	public final String getCoat() {
+		return coat.get();
 	}
 
-	public final void setColor(String color) {
-		this.color.set(color);
+	public final void setCoat(String coat) {
+		this.coat.set(coat);
 	}
 
-	public final StringProperty colorProperty() {
-		return color;
+	public final StringProperty coatProperty() {
+		return coat;
 	}
 	
 	public final String getSex() {
@@ -254,16 +251,16 @@ public class Cat extends Nameable {
 		return lineage;
 	}
 	
-	public final boolean getRunFree() {
-		return runFree.get();
+	public final boolean getOutside() {
+		return outside.get();
 	}
 
-	public final void setRunFree(boolean runFree) {
-		this.runFree.set(runFree);
+	public final void setOutside(boolean outside) {
+		this.outside.set(outside);
 	}
 
-	public final BooleanProperty runFreeProperty() {
-		return runFree;
+	public final BooleanProperty outsideProperty() {
+		return outside;
 	}
 	
 	public final boolean getContact() {

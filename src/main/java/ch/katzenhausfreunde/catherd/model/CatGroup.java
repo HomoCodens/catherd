@@ -10,7 +10,7 @@ public class CatGroup extends Nameable {
 	private ObservableList<Cat> cats = FXCollections.observableArrayList();
 	
 	public CatGroup() {
-		this("Grippe");
+		this("Gruppe");
 	}
 	
 	public CatGroup(String name) {

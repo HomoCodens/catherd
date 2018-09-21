@@ -186,12 +186,12 @@ public class DocumentRenderer {
 			fillField("Textfeld 16", form, cat.getNewName());
 			fillField("Textfeld 17", form, cat.getName());
 			fillField("Textfeld 171", form, cat.getDateOfBirth());
-			fillField("Textfeld 173", form, cat.getColor());
+			fillField("Textfeld 173", form, cat.getCoat());
 			fillField("Geschlecht", form, cat.getSex() != "weiblich" ? "Auswahl1" : "Auswahl2");
 			fillField("Textfeld 172", form, cat.getCastratedDate());
 			fillField("Textfeld 18", form, cat.getBreed());
 			fillField("Stammbaum", form, cat.getLineage() ? "Auswahl1" : "Auswahl2");
-			fillField("Freilauf", form, cat.getRunFree() ? "Auswahl1" : "Auswahl2");
+			fillField("Freilauf", form, cat.getOutside() ? "Auswahl1" : "Auswahl2");
 			fillField("Einzelkatze", form, cat.getContact() ? "Auswahl2" : "Auswahl1");
 			fillField("Textfeld 21", form, cat.getChipNo());
 			fillField("Textfeld 22", form, cat.getChipImplantedDate());

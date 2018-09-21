@@ -217,8 +217,8 @@ public class CatEditorController {
 		this.dateOfBirth.setValue(cat.getDateOfBirth());
 		cat.dateOfBirthProperty().bind(this.dateOfBirth.valueProperty());
 		
-		this.color.setText(cat.getColor());
-		cat.colorProperty().bind(this.color.textProperty());
+		this.color.setText(cat.getCoat());
+		cat.coatProperty().bind(this.color.textProperty());
 		
 		this.sex.setValue(cat.getSex());
 		cat.sexProperty().bind(this.sex.valueProperty());
@@ -232,8 +232,8 @@ public class CatEditorController {
 		this.lineage.setSelected(cat.getLineage());
 		cat.lineageProperty().bind(this.lineage.selectedProperty());
 		
-		this.runFree.setSelected(cat.getRunFree());
-		cat.runFreeProperty().bind(this.runFree.selectedProperty());
+		this.runFree.setSelected(cat.getOutside());
+		cat.outsideProperty().bind(this.runFree.selectedProperty());
 		
 		this.contact.setSelected(cat.getContact());
 		cat.contactProperty().bind(this.contact.selectedProperty());

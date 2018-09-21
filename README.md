@@ -7,7 +7,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 *a lot as you can see*
 
 ## NOW
-* Rethink naming of fields
+* Move parasites & vet measures inside Medizinisches
 * Add metadata to created pdfs
 
 ## Later
