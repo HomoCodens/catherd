@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.Cat;
 import ch.katzenhausfreunde.catherd.model.VeterinaryMeasure;
+import ch.katzenhausfreunde.catherd.util.CatHerdState;
 import ch.katzenhausfreunde.catherd.view.customcontrols.LengthLimitedTextArea;
 import ch.katzenhausfreunde.catherd.view.customcontrols.MoneyField;
 import ch.katzenhausfreunde.catherd.view.customcontrols.PersonController;

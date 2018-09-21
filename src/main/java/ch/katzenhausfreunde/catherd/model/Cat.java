@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
 import ch.katzenhausfreunde.catherd.util.LocalDateAdapter;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.ObjectProperty;
@@ -144,9 +146,21 @@ public class Cat extends Nameable {
 		vermifuge1Date.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore()); // Vermifuge... what a word!
 		vermifuge2Date.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		illnesses.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
+		parasiteMeasures.addListener(new InvalidationListener() {
+			@Override
+			public void invalidated(Observable arg0) {
+				CatHerdState.touchStore();
+			}
+		});
 		for(VeterinaryMeasure vm : parasiteMeasures) {
 			vm.arm();
 		}
+		vetMeasures.addListener(new InvalidationListener() {
+			@Override
+			public void invalidated(Observable arg0) {
+				CatHerdState.touchStore();
+			}
+		});
 		for(VeterinaryMeasure vm : vetMeasures) {
 			vm.arm();
 		}
