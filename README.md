@@ -7,13 +7,13 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 *a lot as you can see*
 
 ## NOW
-* Move parasites & vet measures inside Medizinisches
-* Add metadata to created pdfs
+* removal of vet measures should invalidate store
 
 ## Later
 * Make it preety
  * behavior of PersonEditory
  * some padding 
+ * restyle inner (vetmeasures) titledpanes
 * Custom stack trace error dialog instead of just printStackTrace
  * or at least go through all the trycatch blocks and add meaningful errors (e.g. FileNotFoundException when pdf is open in other program)
 * Document the living daylight out of everything (it's high time)
@@ -34,6 +34,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
   * Maybe for phone numbers, email & chip nrs
 * Aks them to properly label the PDF form fields
 * i18n? Nah... xD
+* Add metadata to created pdfs
 
  
  
