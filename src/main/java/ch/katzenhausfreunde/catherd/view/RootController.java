@@ -172,7 +172,6 @@ public class RootController {
                 				
                 				// Expand item that was just added to
                 				parent.setExpanded(true);
-                				CatHerdState.touchStore();
 							}
                 		});
                 		
@@ -214,7 +213,6 @@ public class RootController {
                 				
                 				// Expand item that was just added to
                 				parent.setExpanded(true);
-                				CatHerdState.touchStore();
 							}
                 		});
                 		
@@ -234,7 +232,6 @@ public class RootController {
             					// Remove the group from the tree
                 				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
                 				node.getParent().getChildren().remove(node);
-                				CatHerdState.touchStore();
             				}
                 		});
                 		
@@ -317,7 +314,6 @@ public class RootController {
                 				// Remove the cat from the tree
                 				TreeItem<Nameable> node = getTreeView().getSelectionModel().getSelectedItem();
                 				node.getParent().getChildren().remove(node);
-                				CatHerdState.touchStore();
             				}
                 		});
                 		

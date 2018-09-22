@@ -2,6 +2,9 @@ package ch.katzenhausfreunde.catherd.model;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import ch.katzenhausfreunde.catherd.util.CatHerdState;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -90,6 +93,12 @@ public class FosterHome extends Nameable {
 	
 	public void arm() {
 		super.arm();
+		groups.addListener(new InvalidationListener() {
+			@Override
+			public void invalidated(Observable arg0) {
+				CatHerdState.touchStore();
+			}
+		});
 		groups.forEach((gr) -> gr.arm());
 		fosterParent.arm();
 	}

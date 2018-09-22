@@ -7,9 +7,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 *a lot as you can see*
 
 ## NOW
-
-## Later
-* add listeners to catgroup and cat lists instead of invalidating store in actions
 * Make it preety
  * behavior of PersonEditory
  * some padding 
@@ -18,13 +15,14 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
  * nice welcome screen
 * Custom stack trace error dialog instead of just printStackTrace
  * or at least go through all the trycatch blocks and add meaningful errors (e.g. FileNotFoundException when pdf is open in other program)
+
+## Later
 * Document the living daylight out of everything (it's high time)
 * Small overview in editors?
 	* Stats & reports! (can be done w/ other app via json too though)
 
 
 ## Maybe
-
 * Tests?
   * I think we'll manage without
 * static state holder feels wonky, maybe move state (and dirty flag) back into main
