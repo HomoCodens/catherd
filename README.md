@@ -8,7 +8,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 
 ## NOW
 * Make it preety
- * behavior of PersonEditory
  * restyle inner (vetmeasures) titledpanes
  * width of inner titledpanes
  * Custom stack trace error dialog instead of just printStackTrace

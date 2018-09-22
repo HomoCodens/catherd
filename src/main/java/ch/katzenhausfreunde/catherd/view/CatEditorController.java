@@ -192,11 +192,14 @@ public class CatEditorController {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(CatHerdMain.class.getResource("view/customcontrols/Person.fxml"));
-			AnchorPane buyerEditor = (AnchorPane) loader.load();
+			VBox buyerEditor = (VBox) loader.load();
 			
 			buyer = loader.getController();
 			
 			buyerPane.getChildren().add(buyerEditor);
+			AnchorPane.setTopAnchor(buyerEditor, 0.0);
+			AnchorPane.setRightAnchor(buyerEditor, 0.0);
+			AnchorPane.setLeftAnchor(buyerEditor, 0.0);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 public class FosterHomeEditorController {
 	@FXML
@@ -29,14 +30,14 @@ public class FosterHomeEditorController {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(CatHerdMain.class.getResource("view/customcontrols/Person.fxml"));
-			AnchorPane catEditor = (AnchorPane) loader.load();
+			VBox personEditor = (VBox) loader.load();
 			
 			personController = loader.getController();
-			
-			TitledPane personPortion = new TitledPane("Pflegeperson", catEditor);
-			personPortion.prefWidthProperty().bind(personContainer.widthProperty());
-			
-			personContainer.getChildren().add(personPortion);
+						
+			personContainer.getChildren().add(personEditor);
+			AnchorPane.setTopAnchor(personEditor, 0.0);
+			AnchorPane.setRightAnchor(personEditor, 0.0);
+			AnchorPane.setLeftAnchor(personEditor, 0.0);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
