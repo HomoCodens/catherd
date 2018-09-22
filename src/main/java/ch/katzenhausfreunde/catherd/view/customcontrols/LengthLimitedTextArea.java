@@ -9,6 +9,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -72,10 +73,13 @@ public class LengthLimitedTextArea extends AnchorPane {
 		// cf https://stackoverflow.com/questions/23728517/blurred-text-in-javafx-textarea
 		Platform.runLater(() -> {
 			textArea.setCache(false);
-			ScrollPane sp = (ScrollPane)textArea.getChildrenUnmodifiable().get(0);
-			sp.setCache(false);
-			for (Node n : sp.getChildrenUnmodifiable()) {
-			    n.setCache(false);
+			ObservableList<Node> children = textArea.getChildrenUnmodifiable();
+			if(children.size() > 0) {
+				ScrollPane sp = (ScrollPane)children.get(0);
+				sp.setCache(false);
+				for (Node n : sp.getChildrenUnmodifiable()) {
+				    n.setCache(false);
+				}
 			}
 		});
 	}
