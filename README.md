@@ -8,8 +8,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 
 ## NOW
 * Make it preety
- * restyle inner (vetmeasures) titledpanes
- * width of inner titledpanes
  * Custom stack trace error dialog instead of just printStackTrace
   * or at least go through all the trycatch blocks and add meaningful errors (e.g. FileNotFoundException when pdf is open in other program)
 
@@ -20,6 +18,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 
 
 ## Maybe
+* Drag&Droppable items in tree
 * Tests?
   * I think we'll manage without
 * static state holder feels wonky, maybe move state (and dirty flag) back into main

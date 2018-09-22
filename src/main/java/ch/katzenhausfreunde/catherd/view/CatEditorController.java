@@ -160,7 +160,7 @@ public class CatEditorController {
 	
 	@FXML
 	private void initialize() {
-		sex.getItems().setAll("maennlich", "weiblich");
+		sex.getItems().setAll("männlich", "weiblich");
 		leucosisTestResult.getItems().setAll("negativ", "positiv");
 		
 		subAmountChanging = new SimpleBooleanProperty(false);
@@ -182,12 +182,21 @@ public class CatEditorController {
 		//Easier than fiddling around with scene builder and dependencies...
 		characterTraits = new LengthLimitedTextArea(140);
 		characterTraitsContainer.getChildren().add(characterTraits);
+		AnchorPane.setTopAnchor(characterTraits, 0.0);
+		AnchorPane.setLeftAnchor(characterTraits, 0.0);
+		AnchorPane.setRightAnchor(characterTraits, 0.0);
 		
 		illnesses = new LengthLimitedTextArea(195);
 		illnessesContainer.getChildren().add(illnesses);
+		AnchorPane.setTopAnchor(illnesses, 0.0);
+		AnchorPane.setLeftAnchor(illnesses, 0.0);
+		AnchorPane.setRightAnchor(illnesses, 0.0);
 		
 		notes = new LengthLimitedTextArea(325);
 		notesContainer.getChildren().add(notes);
+		AnchorPane.setTopAnchor(notes, 0.0);
+		AnchorPane.setLeftAnchor(notes, 0.0);
+		AnchorPane.setRightAnchor(notes, 0.0);
 		
 		try {
 			FXMLLoader loader = new FXMLLoader();

@@ -57,7 +57,14 @@ public class VeterinaryMeasureEditor extends AnchorPane {
 	@FXML
 	public void initialize() {
 		reasonContainer.getChildren().add(reason);
+		AnchorPane.setTopAnchor(reason, 0.0);
+		AnchorPane.setRightAnchor(reason, 0.0);
+		AnchorPane.setLeftAnchor(reason, 0.0);
+		
 		measuresContainer.getChildren().add(measures);
+		AnchorPane.setTopAnchor(measures, 0.0);
+		AnchorPane.setRightAnchor(measures, 0.0);
+		AnchorPane.setLeftAnchor(measures, 0.0);
 		label.textProperty().bind(labelText);
 	}
 	
