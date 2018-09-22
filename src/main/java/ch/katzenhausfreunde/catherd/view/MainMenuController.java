@@ -67,4 +67,9 @@ public class MainMenuController {
 	private void handleSaveAs() {
 		main.handleSaveAs();
 	}
+	
+	@FXML
+	private void handleQuit() {
+		main.quit();
+	}
 }

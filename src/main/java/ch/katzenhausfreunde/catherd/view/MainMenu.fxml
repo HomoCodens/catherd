@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.katzenhausfreunde.catherd.view.MainMenuController">
    <children>
-      <MenuBar>
+      <MenuBar prefHeight="25.0" prefWidth="103.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="Datei">
             <items>
@@ -20,17 +20,13 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Speichern als..." >
+                  <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Speichern als...">
                   <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="Beenden" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Bearbeiten">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
             <Menu mnemonicParsing="false" text="Hilfe">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#showAbout" text="Über CatHerd" />

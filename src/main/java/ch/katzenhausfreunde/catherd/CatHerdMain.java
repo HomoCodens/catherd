@@ -179,6 +179,10 @@ public class CatHerdMain extends Application {
 		return outFile;
 	}
 	
+	public void quit() {
+		primaryStage.close();
+	}
+	
 	private FileChooser getJSONChooser() {
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON Dateien", "*.json");
