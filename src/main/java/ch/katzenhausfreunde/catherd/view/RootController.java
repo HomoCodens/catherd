@@ -13,7 +13,9 @@ import ch.katzenhausfreunde.catherd.model.Nameable;
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
 import ch.katzenhausfreunde.catherd.util.ContractType;
 import ch.katzenhausfreunde.catherd.util.DocumentRenderer;
+import ch.katzenhausfreunde.catherd.util.console;
 import ch.katzenhausfreunde.catherd.view.customcontrols.ProgressDialog;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +28,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -436,46 +439,67 @@ public class RootController {
 	}
 	
 	private void showCatEditor(Cat cat) {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(CatHerdMain.class.getResource("view/CatEditor.fxml"));
-			AnchorPane catEditor = (AnchorPane) loader.load();
-			rightPane.setCenter(catEditor);
-			catEditor.prefWidthProperty().bind(rightPane.widthProperty());
-			
-			CatEditorController controller = loader.getController();
-			controller.setCat(cat);
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+		showEditorLoading();
+		
+		Platform.runLater(() -> {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(CatHerdMain.class.getResource("view/CatEditor.fxml"));
+				AnchorPane catEditor = (AnchorPane) loader.load();
+				rightPane.setCenter(catEditor);
+				catEditor.prefWidthProperty().bind(rightPane.widthProperty());
+				
+				CatEditorController controller = loader.getController();
+				controller.setCat(cat);
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 	
 	private void showCatGroupEditor(CatGroup group) {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(CatHerdMain.class.getResource("view/CatGroupEditor.fxml"));
-			AnchorPane catEditor = (AnchorPane) loader.load();
-			rightPane.setCenter(catEditor);
-			
-			CatGroupEditorController controller = loader.getController();
-			controller.setCatGroup(group);
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+		showEditorLoading();
+				
+		Platform.runLater(() -> {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(CatHerdMain.class.getResource("view/CatGroupEditor.fxml"));
+				AnchorPane catEditor = (AnchorPane) loader.load();
+				rightPane.setCenter(catEditor);
+				
+				CatGroupEditorController controller = loader.getController();
+				controller.setCatGroup(group);
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 	
 	private void showFosterHomeEditor(FosterHome home) {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(CatHerdMain.class.getResource("view/FosterHomeEditor.fxml"));
-			AnchorPane catEditor = (AnchorPane) loader.load();
-			rightPane.setCenter(catEditor);
-			
-			FosterHomeEditorController controller = loader.getController();
-			controller.setFosterHome(home);
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+		showEditorLoading();
+		
+		Platform.runLater(() -> {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(CatHerdMain.class.getResource("view/FosterHomeEditor.fxml"));
+				AnchorPane catEditor = (AnchorPane) loader.load();
+				rightPane.setCenter(catEditor);
+				
+				FosterHomeEditorController controller = loader.getController();
+				controller.setFosterHome(home);
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		});
+	}
+	
+	private void showEditorLoading() {		
+		ProgressIndicator pi = new ProgressIndicator();
+		pi.setProgress(-1.0);
+		pi.setMaxWidth(16.0);
+		pi.setMaxHeight(16.0);
+		
+		rightPane.setCenter(pi);
 	}
 	
 	private void showProgress(DocumentRenderer renderer) {
