@@ -21,8 +21,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * Document the living daylight out of everything (it's high time)
 * Small overview in editors?
 	* Stats & reports! (can be done w/ other app via json too though)
-* use context menu items in main menu
-* menu separators?
 
 
 ## Maybe
@@ -37,6 +35,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * Aks them to properly label the PDF form fields
 * i18n? Nah... xD
 * Add metadata to created pdfs
+* use context menu items in main menu
 
  
  

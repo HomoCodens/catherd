@@ -139,7 +139,11 @@ public class RootController {
             		
             		// Register option to add new group if item is a FosterHome
             		if(item instanceof FosterHome) {
-            			setGraphic(new ImageView(main.getPrimaryStage().getIcons().get(0)));
+            			ImageView homeIcon = new ImageView(main.getPrimaryStage().getIcons().get(0));
+            			homeIcon.setFitWidth(16);
+            			homeIcon.setFitHeight(16);
+            			homeIcon.setSmooth(true);
+            			setGraphic(homeIcon);
             			
             			addMenuItem.setText("Neue Gruppe");
                 		addMenuItem.setOnAction((e) -> {
