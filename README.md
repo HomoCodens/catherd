@@ -9,12 +9,11 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 ## NOW
 * Make it preety
  * behavior of PersonEditory
- * some padding 
  * restyle inner (vetmeasures) titledpanes
  * width of inner titledpanes
  * nice welcome screen
-* Custom stack trace error dialog instead of just printStackTrace
- * or at least go through all the trycatch blocks and add meaningful errors (e.g. FileNotFoundException when pdf is open in other program)
+ * Custom stack trace error dialog instead of just printStackTrace
+  * or at least go through all the trycatch blocks and add meaningful errors (e.g. FileNotFoundException when pdf is open in other program)
 
 ## Later
 * Document the living daylight out of everything (it's high time)
