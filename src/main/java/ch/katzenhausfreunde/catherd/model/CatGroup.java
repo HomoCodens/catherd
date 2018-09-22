@@ -3,7 +3,6 @@ package ch.katzenhausfreunde.catherd.model;
 import javax.xml.bind.annotation.XmlElement;
 
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
-import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
