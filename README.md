@@ -7,6 +7,7 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 *a lot as you can see*
 
 ## NOW
+* Financial overview in group editor!
 * Make it preety
  * Custom stack trace error dialog instead of just printStackTrace
   * or at least go through all the trycatch blocks and add meaningful errors (e.g. FileNotFoundException when pdf is open in other program)

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import ch.katzenhausfreunde.catherd.CatHerdMain;
 import ch.katzenhausfreunde.catherd.model.Cat;
+import ch.katzenhausfreunde.catherd.model.FinancialItem;
 import ch.katzenhausfreunde.catherd.model.VeterinaryMeasure;
 import ch.katzenhausfreunde.catherd.view.customcontrols.LengthLimitedTextArea;
 import ch.katzenhausfreunde.catherd.view.customcontrols.MoneyField;
@@ -335,7 +336,8 @@ public class CatEditorController {
 		this.characterTraits.setText(cat.getCharacterTraits());
 		cat.characterTraitsProperty().bind(this.characterTraits.textProperty());
 		
-		this.charge.setAmount(cat.getCharge());
+		FinancialItem catCharge = cat.getCharge();
+		this.charge.setAmount(catCharge.getAmount());
 		this.charge.amountProperty().addListener((observable, oldValue, newValue) -> {
 			if(!subAmountChanging.get() && newValue != null) {
 				mainAmountChanging.set(true);
@@ -351,9 +353,10 @@ public class CatEditorController {
 		this.charge.amountProperty().bind(Bindings.createFloatBinding(() -> {
 			return 3.0f;
 		}, this.downPayment.amountProperty(), this.remainingPayment.amountProperty()));*/
-		cat.chargeProperty().bind(charge.amountProperty());
+		catCharge.amountProperty().bind(charge.amountProperty());
 
-		this.downPayment.setAmount(cat.getDownPayment());
+		FinancialItem catDownPayment = cat.getDownPayment();
+		this.downPayment.setAmount(catDownPayment.getAmount());
 		this.downPayment.amountProperty().addListener((observable, oldValue, newValue) -> {
 			if(!mainAmountChanging.get() && newValue != null) {
 				subAmountChanging.set(true);
@@ -361,7 +364,7 @@ public class CatEditorController {
 				subAmountChanging.set(false);
 			}
 		});
-		cat.downPaymentProperty().bind(downPayment.amountProperty());
+		catDownPayment.amountProperty().bind(downPayment.amountProperty());
 		
 		this.reservedDate.setValue(cat.getReservedDate());;
 		cat.reservedDateProperty().bind(this.reservedDate.valueProperty());
@@ -369,7 +372,8 @@ public class CatEditorController {
 		this.movedInDate.setValue(cat.getMovedInDate());
 		cat.movedInDateProperty().bind(this.movedInDate.valueProperty());
 		
-		this.remainingPayment.setAmount(cat.getRemainingPayment());
+		FinancialItem catRemainingPayment = cat.getRemainingPayment();
+		this.remainingPayment.setAmount(catRemainingPayment.getAmount());
 		this.remainingPayment.amountProperty().addListener((observable, oldValue, newValue) -> {
 			if(!mainAmountChanging.get() && newValue != null) {
 				subAmountChanging.set(true);
@@ -377,16 +381,18 @@ public class CatEditorController {
 				subAmountChanging.set(false);
 			}
 		});
-		cat.remainingPaymentProperty().bind(remainingPayment.amountProperty());
+		catRemainingPayment.amountProperty().bind(remainingPayment.amountProperty());
 		
 		this.soldDate.setValue(cat.getSoldDate());
 		cat.soldDateProperty().bind(soldDate.valueProperty());
 		
-		this.chipDonation.setSelected(cat.getChipDonation());
-		cat.chipDonationProperty().bind(this.chipDonation.selectedProperty());
+		FinancialItem catChipDonation = cat.getChipDonation();
+		this.chipDonation.setSelected(catChipDonation.getAmount() > 0);
+		catChipDonation.amountProperty().bind(Bindings.createFloatBinding(() -> this.chipDonation.isSelected() ? 20.0f : 0.0f, this.chipDonation.selectedProperty()));
 		
-		this.donation.setAmount(cat.getDonation());
-		cat.donationProperty().bind(donation.amountProperty());
+		FinancialItem catDonation = cat.getDonation();
+		this.donation.setAmount(catDonation.getAmount());
+		catDonation.amountProperty().bind(donation.amountProperty());
 		
 		this.notes.setText(cat.getNotes());
 		cat.notesProperty().bind(this.notes.textProperty());

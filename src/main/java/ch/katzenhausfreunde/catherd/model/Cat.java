@@ -10,10 +10,8 @@ import ch.katzenhausfreunde.catherd.util.LocalDateAdapter;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.FloatProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -57,14 +55,14 @@ public class Cat extends Nameable {
 	private ObservableList<VeterinaryMeasure> vetMeasures;
 	private Person buyer;
 	private StringProperty characterTraits;
-	private FloatProperty charge;
-	private FloatProperty downPayment;
+	private FinancialItem charge;
+	private FinancialItem downPayment;
 	private ObjectProperty<LocalDate> movedInDate;
 	private ObjectProperty<LocalDate> reservedDate;
-	private FloatProperty remainingPayment;
+	private FinancialItem remainingPayment;
 	private ObjectProperty<LocalDate> soldDate;
-	private BooleanProperty chipDonation;
-	private FloatProperty donation;
+	private FinancialItem chipDonation;
+	private FinancialItem donation;
 	private StringProperty notes;
 	
 	/**
@@ -108,14 +106,14 @@ public class Cat extends Nameable {
 		vetMeasures = FXCollections.observableArrayList();
 		buyer = new Person();
 		characterTraits = new SimpleStringProperty(null);
-		charge = new SimpleFloatProperty();
-		downPayment = new SimpleFloatProperty();
+		charge = new FinancialItem();
+		downPayment = new FinancialItem();
 		movedInDate = new SimpleObjectProperty<LocalDate>(null);
 		reservedDate = new SimpleObjectProperty<LocalDate>(null);
-		remainingPayment = new SimpleFloatProperty();
+		remainingPayment = new FinancialItem();
 		soldDate = new SimpleObjectProperty<LocalDate>(null);
-		chipDonation = new SimpleBooleanProperty(false);
-		donation = new SimpleFloatProperty();
+		chipDonation = new FinancialItem();
+		donation = new FinancialItem();
 		notes = new SimpleStringProperty();
 	}
 	
@@ -166,14 +164,14 @@ public class Cat extends Nameable {
 		}
 		buyer.arm();
 		characterTraits.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
-		charge.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
-		downPayment.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
+		charge.arm();
+		downPayment.arm();
 		movedInDate.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		reservedDate.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
-		remainingPayment.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
+		remainingPayment.arm();
 		soldDate.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
-		chipDonation.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
-		donation.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
+		chipDonation.arm();
+		donation.arm();
 		notes.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 	}
 
@@ -517,28 +515,20 @@ public class Cat extends Nameable {
 		return characterTraits;
 	}
 
-	public final float getCharge() {
-		return charge.get();
-	}
-
-	public final void setCharge(float charge) {
-		this.charge.set(charge);
-	}
-	
-	public final FloatProperty chargeProperty() {
+	public final FinancialItem getCharge() {
 		return charge;
 	}
-
-	public final float getDownPayment() {
-		return downPayment.get();
+	
+	public final void setCharge(FinancialItem charge) {
+		this.charge = charge;
 	}
-
-	public final void setDownPayment(float downPayment) {
-		this.downPayment.set(downPayment);
-	}
-
-	public final FloatProperty downPaymentProperty() {
+	
+	public final FinancialItem getDownPayment() {
 		return downPayment;
+	}
+	
+	public final void setDownPayment(FinancialItem downPayment) {
+		this.downPayment = downPayment;
 	}
 	
 	@XmlJavaTypeAdapter(LocalDateAdapter.class)
@@ -569,16 +559,12 @@ public class Cat extends Nameable {
 		return reservedDate;
 	}
 
-	public final float getRemainingPayment() {
-		return remainingPayment.get();
-	}
-
-	public final void setRemainingPayment(float remainingPayment) {
-		this.remainingPayment.set(remainingPayment);
-	}
-
-	public final FloatProperty remainingPaymentProperty() {
+	public final FinancialItem getRemainingPayment() {
 		return remainingPayment;
+	}
+	
+	public final void setRemainingPayment(FinancialItem remainingPayment) {
+		this.remainingPayment = remainingPayment;
 	}
 	
 	@XmlJavaTypeAdapter(LocalDateAdapter.class)
@@ -595,28 +581,20 @@ public class Cat extends Nameable {
 		return soldDate;
 	}
 
-	public final boolean getChipDonation() {
-		return chipDonation.get();
-	}
-
-	public final void setChipDonation(boolean chipDonation) {
-		this.chipDonation.set(chipDonation);
-	}
-	
-	public final BooleanProperty chipDonationProperty() {
+	public final FinancialItem getChipDonation() {
 		return chipDonation;
 	}
 
-	public final float getDonation() {
-		return donation.get();
+	public final void setChipDonation(FinancialItem chipDonation) {
+		this.chipDonation = chipDonation;
 	}
-
-	public final void setDonation(float donation) {
-		this.donation.set(donation);
-	}
-
-	public final FloatProperty donationProperty() {
+	
+	public final FinancialItem getDonation() {
 		return donation;
+	}
+	
+	public final void setDonation(FinancialItem donation) {
+		this.donation = donation;
 	}
 	
 	public final String getNotes() {

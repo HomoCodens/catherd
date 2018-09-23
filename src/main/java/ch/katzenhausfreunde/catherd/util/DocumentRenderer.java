@@ -214,13 +214,13 @@ public class DocumentRenderer {
 			fillField("Textfeld 34", form, cat.getVermifuge2Date());
 			fillField("Textfeld 35", form, cat.getIllnesses());
 			fillField("Textfeld 36", form, cat.getCharacterTraits());
-			fillField("Textfeld 37", form, cat.getCharge());
-			fillField("Textfeld 38", form, cat.getDownPayment());
+			fillField("Textfeld 37", form, cat.getCharge().getAmount());
+			fillField("Textfeld 38", form, cat.getDownPayment().getAmount());
 			fillField("Textfeld 39", form, cat.getReservedDate());
-			fillField("Textfeld 40", form, cat.getRemainingPayment());
+			fillField("Textfeld 40", form, cat.getRemainingPayment().getAmount());
 			fillField("Textfeld 41", form, cat.getSoldDate());
-			fillField("Chipspende", form, cat.getChipDonation() ? "Auswahl1" : "Off");
-			fillField("Textfeld 43", form, cat.getDonation());
+			fillField("Chipspende", form, cat.getChipDonation().getAmount() > 0 ? "Auswahl1" : "Off");
+			fillField("Textfeld 43", form, cat.getDonation().getAmount());
 			fillField("Kastration", form, cat.getCastratedDate() != null ? "Auswahl1" : "Off");
 			fillField("Textfeld 44", form, cat.getNotes());
 			fillField("Textfeld 42", form, cat.getSoldDate());
