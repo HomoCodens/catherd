@@ -7,6 +7,7 @@ import ch.katzenhausfreunde.catherd.util.CatHerdState;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -15,6 +16,9 @@ import javafx.stage.Stage;
 public class MainMenuController {
 	@FXML
 	MenuItem saveItem;
+	
+	@FXML
+	Menu editMenu;
 	
 	private CatHerdMain main;
 	
@@ -51,6 +55,10 @@ public class MainMenuController {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void pupulateEditMenu(MenuItem... items) {
+		editMenu.getItems().setAll(items);
 	}
 	
 	@FXML

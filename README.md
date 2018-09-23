@@ -7,6 +7,8 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 *a lot as you can see*
 
 ## NOW
+* Replace most of CatCell with listener to treeviews selectionmodel
+ * Then add menu items to context AND "Edit" menu
 * Financial overview in group editor!
 * Make it preety
  * Custom stack trace error dialog instead of just printStackTrace
@@ -30,7 +32,6 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 * Aks them to properly label the PDF form fields
 * i18n? Nah... xD
 * Add metadata to created pdfs
-* use context menu items in main menu
 
  
  
