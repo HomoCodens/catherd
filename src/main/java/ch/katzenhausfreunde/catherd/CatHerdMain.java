@@ -42,9 +42,15 @@ public class CatHerdMain extends Application {
 		
 		// Attempt loading stored state and use default if not available
 		File inFile = CatHerdDiskStorage.getSavePath();
-		CatHerdStore loadedStore = CatHerdDiskStorage.loadFromFile(inFile);
-		if(loadedStore != null) {
-			CatHerdState.setStore(loadedStore);
+		if(inFile != null) {
+			CatHerdStore loadedStore = CatHerdDiskStorage.loadFromFile(inFile);
+			if(loadedStore != null) {
+				CatHerdState.setStore(loadedStore);
+			} else {
+				CatHerdStore store = new CatHerdStore();
+				store.addHome(new FosterHome());
+				CatHerdState.setStore(store);
+			}
 		} else {
 			CatHerdStore store = new CatHerdStore();
 			store.addHome(new FosterHome());
@@ -185,7 +191,10 @@ public class CatHerdMain extends Application {
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON Dateien", "*.json");
 		fileChooser.getExtensionFilters().add(extFilter);
-		fileChooser.setInitialDirectory(new File(CatHerdDiskStorage.getSavePath().getParent()));
+		File savePath = CatHerdDiskStorage.getSavePath();
+		if(savePath != null) {
+			fileChooser.setInitialDirectory(new File(CatHerdDiskStorage.getSavePath().getParent()));
+		}
 		return fileChooser;
 	}
 	

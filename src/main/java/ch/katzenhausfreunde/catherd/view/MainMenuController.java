@@ -3,7 +3,9 @@ package ch.katzenhausfreunde.catherd.view;
 import java.io.IOException;
 
 import ch.katzenhausfreunde.catherd.CatHerdMain;
+import ch.katzenhausfreunde.catherd.util.CatHerdDiskStorage;
 import ch.katzenhausfreunde.catherd.util.CatHerdState;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,7 +27,11 @@ public class MainMenuController {
 	@FXML
 	private void initialize() {
 		// Funky
-		saveItem.disableProperty().bind(CatHerdState.dirtyProperty().not());
+		saveItem.disableProperty().bind(
+				Bindings.createBooleanBinding(
+						() -> CatHerdState.dirtyProperty().not().get() ||
+						CatHerdDiskStorage.getSavePath() == null, 
+						CatHerdState.dirtyProperty()));
 	}
 	
 	public void setMain(CatHerdMain main) {
