@@ -220,13 +220,15 @@ public class DocumentRenderer {
 			fillField("Textfeld 40", form, cat.getRemainingPayment().getAmount());
 			fillField("Textfeld 41", form, cat.getSoldDate());
 			fillField("Chipspende", form, cat.getChipDonation().getAmount() > 0 ? "Auswahl1" : "Off");
-			fillField("Textfeld 43", form, cat.getDonation().getAmount());
-			fillField("Kastration", form, cat.getCastratedDate() != null ? "Auswahl1" : "Off");
+			if(cat.getDonation().getAmount() > 0) {
+				fillField("Textfeld 43", form, cat.getDonation().getAmount());	
+			}
+			fillField("Kastration", form, cat.getCastratedDate() == null ? "Auswahl1" : "Off");
 			fillField("Textfeld 44", form, cat.getNotes());
 			fillField("Textfeld 42", form, cat.getSoldDate());
 			// Whee weeny oneliners
 			fillField("Textfeld 45", form, 
-					(fosterParent.getPostalAndTown() != null ? fosterParent.getPostalAndTown() : "").replaceAll("[0-9,. ]", "") + 
+					(fosterParent.getPostalAndTown() != null ? fosterParent.getPostalAndTown() : "").replaceAll("[0-9,. ]", "") + ", " +
 					formatDate(type == ContractType.RESERVATION ? cat.getReservedDate() : cat.getSoldDate()));
 			
 			
@@ -381,7 +383,7 @@ public class DocumentRenderer {
 	
 	private String formatDate(LocalDate date) {
 		if(date == null) {
-			return null;
+			return "";
 		}
 		return date.format(DateTimeFormatter.ofPattern("dd.MM.uuuu"));
 	}
