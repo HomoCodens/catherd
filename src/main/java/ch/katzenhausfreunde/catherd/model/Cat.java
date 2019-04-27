@@ -32,8 +32,8 @@ public class Cat extends Nameable {
 	private ObjectProperty<LocalDate> castratedDate;
 	private StringProperty breed;
 	private BooleanProperty lineage;
-	private BooleanProperty outside;
-	private BooleanProperty contact;
+	private StringProperty outside;
+	private StringProperty contact;
 	private StringProperty chipNo;
 	private ObjectProperty<LocalDate> chipImplantedDate;
 	private ObjectProperty<LocalDate> leucosisVaccination1Date;
@@ -85,8 +85,8 @@ public class Cat extends Nameable {
 		castratedDate = new SimpleObjectProperty<LocalDate>(null);
 		breed = new SimpleStringProperty(null);
 		lineage = new SimpleBooleanProperty(false);
-		outside = new SimpleBooleanProperty(false);
-		contact = new SimpleBooleanProperty(false);
+		outside = new SimpleStringProperty(null);
+		contact = new SimpleStringProperty(null);
 		chipNo = new SimpleStringProperty();
 		chipImplantedDate = new SimpleObjectProperty<LocalDate>(null);
 		leucosisVaccination1Date = new SimpleObjectProperty<LocalDate>(null);
@@ -263,27 +263,27 @@ public class Cat extends Nameable {
 		return lineage;
 	}
 	
-	public final boolean getOutside() {
+	public final String getOutside() {
 		return outside.get();
 	}
 
-	public final void setOutside(boolean outside) {
+	public final void setOutside(String outside) {
 		this.outside.set(outside);
 	}
 
-	public final BooleanProperty outsideProperty() {
+	public final StringProperty outsideProperty() {
 		return outside;
 	}
 	
-	public final boolean getContact() {
+	public final String getContact() {
 		return contact.get();
 	}
 
-	public final void setContact(boolean contact) {
+	public final void setContact(String contact) {
 		this.contact.set(contact);
 	}
 	
-	public final BooleanProperty contactProperty() {
+	public final StringProperty contactProperty() {
 		return contact;
 	}
 	

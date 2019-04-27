@@ -52,10 +52,10 @@ public class CatEditorController {
 	private CheckBox lineage;
 	
 	@FXML
-	private CheckBox runFree;
+	private ChoiceBox<String> runFree;
 	
 	@FXML
-	private CheckBox contact;
+	private ChoiceBox<String> contact;
 	
 	@FXML
 	private TextField chipNo;
@@ -159,6 +159,8 @@ public class CatEditorController {
 	@FXML
 	private void initialize() {
 		sex.getItems().setAll("männlich", "weiblich");
+		contact.getItems().setAll("Keine Angabe", "Ja", "Nein");
+		runFree.getItems().setAll("Keine Angabe", "Ja", "Nein");
 		leucosisTestResult.getItems().setAll("negativ", "positiv");
 		
 		subAmountChanging = new SimpleBooleanProperty(false);
@@ -243,11 +245,11 @@ public class CatEditorController {
 		this.lineage.setSelected(cat.getLineage());
 		cat.lineageProperty().bind(this.lineage.selectedProperty());
 		
-		this.runFree.setSelected(cat.getOutside());
-		cat.outsideProperty().bind(this.runFree.selectedProperty());
+		this.runFree.setValue(cat.getOutside());
+		cat.outsideProperty().bind(this.runFree.valueProperty());
 		
-		this.contact.setSelected(cat.getContact());
-		cat.contactProperty().bind(this.contact.selectedProperty());
+		this.contact.setValue(cat.getContact());
+		cat.contactProperty().bind(this.contact.valueProperty());
 		
 		
 		this.chipNo.setText(cat.getChipNo());

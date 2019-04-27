@@ -191,8 +191,16 @@ public class DocumentRenderer {
 			fillField("Textfeld 172", form, cat.getCastratedDate());
 			fillField("Textfeld 18", form, cat.getBreed());
 			fillField("Stammbaum", form, cat.getLineage() ? "Auswahl1" : "Auswahl2");
-			fillField("Freilauf", form, cat.getOutside() ? "Auswahl1" : "Auswahl2");
-			fillField("Einzelkatze", form, cat.getContact() ? "Auswahl2" : "Auswahl1");
+			if(cat.getOutside() == "Ja") {
+				fillField("Freilauf", form, "Auswahl1");
+			} else if(cat.getOutside() == "Nein") {
+				fillField("Freilauf", form, "Auswahl2");
+			}
+			if(cat.getContact() == "Ja") {
+				fillField("Einzelkatze", form, "Auswahl2");
+			} else if(cat.getOutside() == "Nein") {
+				fillField("Einzelkatze", form, "Auswahl1");
+			}
 			fillField("Textfeld 21", form, cat.getChipNo());
 			fillField("Textfeld 22", form, cat.getChipImplantedDate());
 			fillField("1. SS", form, cat.getFVRVaccination1Date() != null ? "Auswahl1" : "Off");
