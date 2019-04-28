@@ -188,7 +188,6 @@ public class DocumentRenderer {
 			fillField("Textfeld 171", form, cat.getDateOfBirth());
 			fillField("Textfeld 173", form, cat.getCoat());
 			fillField("Geschlecht", form, cat.getSex() != "weiblich" ? "Auswahl1" : "Auswahl2");
-			fillField("Textfeld 172", form, cat.getCastratedDate());
 			fillField("Textfeld 18", form, cat.getBreed());
 			fillField("Stammbaum", form, cat.getLineage() ? "Auswahl1" : "Auswahl2");
 			if(cat.getOutside() == "Ja") {
@@ -231,7 +230,6 @@ public class DocumentRenderer {
 			if(cat.getDonation().getAmount() > 0) {
 				fillField("Textfeld 43", form, cat.getDonation().getAmount());	
 			}
-			fillField("Kastration", form, cat.getCastratedDate() == null ? "Auswahl1" : "Off");
 			fillField("Textfeld 44", form, cat.getNotes());
 			fillField("Textfeld 42", form, cat.getSoldDate());
 			// Whee weeny oneliners
@@ -242,9 +240,14 @@ public class DocumentRenderer {
 			
 			form.flatten(fieldsToFlatten, true);
 			
-			if(cat.getCastratedDate() == null) {
-				PDPage castrationPage = _renderCastration(cat, destination);
-				contract.addPage(castrationPage);
+			// If the cat is not *going to be* castrated by us (allowing for some leeway in unselecting after (maybe auto-do that)
+			if(!cat.getCastrationPending() && cat.getCastratedDate() != null) {
+				fillField("Textfeld 172", form, cat.getCastratedDate());
+				fillField("Kastration", form, cat.getCastratedDate() == null ? "Auswahl1" : "Off");
+				if(cat.getCastratedDate() == null) {
+					PDPage castrationPage = _renderCastration(cat, destination);
+					contract.addPage(castrationPage);
+				}
 			}
 			
 			contract.save(outFile);

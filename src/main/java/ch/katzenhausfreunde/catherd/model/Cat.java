@@ -30,6 +30,7 @@ public class Cat extends Nameable {
 	private StringProperty coat;
 	private StringProperty sex;
 	private ObjectProperty<LocalDate> castratedDate;
+	private BooleanProperty castrationPending;
 	private StringProperty breed;
 	private BooleanProperty lineage;
 	private StringProperty outside;
@@ -83,6 +84,7 @@ public class Cat extends Nameable {
 		coat = new SimpleStringProperty(null);
 		sex = new SimpleStringProperty(null);
 		castratedDate = new SimpleObjectProperty<LocalDate>(null);
+		castrationPending = new SimpleBooleanProperty(false);
 		breed = new SimpleStringProperty(null);
 		lineage = new SimpleBooleanProperty(false);
 		outside = new SimpleStringProperty(null);
@@ -125,6 +127,7 @@ public class Cat extends Nameable {
 		coat.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		sex.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		castratedDate.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
+		castrationPending.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore()); 
 		breed.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		lineage.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
 		outside.addListener((observable, oldValue, newValue) -> CatHerdState.touchStore());
@@ -237,6 +240,18 @@ public class Cat extends Nameable {
 
 	public final ObjectProperty<LocalDate> castratedDateProperty() {
 		return castratedDate;
+	}
+	
+	public final boolean getCastrationPending() {
+		return castrationPending.get();
+	}
+	
+	public final void setCastrationPending(boolean castrationPending) {
+		this.castrationPending.set(castrationPending);
+	}
+	
+	public final BooleanProperty castrationPendingProperty() {
+		return castrationPending;
 	}
 	
 	public final String getBreed() {

@@ -46,6 +46,9 @@ public class CatEditorController {
 	private DatePicker castratedDate;
 	
 	@FXML
+	private CheckBox castrationPending;
+	
+	@FXML
 	private TextField breed;
 	
 	@FXML
@@ -239,6 +242,9 @@ public class CatEditorController {
 		this.castratedDate.setValue(cat.getCastratedDate());
 		cat.castratedDateProperty().bind(this.castratedDate.valueProperty());
 		
+		this.castrationPending.setSelected(cat.getCastrationPending());
+		cat.castrationPendingProperty().bind(this.castrationPending.selectedProperty());
+				
 		this.breed.setText(cat.getBreed());
 		cat.breedProperty().bind(this.breed.textProperty());
 		
@@ -250,8 +256,7 @@ public class CatEditorController {
 		
 		this.contact.setValue(cat.getContact());
 		cat.contactProperty().bind(this.contact.valueProperty());
-		
-		
+				
 		this.chipNo.setText(cat.getChipNo());
 		cat.chipNoProperty().bind(this.chipNo.textProperty());
 		

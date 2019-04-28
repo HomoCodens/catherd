@@ -73,6 +73,7 @@
                                                   <rowConstraints>
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -86,21 +87,27 @@
                                                       <ChoiceBox fx:id="sex" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                       <Label text="Kastriert am" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                       <DatePicker fx:id="castratedDate" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                                      <Label text="Rasse" GridPane.rowIndex="2" />
-                                                      <TextField fx:id="breed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                      <Label text="Stammbaum" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                                      <CheckBox fx:id="lineage" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                                                      <Label text="Rasse" GridPane.rowIndex="3" />
+                                                      <TextField fx:id="breed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Label text="Stammbaum" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                                      <CheckBox fx:id="lineage" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                                                          <GridPane.margin>
                                                             <Insets left="20.0" />
                                                          </GridPane.margin></CheckBox>
-                                                      <Label text="Freilauf" GridPane.rowIndex="3" />
-                                                      <Label text="Sozialkontakt" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                                      <Label text="Chip-Nr." GridPane.rowIndex="4" />
-                                                      <TextField fx:id="chipNo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                      <Label text="Chip-Implantation am" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                                      <DatePicker fx:id="chipImplantedDate" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                                      <ChoiceBox fx:id="runFree" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                      <ChoiceBox fx:id="contact" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                                      <Label text="Freilauf" GridPane.rowIndex="4" />
+                                                      <Label text="Sozialkontakt" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                                      <Label text="Chip-Nr." GridPane.rowIndex="5" />
+                                                      <TextField fx:id="chipNo" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                      <Label text="Chip-Implantation am" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                                      <DatePicker fx:id="chipImplantedDate" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                                      <ChoiceBox fx:id="runFree" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <ChoiceBox fx:id="contact" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                                      <Label text="Kastr. folgt noch" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                      <CheckBox fx:id="castrationPending" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                                                         <GridPane.margin>
+                                                            <Insets left="20.0" />
+                                                         </GridPane.margin>
+                                                      </CheckBox>
                                                    </children>
                                                 </GridPane>
                                              </children>
