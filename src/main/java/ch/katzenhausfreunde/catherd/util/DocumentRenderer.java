@@ -212,8 +212,10 @@ public class DocumentRenderer {
 			fillField("Textfeld 27", form, cat.getLeucosisVaccination2Date());
 			fillField("Textfeld 28", form, cat.getOtherVaccination());
 			fillField("Textfeld 29", form, cat.getOtherVaccinationDate());
-			fillField("Leuk", form, cat.getLeucosisTestResult() != null ? "Auswahl1" : "Off");
-			fillField("Leukose", form, cat.getLeucosisTestResult() == "negativ" ? "Auswahl1" : "Auswahl2");
+			if(cat.getLeucosisTestResult() != null) {
+				fillField("Leuk", form, "Auswahl1");
+				fillField("Leukose", form, cat.getLeucosisTestResult() == "negativ" ? "Auswahl1" : "Auswahl2");	
+			}
 			fillField("Textfeld 30", form, cat.getLeucosisTestDate());
 			fillField("Textfeld 31", form, cat.getOtherTests());
 			fillField("Textfeld 32", form, cat.getOtherTestsDate());
@@ -241,7 +243,7 @@ public class DocumentRenderer {
 			form.flatten(fieldsToFlatten, true);
 			
 			// If the cat is not *going to be* castrated by us (allowing for some leeway in unselecting after (maybe auto-do that)
-			if(!cat.getCastrationPending() && cat.getCastratedDate() != null) {
+			if(type == ContractType.SALE && !cat.getCastrationPending() && cat.getCastratedDate() != null) {
 				fillField("Textfeld 172", form, cat.getCastratedDate());
 				fillField("Kastration", form, cat.getCastratedDate() == null ? "Auswahl1" : "Off");
 				if(cat.getCastratedDate() == null) {
