@@ -197,7 +197,7 @@ public class DocumentRenderer {
 			}
 			if(cat.getContact() == "Ja") {
 				fillField("Einzelkatze", form, "Auswahl2");
-			} else if(cat.getOutside() == "Nein") {
+			} else if(cat.getContact() == "Nein") {
 				fillField("Einzelkatze", form, "Auswahl1");
 			}
 			fillField("Textfeld 21", form, cat.getChipNo());
@@ -243,7 +243,7 @@ public class DocumentRenderer {
 			form.flatten(fieldsToFlatten, true);
 			
 			// If the cat is not *going to be* castrated by us (allowing for some leeway in unselecting after (maybe auto-do that)
-			if(type == ContractType.SALE && !cat.getCastrationPending() && cat.getCastratedDate() != null) {
+			if(type == ContractType.SALE /*&& !cat.getCastrationPending()*/ /*&& cat.getCastratedDate() != null*/) {
 				fillField("Textfeld 172", form, cat.getCastratedDate());
 				fillField("Kastration", form, cat.getCastratedDate() == null ? "Auswahl1" : "Off");
 				if(cat.getCastratedDate() == null) {
