@@ -7,13 +7,11 @@ Half curiosity to learn JavaFX, half pro bono work. Half fun.
 *a lot as you can see*
 
 ## NOW
-* Option to specify "not yet castrated but going to be"
-* Make "Freilauf" and "Sozialkontakt" dropdowns ["na", "Ja", "Nein"]
 * Replace most of CatCell with listener to treeviews selectionmodel
  * Then add menu items to context AND "Edit" menu
-* Make it preety
- * Custom stack trace error dialog instead of just printStackTrace
-  * or at least go through all the trycatch blocks and add meaningful errors (e.g. FileNotFoundException when pdf is open in other program)
+
+* Custom stack trace error dialog instead of just printStackTrace
+ * or at least go through all the trycatch blocks and add meaningful errors (e.g. FileNotFoundException when pdf is open in other program)
 
 ## Later
 * Document the living daylight out of everything (it's high time)
